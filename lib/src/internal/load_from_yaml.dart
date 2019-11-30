@@ -23,6 +23,13 @@
  *
  */
 
-library pubspec_yaml;
+import 'dart:convert';
 
-export 'src/pubspec_yaml.dart';
+import 'package:yaml/yaml.dart';
+
+import '../pubspec_yaml.dart';
+
+// ignore_for_file: avoid_as
+
+PubspecYaml loadFromYaml(String content) =>
+    PubspecYaml(customFields: json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>);
