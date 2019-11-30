@@ -23,23 +23,12 @@
  *
  */
 
-import 'dart:convert';
+import 'package:pubspec_yaml/pubspec_yaml.dart';
+import 'package:pubspec_yaml/src/internal/tokens.dart';
 
-import 'package:yaml/yaml.dart';
+import 'json2yaml.dart';
 
-import '../pubspec_yaml.dart';
-import 'tokens.dart';
-
-// ignore_for_file: avoid_as
-
-PubspecYaml loadFromYaml(String content) {
-  final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
-  return PubspecYaml(
-    name: jsonMap[Tokens.name] as String,
-    customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
-  );
+String formatToYaml(PubspecYaml pubspecYaml) {
+  final packageMetadata = {Tokens.name: pubspecYaml.name};
+  return '${json2yaml(packageMetadata)}\n';
 }
-
-const _knownTokens = [
-  Tokens.name,
-];

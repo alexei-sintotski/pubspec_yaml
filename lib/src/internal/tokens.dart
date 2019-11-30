@@ -14,32 +14,14 @@
  * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
  */
 
-import 'dart:convert';
-
-import 'package:yaml/yaml.dart';
-
-import '../pubspec_yaml.dart';
-import 'tokens.dart';
-
-// ignore_for_file: avoid_as
-
-PubspecYaml loadFromYaml(String content) {
-  final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
-  return PubspecYaml(
-    name: jsonMap[Tokens.name] as String,
-    customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
-  );
+class Tokens {
+  static const name = 'name';
 }
-
-const _knownTokens = [
-  Tokens.name,
-];
