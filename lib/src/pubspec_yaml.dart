@@ -23,6 +23,34 @@
  *
  */
 
-library pubspec_yaml;
+import 'package:functional_data/functional_data.dart';
+import 'package:meta/meta.dart';
 
-export 'src/pubspec_yaml.dart';
+import 'internal/load_from_yaml.dart';
+
+part 'pubspec_yaml.g.dart';
+
+// ignore_for_file: annotate_overrides
+
+/// PubspecYaml is a data type representing data stored in pubspec.yaml files.
+/// See https://dart.dev/tools/pub/pubspec for details
+/// It provides the following facilities:
+/// - Parser from pubspec.yaml YAML string
+/// - Formatter to pubspec.yaml YAML string
+/// - https://pub.dev/packages/functional_data is used to provide data type facilities
+@immutable
+@FunctionalData()
+class PubspecYaml extends $PubspecYaml {
+  const PubspecYaml({this.customFields = const <String, dynamic>{}});
+
+  factory PubspecYaml.loadFromYamlString(String content) {
+    assert(content != null, 'content must not be null');
+    assert(content.trim().isNotEmpty, 'content must not be empty');
+    return loadFromYaml(content);
+  }
+
+  String toYamlString() => '';
+
+  /// JSON representation of other pubspec.yaml fields
+  final Map<String, dynamic> customFields;
+}
