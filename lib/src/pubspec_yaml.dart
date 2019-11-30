@@ -27,6 +27,7 @@ import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
 
 import 'internal/load_from_yaml.dart';
+import 'internal/yaml_formatter.dart';
 
 part 'pubspec_yaml.g.dart';
 
@@ -41,7 +42,10 @@ part 'pubspec_yaml.g.dart';
 @immutable
 @FunctionalData()
 class PubspecYaml extends $PubspecYaml {
-  const PubspecYaml({this.customFields = const <String, dynamic>{}});
+  const PubspecYaml({
+    @required this.name,
+    this.customFields = const <String, dynamic>{},
+  });
 
   factory PubspecYaml.loadFromYamlString(String content) {
     assert(content != null, 'content must not be null');
@@ -49,8 +53,11 @@ class PubspecYaml extends $PubspecYaml {
     return loadFromYaml(content);
   }
 
-  String toYamlString() => '';
+  /// Package name
+  final String name;
 
   /// JSON representation of other pubspec.yaml fields
   final Map<String, dynamic> customFields;
+
+  String toYamlString() => formatToYaml(this);
 }
