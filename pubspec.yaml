@@ -1,0 +1,11 @@
+name: pubspec_yaml
+description: Dart library to access and manipulate content of pubpec.yaml files
+version: 0.0.1
+author: Alexei Sintotski <alexei.sintotski@gmail.com>
+homepage: https://github.com/alexei-sintotski/pubspec_yaml
+
+environment:
+  sdk: ">=2.5.0 <3.0.0"
+
+dev_dependencies:
+  dependency_validator: ^1.0.0
