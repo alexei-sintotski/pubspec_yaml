@@ -45,6 +45,7 @@ class PubspecYaml extends $PubspecYaml {
   const PubspecYaml({
     @required this.name,
     this.version = const Optional.none(),
+    this.description = const Optional.none(),
     this.customFields = const <String, dynamic>{},
   });
 
@@ -59,6 +60,9 @@ class PubspecYaml extends $PubspecYaml {
 
   /// Package version (https://dart.dev/tools/pub/pubspec#version)
   final Optional<String> version;
+
+  /// Package description (https://dart.dev/tools/pub/pubspec#description)
+  final Optional<String> description;
 
   /// JSON representation of other pubspec.yaml fields
   final Map<String, dynamic> customFields;
