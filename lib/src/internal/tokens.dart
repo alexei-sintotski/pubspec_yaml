@@ -25,4 +25,5 @@
 class Tokens {
   static const name = 'name';
   static const version = 'version';
+  static const description = 'description';
 }

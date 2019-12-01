@@ -38,6 +38,7 @@ PubspecYaml loadFromYaml(String content) {
   return PubspecYaml(
     name: jsonMap[Tokens.name] as String,
     version: Optional(jsonMap[Tokens.version] as String),
+    description: Optional(jsonMap[Tokens.description] as String),
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -45,4 +46,5 @@ PubspecYaml loadFromYaml(String content) {
 const _knownTokens = [
   Tokens.name,
   Tokens.version,
+  Tokens.description,
 ];
