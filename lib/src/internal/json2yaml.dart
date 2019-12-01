@@ -24,9 +24,4 @@
 
 String json2yaml(Map<String, dynamic> json) => json.entries.map(_formatEntry).join('\n');
 
-String _formatEntry(MapEntry<String, dynamic> entry) {
-  if (entry.value is String) {
-    return '${entry.key}: ${entry.value}';
-  }
-  throw AssertionError('Unhandled case');
-}
+String _formatEntry(MapEntry<String, dynamic> entry) => '${entry.key}: ${entry.value}';
