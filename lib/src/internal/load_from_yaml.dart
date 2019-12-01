@@ -44,4 +44,5 @@ PubspecYaml loadFromYaml(String content) {
 
 const _knownTokens = [
   Tokens.name,
+  Tokens.version,
 ];
