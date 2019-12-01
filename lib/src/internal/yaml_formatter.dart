@@ -29,6 +29,9 @@ import 'package:pubspec_yaml/src/internal/tokens.dart';
 import 'json2yaml.dart';
 
 String formatToYaml(PubspecYaml pubspecYaml) {
-  final packageMetadata = {Tokens.name: pubspecYaml.name};
+  final packageMetadata = {
+    Tokens.name: pubspecYaml.name,
+    if (pubspecYaml.version.hasValue) Tokens.version: pubspecYaml.version.valueOr(null),
+  };
   return '${json2yaml(packageMetadata)}\n';
 }
