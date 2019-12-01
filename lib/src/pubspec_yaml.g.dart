@@ -8,17 +8,22 @@ part of 'pubspec_yaml.dart';
 
 abstract class $PubspecYaml {
   String get name;
+  Optional<String> get version;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
-  PubspecYaml copyWith({String name, Map<String, dynamic> customFields}) =>
-      PubspecYaml(name: name ?? this.name, customFields: customFields ?? this.customFields);
-  String toString() => "PubspecYaml(name: $name, customFields: $customFields)";
+  PubspecYaml copyWith({String name, Optional<String> version, Map<String, dynamic> customFields}) => PubspecYaml(
+      name: name ?? this.name, version: version ?? this.version, customFields: customFields ?? this.customFields);
+  String toString() => "PubspecYaml(name: $name, version: $version, customFields: $customFields)";
   bool operator ==(dynamic other) =>
-      other.runtimeType == runtimeType && name == other.name && customFields == other.customFields;
+      other.runtimeType == runtimeType &&
+      name == other.name &&
+      version == other.version &&
+      customFields == other.customFields;
   @override
   int get hashCode {
     var result = 17;
     result = 37 * result + name.hashCode;
+    result = 37 * result + version.hashCode;
     result = 37 * result + customFields.hashCode;
     return result;
   }
@@ -26,6 +31,8 @@ abstract class $PubspecYaml {
 
 class PubspecYaml$ {
   static final name = Lens<PubspecYaml, String>((s_) => s_.name, (s_, name) => s_.copyWith(name: name));
+  static final version =
+      Lens<PubspecYaml, Optional<String>>((s_) => s_.version, (s_, version) => s_.copyWith(version: version));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
       (s_) => s_.customFields, (s_, customFields) => s_.copyWith(customFields: customFields));
 }

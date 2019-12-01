@@ -25,6 +25,7 @@
 
 import 'dart:convert';
 
+import 'package:functional_data/functional_data.dart';
 import 'package:yaml/yaml.dart';
 
 import '../pubspec_yaml.dart';
@@ -36,6 +37,7 @@ PubspecYaml loadFromYaml(String content) {
   final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
   return PubspecYaml(
     name: jsonMap[Tokens.name] as String,
+    version: Optional(jsonMap[Tokens.version] as String),
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
