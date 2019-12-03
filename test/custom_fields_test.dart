@@ -2,9 +2,9 @@ import 'package:pubspec_yaml/src/pubspec_yaml.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('$PubspecYaml.loadFromYamlString', () {
-    group('given pubspec.yaml with one custom field', () {
-      final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithOneCustomField);
+  group('given pubspec.yaml with one custom field', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithOneCustomField);
+    group('$PubspecYaml.loadFromYamlString', () {
       test('it produces object with a single custom field', () {
         expect(pubspecYaml.customFields.length, 1);
       });
@@ -12,11 +12,23 @@ void main() {
         expect(pubspecYaml.customFields.keys, contains(customFieldName));
       });
     });
+    group('$PubspecYaml.toYamlString', () {
+      test('preserves custom fields data', () {
+        expect(PubspecYaml.loadFromYamlString(pubspecYaml.toYamlString()).customFields, pubspecYaml.customFields);
+      });
+    });
+  });
 
-    group('given pubspec.yaml with two custom fields', () {
-      final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithTwoCustomFields);
+  group('given pubspec.yaml with two custom fields', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithTwoCustomFields);
+    group('$PubspecYaml.loadFromYamlString', () {
       test('it produces object with two custom field', () {
         expect(pubspecYaml.customFields.length, 2);
+      });
+    });
+    group('$PubspecYaml.toYamlString', () {
+      test('preserves custom fields data', () {
+        expect(PubspecYaml.loadFromYamlString(pubspecYaml.toYamlString()).customFields, pubspecYaml.customFields);
       });
     });
   });
