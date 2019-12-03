@@ -22,6 +22,43 @@
  * SOFTWARE.
  */
 
-String json2yaml(Map<String, dynamic> json) => json.entries.map(_formatEntry).join('\n');
+// ignore_for_file: avoid_annotating_with_dynamic
 
-String _formatEntry(MapEntry<String, dynamic> entry) => '${entry.key}: ${entry.value}';
+String json2yaml(Map<String, dynamic> json) => '${_json2yaml(json, 0)}';
+
+String _json2yaml(Map<String, dynamic> json, int nestingLevel) =>
+    json.entries.map((entry) => _formatEntry(entry, nestingLevel)).join('\n');
+
+String _formatEntry(MapEntry<String, dynamic> entry, int nesting) =>
+    '${_indentation(nesting)}${entry.key}:${_formatValue(entry.value, nesting)}';
+
+String _formatValue(dynamic value, int nesting) {
+  if (value is Map<String, dynamic>) {
+    return '\n${_json2yaml(value, nesting + 1)}';
+  }
+  if (value is List<dynamic>) {
+    return '\n${_formatList(value, nesting + 1)}';
+  }
+  if (value is String) {
+    if (_isMultilineString(value)) {
+      return ' |\n${value.split('\n').map((s) => '${_indentation(nesting + 1)}$s').join('\n')}';
+    }
+    if (_containsSpecialCharacters(value) || _containsFloatingPointPattern(value)) {
+      return ' "$value"';
+    }
+  }
+  return ' $value';
+}
+
+String _formatList(List<dynamic> list, int nesting) =>
+    list.map((dynamic value) => '${_indentation(nesting)}-${_formatValue(value, nesting + 2)}').join('\n');
+
+String _indentation(int nesting) => _spaces(nesting * 2);
+String _spaces(int n) => ''.padRight(n, ' ');
+
+bool _isMultilineString(String s) => s.contains('\n');
+
+bool _containsFloatingPointPattern(String s) => s.contains(RegExp(r'[0-9]\.[0-9]'));
+
+bool _containsSpecialCharacters(String s) => _specialCharacters.any((c) => s.contains(c));
+final _specialCharacters = ':{}[],&*#?|-<>=!%@\\'.split('');
