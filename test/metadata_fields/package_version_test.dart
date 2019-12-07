@@ -67,7 +67,7 @@ void main() {
 const packageVersion = '1.0.0';
 const pubspecYamlWithPackageVersionDefined = '''
 name: pubspec_yaml
-version: "$packageVersion"
+version: $packageVersion
 ''';
 
 const pubspecYamlWithUndefinedVersion = '''
