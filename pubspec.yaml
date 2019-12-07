@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   functional_data: ^0.2.0
+  json2yaml: ^1.0.0
   meta: ^1.1.0
   yaml: ^2.2.0
 

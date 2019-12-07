@@ -23,10 +23,9 @@
  *
  */
 
+import 'package:json2yaml/json2yaml.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:pubspec_yaml/src/internal/tokens.dart';
-
-import 'json2yaml.dart';
 
 String formatToYaml(PubspecYaml pubspecYaml) {
   final packageMetadata = <String, dynamic>{
@@ -35,5 +34,5 @@ String formatToYaml(PubspecYaml pubspecYaml) {
     if (pubspecYaml.description.hasValue) Tokens.description: pubspecYaml.description.valueOr(''),
     for (final field in pubspecYaml.customFields.keys) field: pubspecYaml.customFields[field],
   };
-  return '${json2yaml(packageMetadata)}\n';
+  return '${json2yaml(packageMetadata, yamlStyle: YamlStyle.pubspecYaml)}\n';
 }
