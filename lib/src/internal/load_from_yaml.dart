@@ -25,7 +25,7 @@
 
 import 'dart:convert';
 
-import 'package:functional_data/functional_data.dart';
+import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
 import '../pubspec_yaml.dart';

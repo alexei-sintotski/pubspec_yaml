@@ -26,14 +26,14 @@ abstract class $PubspecYaml {
       name == other.name &&
       version == other.version &&
       description == other.description &&
-      customFields == other.customFields;
+      const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
   int get hashCode {
     var result = 17;
     result = 37 * result + name.hashCode;
     result = 37 * result + version.hashCode;
     result = 37 * result + description.hashCode;
-    result = 37 * result + customFields.hashCode;
+    result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
   }
 }

@@ -31,7 +31,7 @@ void main() {
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package description', () {
-        expect(pubspecYaml.description.valueOr(''), packageDescription);
+        expect(pubspecYaml.description.valueOr(() => ''), packageDescription);
       });
       test('produces object without custom fields', () {
         expect(pubspecYaml.customFields, isEmpty);
@@ -68,7 +68,7 @@ void main() {
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package description', () {
-        expect(pubspecYaml.description.valueOr(''), packageDescription);
+        expect(pubspecYaml.description.valueOr(() => ''), packageDescription);
       });
       test('produces object without custom fields', () {
         expect(pubspecYaml.customFields, isEmpty);

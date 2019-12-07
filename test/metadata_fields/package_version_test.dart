@@ -31,7 +31,7 @@ void main() {
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package version', () {
-        expect(pubspecYaml.version.valueOr(null), packageVersion);
+        expect(pubspecYaml.version.valueOr(() => ''), packageVersion);
       });
       test('produces object without custom fields', () {
         expect(pubspecYaml.customFields, isEmpty);

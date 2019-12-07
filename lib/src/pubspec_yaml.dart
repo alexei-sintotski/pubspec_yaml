@@ -23,8 +23,10 @@
  *
  */
 
-import 'package:functional_data/functional_data.dart';
+import 'package:collection/collection.dart';
+import 'package:functional_data/functional_data.dart' hide Optional;
 import 'package:meta/meta.dart';
+import 'package:plain_optional/plain_optional.dart';
 
 import 'internal/load_from_yaml.dart';
 import 'internal/yaml_formatter.dart';
@@ -65,6 +67,7 @@ class PubspecYaml extends $PubspecYaml {
   final Optional<String> description;
 
   /// JSON representation of other pubspec.yaml fields
+  @CustomEquality(DeepCollectionEquality())
   final Map<String, dynamic> customFields;
 
   String toYamlString() => formatToYaml(this);
