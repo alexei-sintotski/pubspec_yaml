@@ -48,6 +48,7 @@ class PubspecYaml extends $PubspecYaml {
     @required this.name,
     this.version = const Optional.none(),
     this.description = const Optional.none(),
+    this.authors = const [],
     this.customFields = const <String, dynamic>{},
   });
 
@@ -65,6 +66,10 @@ class PubspecYaml extends $PubspecYaml {
 
   /// Package description (https://dart.dev/tools/pub/pubspec#description)
   final Optional<String> description;
+
+  /// Package authors (https://dart.dev/tools/pub/pubspec)
+  @CustomEquality(DeepCollectionEquality())
+  final List<String> authors;
 
   /// JSON representation of other pubspec.yaml fields
   @CustomEquality(DeepCollectionEquality())

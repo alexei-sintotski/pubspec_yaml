@@ -32,6 +32,7 @@ import '../pubspec_yaml.dart';
 import 'tokens.dart';
 
 // ignore_for_file: avoid_as
+// ignore_for_file: avoid_annotating_with_dynamic
 
 PubspecYaml loadFromYaml(String content) {
   final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
@@ -39,6 +40,11 @@ PubspecYaml loadFromYaml(String content) {
     name: jsonMap[Tokens.name] as String,
     version: Optional(jsonMap[Tokens.version] as String),
     description: Optional(jsonMap[Tokens.description] as String),
+    authors: [
+      if (jsonMap[Tokens.author] != null) jsonMap[Tokens.author] as String,
+      if (jsonMap[Tokens.authors] != null)
+        ...(jsonMap[Tokens.authors] as List<dynamic>).map((dynamic author) => author as String)
+    ],
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -47,4 +53,6 @@ const _knownTokens = [
   Tokens.name,
   Tokens.version,
   Tokens.description,
+  Tokens.author,
+  Tokens.authors,
 ];
