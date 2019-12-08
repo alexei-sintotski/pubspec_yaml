@@ -11,6 +11,7 @@ abstract class $PubspecYaml {
   Optional<String> get version;
   Optional<String> get description;
   List<String> get authors;
+  Optional<String> get homepage;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
   PubspecYaml copyWith(
@@ -18,21 +19,24 @@ abstract class $PubspecYaml {
           Optional<String> version,
           Optional<String> description,
           List<String> authors,
+          Optional<String> homepage,
           Map<String, dynamic> customFields}) =>
       PubspecYaml(
           name: name ?? this.name,
           version: version ?? this.version,
           description: description ?? this.description,
           authors: authors ?? this.authors,
+          homepage: homepage ?? this.homepage,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
       version == other.version &&
       description == other.description &&
       const DeepCollectionEquality().equals(authors, other.authors) &&
+      homepage == other.homepage &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
   int get hashCode {
@@ -41,6 +45,7 @@ abstract class $PubspecYaml {
     result = 37 * result + version.hashCode;
     result = 37 * result + description.hashCode;
     result = 37 * result + const DeepCollectionEquality().hash(authors);
+    result = 37 * result + homepage.hashCode;
     result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
   }
@@ -54,6 +59,8 @@ class PubspecYaml$ {
       (s_) => s_.description, (s_, description) => s_.copyWith(description: description));
   static final authors =
       Lens<PubspecYaml, List<String>>((s_) => s_.authors, (s_, authors) => s_.copyWith(authors: authors));
+  static final homepage =
+      Lens<PubspecYaml, Optional<String>>((s_) => s_.homepage, (s_, homepage) => s_.copyWith(homepage: homepage));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
       (s_) => s_.customFields, (s_, customFields) => s_.copyWith(customFields: customFields));
 }
