@@ -15,6 +15,7 @@ abstract class $PubspecYaml {
   Optional<String> get repository;
   Optional<String> get issueTracker;
   Optional<String> get documentation;
+  Iterable<PackageDependencySpec> get dependencies;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
   PubspecYaml copyWith(
@@ -26,6 +27,7 @@ abstract class $PubspecYaml {
           Optional<String> repository,
           Optional<String> issueTracker,
           Optional<String> documentation,
+          Iterable<PackageDependencySpec> dependencies,
           Map<String, dynamic> customFields}) =>
       PubspecYaml(
           name: name ?? this.name,
@@ -36,9 +38,10 @@ abstract class $PubspecYaml {
           repository: repository ?? this.repository,
           issueTracker: issueTracker ?? this.issueTracker,
           documentation: documentation ?? this.documentation,
+          dependencies: dependencies ?? this.dependencies,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
@@ -49,6 +52,7 @@ abstract class $PubspecYaml {
       repository == other.repository &&
       issueTracker == other.issueTracker &&
       documentation == other.documentation &&
+      const DeepCollectionEquality().equals(dependencies, other.dependencies) &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
   int get hashCode {
@@ -61,6 +65,7 @@ abstract class $PubspecYaml {
     result = 37 * result + repository.hashCode;
     result = 37 * result + issueTracker.hashCode;
     result = 37 * result + documentation.hashCode;
+    result = 37 * result + const DeepCollectionEquality().hash(dependencies);
     result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
   }
@@ -82,16 +87,20 @@ class PubspecYaml$ {
       (s_) => s_.issueTracker, (s_, issueTracker) => s_.copyWith(issueTracker: issueTracker));
   static final documentation = Lens<PubspecYaml, Optional<String>>(
       (s_) => s_.documentation, (s_, documentation) => s_.copyWith(documentation: documentation));
+  static final dependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
+      (s_) => s_.dependencies, (s_, dependencies) => s_.copyWith(dependencies: dependencies));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
       (s_) => s_.customFields, (s_, customFields) => s_.copyWith(customFields: customFields));
 }
 
 // ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: always_require_non_null_named_parameters
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
 // ignore_for_file: avoid_classes_with_only_static_members
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: join_return_with_assignment
+// ignore_for_file: prefer_asserts_with_message
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: prefer_single_quotes
 // ignore_for_file: sort_constructors_first

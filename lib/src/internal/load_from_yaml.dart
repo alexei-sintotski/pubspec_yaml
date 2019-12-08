@@ -26,6 +26,8 @@
 import 'dart:convert';
 
 import 'package:plain_optional/plain_optional.dart';
+import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
+import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 import 'package:yaml/yaml.dart';
 
 import '../pubspec_yaml.dart';
@@ -49,9 +51,30 @@ PubspecYaml loadFromYaml(String content) {
     repository: Optional(jsonMap[Tokens.repository] as String),
     issueTracker: Optional(jsonMap[Tokens.issueTracker] as String),
     documentation: Optional(jsonMap[Tokens.documentation] as String),
+    dependencies: jsonMap.containsKey(Tokens.dependencies) && jsonMap[Tokens.dependencies] != null
+        ? _loadDependencies(jsonMap[Tokens.dependencies] as Map<String, dynamic>)
+        : [],
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
+
+Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependencies) =>
+    dependencies.entries.map((entry) {
+      final dynamic value = entry.value;
+      if (value is Map<String, dynamic>) {
+        if (value.containsKey(Tokens.sdk)) {
+          return PackageDependencySpec.sdk(_loadSdkDependency(entry.key, value));
+        }
+      }
+      return null;
+    });
+
+SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic> definition) =>
+    SdkPackageDependencySpec(
+      package: package,
+      sdk: definition[Tokens.sdk] as String,
+      version: Optional(definition[Tokens.version] as String),
+    );
 
 const _knownTokens = [
   Tokens.name,
@@ -63,4 +86,5 @@ const _knownTokens = [
   Tokens.repository,
   Tokens.issueTracker,
   Tokens.documentation,
+  Tokens.dependencies,
 ];

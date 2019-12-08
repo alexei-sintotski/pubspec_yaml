@@ -20,18 +20,46 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-class Tokens {
-  static const name = 'name';
-  static const version = 'version';
-  static const description = 'description';
-  static const author = 'author';
-  static const authors = 'authors';
-  static const homepage = 'homepage';
-  static const repository = 'repository';
-  static const issueTracker = 'issue_tracker';
-  static const documentation = 'documentation';
-  static const dependencies = 'dependencies';
-  static const sdk = 'sdk';
+import 'package:pubspec_yaml/pubspec_yaml.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('given pubspec.yaml without dependencies', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutDependencies);
+
+    group('$PubspecYaml.loadFromYamlString', () {
+      test('produces object with no dependencies', () {
+        expect(pubspecYaml.dependencies, isEmpty);
+      });
+    });
+
+    group('$PubspecYaml.toYamlString', () {
+      test('produces string equivalent to the input', () {
+        expect(pubspecYaml.toYamlString(), pubspecYamlWithoutDependencies);
+      });
+    });
+  });
+
+  group('given pubspec.yaml with no dependencies', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithNoDependencies);
+
+    group('$PubspecYaml.loadFromYamlString', () {
+      test('produces object with no dependencies', () {
+        expect(pubspecYaml.dependencies, isEmpty);
+      });
+    });
+  });
 }
+
+const pubspecYamlWithoutDependencies = '''
+name: pubspec_yaml
+''';
+
+const pubspecYamlWithNoDependencies = '''
+name: pubspec_yaml
+
+dependencies:
+''';
