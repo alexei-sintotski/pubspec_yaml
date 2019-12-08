@@ -52,6 +52,7 @@ class PubspecYaml extends $PubspecYaml {
     this.homepage = const Optional.none(),
     this.repository = const Optional.none(),
     this.issueTracker = const Optional.none(),
+    this.documentation = const Optional.none(),
     this.customFields = const <String, dynamic>{},
   });
 
@@ -83,6 +84,10 @@ class PubspecYaml extends $PubspecYaml {
   ///URL for the package’s issue tracker, where existing bugs can be viewed and new bugs can be filed
   ///https://dart.dev/tools/pub/pubspec#issue-tracker
   final Optional<String> issueTracker;
+
+  /// Site that hosts documentation, separate from the main homepage and from the Pub-generated API reference
+  ///https://dart.dev/tools/pub/pubspec#documentation
+  final Optional<String> documentation;
 
   /// JSON representation of other pubspec.yaml fields
   @CustomEquality(DeepCollectionEquality())

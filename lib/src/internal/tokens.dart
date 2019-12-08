@@ -31,4 +31,5 @@ class Tokens {
   static const homepage = 'homepage';
   static const repository = 'repository';
   static const issueTracker = 'issue_tracker';
+  static const documentation = 'documentation';
 }
