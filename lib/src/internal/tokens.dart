@@ -29,4 +29,5 @@ class Tokens {
   static const author = 'author';
   static const authors = 'authors';
   static const homepage = 'homepage';
+  static const repository = 'repository';
 }

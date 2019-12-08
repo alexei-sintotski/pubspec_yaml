@@ -46,6 +46,7 @@ PubspecYaml loadFromYaml(String content) {
         ...(jsonMap[Tokens.authors] as List<dynamic>).map((dynamic author) => author as String)
     ],
     homepage: Optional(jsonMap[Tokens.homepage] as String),
+    repository: Optional(jsonMap[Tokens.repository] as String),
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -57,4 +58,5 @@ const _knownTokens = [
   Tokens.author,
   Tokens.authors,
   Tokens.homepage,
+  Tokens.repository,
 ];
