@@ -25,20 +25,38 @@
 
 import 'package:json2yaml/json2yaml.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
+import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/internal/tokens.dart';
+import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 
-String formatToYaml(PubspecYaml pubspecYaml) {
-  final packageMetadata = <String, dynamic>{
-    Tokens.name: pubspecYaml.name,
-    if (pubspecYaml.version.hasValue) Tokens.version: pubspecYaml.version.valueOr(() => ''),
-    if (pubspecYaml.description.hasValue) Tokens.description: pubspecYaml.description.valueOr(() => ''),
-    if (pubspecYaml.authors.length == 1) Tokens.author: pubspecYaml.authors.first,
-    if (pubspecYaml.authors.length > 1) Tokens.authors: pubspecYaml.authors,
-    if (pubspecYaml.homepage.hasValue) Tokens.homepage: pubspecYaml.homepage.valueOr(() => ''),
-    if (pubspecYaml.repository.hasValue) Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
-    if (pubspecYaml.issueTracker.hasValue) Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
-    if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
-    for (final field in pubspecYaml.customFields.keys) field: pubspecYaml.customFields[field],
-  };
-  return '${json2yaml(packageMetadata, yamlStyle: YamlStyle.pubspecYaml)}\n';
-}
+String formatToYaml(PubspecYaml pubspecYaml) => '${[
+      _packageMetadataToYaml(pubspecYaml),
+      if (pubspecYaml.dependencies.isNotEmpty) _packageDependenciesToYaml(pubspecYaml.dependencies),
+    ].join("\n\n")}\n';
+
+String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dynamic>{
+      Tokens.name: pubspecYaml.name,
+      if (pubspecYaml.version.hasValue) Tokens.version: pubspecYaml.version.valueOr(() => ''),
+      if (pubspecYaml.description.hasValue) Tokens.description: pubspecYaml.description.valueOr(() => ''),
+      if (pubspecYaml.authors.length == 1) Tokens.author: pubspecYaml.authors.first,
+      if (pubspecYaml.authors.length > 1) Tokens.authors: pubspecYaml.authors,
+      if (pubspecYaml.homepage.hasValue) Tokens.homepage: pubspecYaml.homepage.valueOr(() => ''),
+      if (pubspecYaml.repository.hasValue) Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
+      if (pubspecYaml.issueTracker.hasValue) Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
+      if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
+      for (final field in pubspecYaml.customFields.keys) field: pubspecYaml.customFields[field],
+    }, yamlStyle: YamlStyle.pubspecYaml);
+
+String _packageDependenciesToYaml(Iterable<PackageDependencySpec> dependencies) => json2yaml(<String, dynamic>{
+      Tokens.dependencies: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
+            sdk: _sdkPackageDependencyToJson,
+          ))),
+    }, yamlStyle: YamlStyle.pubspecYaml);
+
+MapEntry<String, dynamic> _sdkPackageDependencyToJson(SdkPackageDependencySpec dep) => MapEntry<String, dynamic>(
+      dep.package,
+      <String, dynamic>{
+        Tokens.sdk: dep.sdk,
+        if (dep.version.hasValue) Tokens.version: dep.version.valueOr(() => ''),
+      },
+    );

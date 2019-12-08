@@ -20,18 +20,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-class Tokens {
-  static const name = 'name';
-  static const version = 'version';
-  static const description = 'description';
-  static const author = 'author';
-  static const authors = 'authors';
-  static const homepage = 'homepage';
-  static const repository = 'repository';
-  static const issueTracker = 'issue_tracker';
-  static const documentation = 'documentation';
-  static const dependencies = 'dependencies';
-  static const sdk = 'sdk';
+import 'package:meta/meta.dart';
+import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
+import 'package:sum_types/sum_types.dart';
+
+part 'package_dependency_spec.g.dart';
+
+/// Package dependency specification (https://dart.dev/tools/pub/dependencies)
+@immutable
+@SumType()
+class PackageDependencySpec extends _$PackageDependencySpec {
+  const PackageDependencySpec.sdk(SdkPackageDependencySpec package) : super(sdk: package);
+
+  String package() => iswitch(sdk: (p) => p.package);
 }

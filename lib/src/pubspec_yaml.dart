@@ -27,6 +27,7 @@ import 'package:collection/collection.dart';
 import 'package:functional_data/functional_data.dart' hide Optional;
 import 'package:meta/meta.dart';
 import 'package:plain_optional/plain_optional.dart';
+import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 
 import 'internal/load_from_yaml.dart';
 import 'internal/yaml_formatter.dart';
@@ -53,6 +54,7 @@ class PubspecYaml extends $PubspecYaml {
     this.repository = const Optional.none(),
     this.issueTracker = const Optional.none(),
     this.documentation = const Optional.none(),
+    this.dependencies = const [],
     this.customFields = const <String, dynamic>{},
   });
 
@@ -88,6 +90,11 @@ class PubspecYaml extends $PubspecYaml {
   /// Site that hosts documentation, separate from the main homepage and from the Pub-generated API reference
   ///https://dart.dev/tools/pub/pubspec#documentation
   final Optional<String> documentation;
+
+  /// Regular dependencies that anyone using the package will also need
+  /// https://dart.dev/tools/pub/pubspec#dependencies
+  @CustomEquality(DeepCollectionEquality())
+  final Iterable<PackageDependencySpec> dependencies;
 
   /// JSON representation of other pubspec.yaml fields
   @CustomEquality(DeepCollectionEquality())

@@ -20,18 +20,28 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-class Tokens {
-  static const name = 'name';
-  static const version = 'version';
-  static const description = 'description';
-  static const author = 'author';
-  static const authors = 'authors';
-  static const homepage = 'homepage';
-  static const repository = 'repository';
-  static const issueTracker = 'issue_tracker';
-  static const documentation = 'documentation';
-  static const dependencies = 'dependencies';
-  static const sdk = 'sdk';
+import 'package:functional_data/functional_data.dart' hide Optional;
+import 'package:meta/meta.dart';
+import 'package:plain_optional/plain_optional.dart';
+
+part 'sdk_package_dependency_spec.g.dart';
+
+// ignore_for_file: annotate_overrides
+
+/// Package coming from an SDK (https://dart.dev/tools/pub/dependencies)
+@immutable
+@FunctionalData()
+class SdkPackageDependencySpec extends $SdkPackageDependencySpec {
+  const SdkPackageDependencySpec({
+    @required this.package,
+    @required this.sdk,
+    this.version = const Optional.none(),
+  });
+
+  final String package;
+  final String sdk;
+  final Optional<String> version;
 }
