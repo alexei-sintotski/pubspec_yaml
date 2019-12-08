@@ -48,6 +48,7 @@ PubspecYaml loadFromYaml(String content) {
     homepage: Optional(jsonMap[Tokens.homepage] as String),
     repository: Optional(jsonMap[Tokens.repository] as String),
     issueTracker: Optional(jsonMap[Tokens.issueTracker] as String),
+    documentation: Optional(jsonMap[Tokens.documentation] as String),
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -61,4 +62,5 @@ const _knownTokens = [
   Tokens.homepage,
   Tokens.repository,
   Tokens.issueTracker,
+  Tokens.documentation,
 ];

@@ -37,6 +37,7 @@ String formatToYaml(PubspecYaml pubspecYaml) {
     if (pubspecYaml.homepage.hasValue) Tokens.homepage: pubspecYaml.homepage.valueOr(() => ''),
     if (pubspecYaml.repository.hasValue) Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
     if (pubspecYaml.issueTracker.hasValue) Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
+    if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
     for (final field in pubspecYaml.customFields.keys) field: pubspecYaml.customFields[field],
   };
   return '${json2yaml(packageMetadata, yamlStyle: YamlStyle.pubspecYaml)}\n';

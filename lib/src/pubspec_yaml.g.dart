@@ -14,6 +14,7 @@ abstract class $PubspecYaml {
   Optional<String> get homepage;
   Optional<String> get repository;
   Optional<String> get issueTracker;
+  Optional<String> get documentation;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
   PubspecYaml copyWith(
@@ -24,6 +25,7 @@ abstract class $PubspecYaml {
           Optional<String> homepage,
           Optional<String> repository,
           Optional<String> issueTracker,
+          Optional<String> documentation,
           Map<String, dynamic> customFields}) =>
       PubspecYaml(
           name: name ?? this.name,
@@ -33,9 +35,10 @@ abstract class $PubspecYaml {
           homepage: homepage ?? this.homepage,
           repository: repository ?? this.repository,
           issueTracker: issueTracker ?? this.issueTracker,
+          documentation: documentation ?? this.documentation,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
@@ -45,6 +48,7 @@ abstract class $PubspecYaml {
       homepage == other.homepage &&
       repository == other.repository &&
       issueTracker == other.issueTracker &&
+      documentation == other.documentation &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
   int get hashCode {
@@ -56,6 +60,7 @@ abstract class $PubspecYaml {
     result = 37 * result + homepage.hashCode;
     result = 37 * result + repository.hashCode;
     result = 37 * result + issueTracker.hashCode;
+    result = 37 * result + documentation.hashCode;
     result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
   }
@@ -75,6 +80,8 @@ class PubspecYaml$ {
       (s_) => s_.repository, (s_, repository) => s_.copyWith(repository: repository));
   static final issueTracker = Lens<PubspecYaml, Optional<String>>(
       (s_) => s_.issueTracker, (s_, issueTracker) => s_.copyWith(issueTracker: issueTracker));
+  static final documentation = Lens<PubspecYaml, Optional<String>>(
+      (s_) => s_.documentation, (s_, documentation) => s_.copyWith(documentation: documentation));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
       (s_) => s_.customFields, (s_, customFields) => s_.copyWith(customFields: customFields));
 }
