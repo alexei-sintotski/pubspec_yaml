@@ -30,6 +30,7 @@ part 'path_package_dependency_spec.g.dart';
 
 // ignore_for_file: annotate_overrides
 
+/// Dependency on a package stored in a local filesystem (https://dart.dev/tools/pub/dependencies)
 @immutable
 @FunctionalData()
 class PathPackageDependencySpec extends $PathPackageDependencySpec {
