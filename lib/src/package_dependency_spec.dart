@@ -24,6 +24,7 @@
  */
 
 import 'package:meta/meta.dart';
+import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:sum_types/sum_types.dart';
 
@@ -34,6 +35,10 @@ part 'package_dependency_spec.g.dart';
 @SumType()
 class PackageDependencySpec extends _$PackageDependencySpec {
   const PackageDependencySpec.sdk(SdkPackageDependencySpec package) : super(sdk: package);
+  const PackageDependencySpec.git(GitPackageDependencySpec package) : super(git: package);
 
-  String package() => iswitch(sdk: (p) => p.package);
+  String package() => iswitch(
+        sdk: (p) => p.package,
+        git: (p) => p.package,
+      );
 }

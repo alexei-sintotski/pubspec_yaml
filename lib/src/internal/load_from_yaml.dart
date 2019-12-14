@@ -26,6 +26,7 @@
 import 'dart:convert';
 
 import 'package:plain_optional/plain_optional.dart';
+import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 import 'package:yaml/yaml.dart';
@@ -65,6 +66,9 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
         if (value.containsKey(Tokens.sdk)) {
           return PackageDependencySpec.sdk(_loadSdkDependency(entry.key, value));
         }
+        if (value.containsKey(Tokens.git)) {
+          return PackageDependencySpec.git(_loadGitDependency(entry.key, value[Tokens.git]));
+        }
       }
       return null;
     });
@@ -74,6 +78,25 @@ SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic>
       package: package,
       sdk: definition[Tokens.sdk] as String,
       version: Optional(definition[Tokens.version] as String),
+    );
+
+GitPackageDependencySpec _loadGitDependency(String package, dynamic definition) {
+  if (definition is String) {
+    return _loadFromSimpleGitDependencyDefinition(package, definition);
+  } else {
+    return _loadFromDetailedGitDependencyDefinition(package, definition as Map<String, dynamic>);
+  }
+}
+
+GitPackageDependencySpec _loadFromSimpleGitDependencyDefinition(String package, String url) =>
+    GitPackageDependencySpec(package: package, url: url);
+
+GitPackageDependencySpec _loadFromDetailedGitDependencyDefinition(String package, Map<String, dynamic> definition) =>
+    GitPackageDependencySpec(
+      package: package,
+      url: definition[Tokens.url] as String,
+      ref: Optional(definition[Tokens.ref] as String),
+      path: Optional(definition[Tokens.path] as String),
     );
 
 const _knownTokens = [

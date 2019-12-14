@@ -9,12 +9,15 @@ part of 'package_dependency_spec.dart';
 abstract class _$PackageDependencySpec {
   const _$PackageDependencySpec({
     this.sdk,
-  }) : assert(sdk != null);
+    this.git,
+  }) : assert(sdk != null && git == null || sdk == null && git != null);
   static PackageDependencySpec load<$T extends PackageDependencySpecRecordBase<$T>>(
     $T rec,
   ) {
-    if (rec.sdk != null) {
+    if (rec.sdk != null && rec.git == null) {
       return PackageDependencySpec.sdk(rec.sdk);
+    } else if (rec.sdk == null && rec.git != null) {
+      return PackageDependencySpec.git(rec.git);
     } else {
       throw Exception("Cannot select a $PackageDependencySpec case given $rec");
     }
@@ -23,19 +26,24 @@ abstract class _$PackageDependencySpec {
   $T dump<$T>(
     $T Function({
       SdkPackageDependencySpec sdk,
+      GitPackageDependencySpec git,
     })
         make,
   ) {
     return iswitch(
       sdk: (sdk) => make(sdk: sdk),
+      git: (git) => make(git: git),
     );
   }
 
   $T iswitch<$T>({
     @required $T Function(SdkPackageDependencySpec) sdk,
+    @required $T Function(GitPackageDependencySpec) git,
   }) {
     if (this.sdk != null) {
       return sdk(this.sdk);
+    } else if (this.git != null) {
+      return git(this.git);
     } else {
       throw StateError("an instance of $PackageDependencySpec has no case selected");
     }
@@ -43,11 +51,13 @@ abstract class _$PackageDependencySpec {
 
   $T iswitcho<$T>({
     $T Function(SdkPackageDependencySpec) sdk,
+    $T Function(GitPackageDependencySpec) git,
     @required $T Function() otherwise,
   }) {
     $T _otherwise(Object _) => otherwise();
     return iswitch(
       sdk: sdk ?? _otherwise,
+      git: git ?? _otherwise,
     );
   }
 
@@ -55,13 +65,14 @@ abstract class _$PackageDependencySpec {
   bool operator ==(
     dynamic other,
   ) {
-    return other.runtimeType == runtimeType && other.sdk == sdk;
+    return other.runtimeType == runtimeType && other.sdk == sdk && other.git == git;
   }
 
   @override
   int get hashCode {
     var result = 17;
     result = 37 * result + sdk.hashCode;
+    result = 37 * result + git.hashCode;
     return result;
   }
 
@@ -69,16 +80,20 @@ abstract class _$PackageDependencySpec {
   String toString() {
     final ctor = iswitch(
       sdk: (value) => "sdk($value)",
+      git: (value) => "git($value)",
     );
     return "$runtimeType.$ctor";
   }
 
   @protected
   final SdkPackageDependencySpec sdk;
+  @protected
+  final GitPackageDependencySpec git;
 }
 
 abstract class PackageDependencySpecRecordBase<Self> {
   SdkPackageDependencySpec get sdk;
+  GitPackageDependencySpec get git;
 }
 
 // ignore_for_file: always_put_required_named_parameters_first
