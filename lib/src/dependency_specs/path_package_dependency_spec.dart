@@ -23,26 +23,18 @@
  *
  */
 
+import 'package:functional_data/functional_data.dart' hide Optional;
 import 'package:meta/meta.dart';
-import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
-import 'package:sum_types/sum_types.dart';
 
-import 'dependency_specs/path_package_dependency_spec.dart';
+part 'path_package_dependency_spec.g.dart';
 
-part 'package_dependency_spec.g.dart';
+// ignore_for_file: annotate_overrides
 
-/// Package dependency specification (https://dart.dev/tools/pub/dependencies)
 @immutable
-@SumType()
-class PackageDependencySpec extends _$PackageDependencySpec {
-  const PackageDependencySpec.sdk(SdkPackageDependencySpec package) : super(sdk: package);
-  const PackageDependencySpec.git(GitPackageDependencySpec package) : super(git: package);
-  const PackageDependencySpec.path(PathPackageDependencySpec package) : super(path: package);
+@FunctionalData()
+class PathPackageDependencySpec extends $PathPackageDependencySpec {
+  const PathPackageDependencySpec({@required this.package, @required this.path});
 
-  String package() => iswitch(
-        sdk: (p) => p.package,
-        git: (p) => p.package,
-        path: (p) => p.package,
-      );
+  final String package;
+  final String path;
 }
