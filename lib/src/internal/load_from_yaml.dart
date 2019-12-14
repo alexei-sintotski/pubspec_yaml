@@ -27,6 +27,7 @@ import 'dart:convert';
 
 import 'package:plain_optional/plain_optional.dart';
 import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
+import 'package:pubspec_yaml/src/dependency_specs/path_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 import 'package:yaml/yaml.dart';
@@ -68,6 +69,12 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
         }
         if (value.containsKey(Tokens.git)) {
           return PackageDependencySpec.git(_loadGitDependency(entry.key, value[Tokens.git]));
+        }
+        if (value.containsKey(Tokens.path)) {
+          return PackageDependencySpec.path(PathPackageDependencySpec(
+            package: entry.key,
+            path: value[Tokens.path] as String,
+          ));
         }
       }
       return null;

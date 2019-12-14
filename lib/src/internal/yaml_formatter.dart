@@ -26,6 +26,7 @@
 import 'package:json2yaml/json2yaml.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
+import 'package:pubspec_yaml/src/dependency_specs/path_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/internal/tokens.dart';
 import 'package:pubspec_yaml/src/package_dependency_spec.dart';
@@ -52,6 +53,7 @@ String _packageDependenciesToYaml(Iterable<PackageDependencySpec> dependencies) 
       Tokens.dependencies: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
             sdk: _sdkPackageDependencyToJson,
             git: _gitPackageDependencyToJson,
+            path: _pathPackageDependencyToJson,
           ))),
     }, yamlStyle: YamlStyle.pubspecYaml);
 
@@ -73,5 +75,12 @@ MapEntry<String, dynamic> _gitPackageDependencyToJson(GitPackageDependencySpec d
                 if (dep.path.hasValue) Tokens.path: dep.path.valueOr(() => ''),
               }
             : dep.url,
+      },
+    );
+
+MapEntry<String, dynamic> _pathPackageDependencyToJson(PathPackageDependencySpec dep) => MapEntry<String, dynamic>(
+      dep.package,
+      <String, dynamic>{
+        Tokens.path: dep.path,
       },
     );
