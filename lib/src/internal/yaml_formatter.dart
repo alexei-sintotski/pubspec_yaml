@@ -24,6 +24,7 @@
  */
 
 import 'package:json2yaml/json2yaml.dart';
+import 'package:plain_optional/plain_optional.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/hosted_package_dependency_spec.dart';
@@ -35,6 +36,9 @@ import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 String formatToYaml(PubspecYaml pubspecYaml) => '${[
       _packageMetadataToYaml(pubspecYaml),
       if (pubspecYaml.dependencies.isNotEmpty) _packageDependenciesToYaml(pubspecYaml.dependencies),
+      if (pubspecYaml.executables.isNotEmpty) _executablesToYaml(pubspecYaml.executables),
+      for (final customField in pubspecYaml.customFields.entries)
+        json2yaml(Map<String, dynamic>.fromEntries({customField}), yamlStyle: YamlStyle.pubspecYaml),
     ].join("\n\n")}\n';
 
 String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dynamic>{
@@ -47,7 +51,6 @@ String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dyn
       if (pubspecYaml.repository.hasValue) Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
       if (pubspecYaml.issueTracker.hasValue) Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
       if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
-      for (final field in pubspecYaml.customFields.keys) field: pubspecYaml.customFields[field],
     }, yamlStyle: YamlStyle.pubspecYaml);
 
 String _packageDependenciesToYaml(Iterable<PackageDependencySpec> dependencies) => json2yaml(<String, dynamic>{
@@ -98,4 +101,13 @@ MapEntry<String, dynamic> _hostedPackageDependencyToJson(HostedPackageDependency
               if (dep.version.hasValue) Tokens.version: dep.version.valueOr(() => ''),
             }
           : dep.version.valueOr(() => null),
+    );
+
+String _executablesToYaml(Map<String, Optional<String>> executables) => json2yaml(
+      <String, dynamic>{
+        Tokens.executables: <String, dynamic>{
+          for (final entry in executables.entries) entry.key: entry.value.valueOr(() => null),
+        }
+      },
+      yamlStyle: YamlStyle.pubspecYaml,
     );

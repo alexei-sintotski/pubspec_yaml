@@ -39,4 +39,5 @@ class Tokens {
   static const ref = 'ref';
   static const path = 'path';
   static const hosted = 'hosted';
+  static const executables = 'executables';
 }
