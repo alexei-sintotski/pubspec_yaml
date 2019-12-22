@@ -1,5 +1,7 @@
-## [1.0.0] - 2019-12-22
+## [1.0.0+1] - 2019-12-22
+* README.md correction
 
+## [1.0.0] - 2019-12-22
 PubspecYaml is a data type representing data stored in pubspec.yaml files.
 
 The following fields are supported:
