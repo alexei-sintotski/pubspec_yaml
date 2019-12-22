@@ -56,6 +56,7 @@ class PubspecYaml extends $PubspecYaml {
     this.documentation = const Optional.none(),
     this.dependencies = const [],
     this.devDependencies = const [],
+    this.dependencyOverrides = const [],
     this.executables = const {},
     this.customFields = const <String, dynamic>{},
   });
@@ -95,13 +96,21 @@ class PubspecYaml extends $PubspecYaml {
 
   /// Regular dependencies that anyone using the package will also need
   /// https://dart.dev/tools/pub/pubspec#dependencies
+  /// https://dart.dev/tools/pub/dependencies
   @CustomEquality(DeepCollectionEquality())
   final Iterable<PackageDependencySpec> dependencies;
 
   /// Dependencies that are only needed in the development phase of the package
   /// https://dart.dev/tools/pub/pubspec#dependencies
+  /// https://dart.dev/tools/pub/dependencies
   @CustomEquality(DeepCollectionEquality())
   final Iterable<PackageDependencySpec> devDependencies;
+
+  /// Temporarily override all references to a dependency
+  /// https://dart.dev/tools/pub/pubspec#dependencies
+  /// https://dart.dev/tools/pub/dependencies
+  @CustomEquality(DeepCollectionEquality())
+  final Iterable<PackageDependencySpec> dependencyOverrides;
 
   /// Executables that can be run directly from the command line
   /// https://dart.dev/tools/pub/pubspec#executables
