@@ -18,6 +18,7 @@ abstract class $PubspecYaml {
   Iterable<PackageDependencySpec> get dependencies;
   Iterable<PackageDependencySpec> get devDependencies;
   Iterable<PackageDependencySpec> get dependencyOverrides;
+  Map<String, String> get environment;
   Map<String, Optional<String>> get executables;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
@@ -33,6 +34,7 @@ abstract class $PubspecYaml {
           Iterable<PackageDependencySpec> dependencies,
           Iterable<PackageDependencySpec> devDependencies,
           Iterable<PackageDependencySpec> dependencyOverrides,
+          Map<String, String> environment,
           Map<String, Optional<String>> executables,
           Map<String, dynamic> customFields}) =>
       PubspecYaml(
@@ -47,10 +49,11 @@ abstract class $PubspecYaml {
           dependencies: dependencies ?? this.dependencies,
           devDependencies: devDependencies ?? this.devDependencies,
           dependencyOverrides: dependencyOverrides ?? this.dependencyOverrides,
+          environment: environment ?? this.environment,
           executables: executables ?? this.executables,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, devDependencies: $devDependencies, dependencyOverrides: $dependencyOverrides, executables: $executables, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, devDependencies: $devDependencies, dependencyOverrides: $dependencyOverrides, environment: $environment, executables: $executables, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
@@ -64,6 +67,7 @@ abstract class $PubspecYaml {
       const DeepCollectionEquality().equals(dependencies, other.dependencies) &&
       const DeepCollectionEquality().equals(devDependencies, other.devDependencies) &&
       const DeepCollectionEquality().equals(dependencyOverrides, other.dependencyOverrides) &&
+      const DeepCollectionEquality().equals(environment, other.environment) &&
       const DeepCollectionEquality().equals(executables, other.executables) &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
@@ -80,6 +84,7 @@ abstract class $PubspecYaml {
     result = 37 * result + const DeepCollectionEquality().hash(dependencies);
     result = 37 * result + const DeepCollectionEquality().hash(devDependencies);
     result = 37 * result + const DeepCollectionEquality().hash(dependencyOverrides);
+    result = 37 * result + const DeepCollectionEquality().hash(environment);
     result = 37 * result + const DeepCollectionEquality().hash(executables);
     result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
@@ -108,6 +113,8 @@ class PubspecYaml$ {
       (s_) => s_.devDependencies, (s_, devDependencies) => s_.copyWith(devDependencies: devDependencies));
   static final dependencyOverrides = Lens<PubspecYaml, Iterable<PackageDependencySpec>>((s_) => s_.dependencyOverrides,
       (s_, dependencyOverrides) => s_.copyWith(dependencyOverrides: dependencyOverrides));
+  static final environment = Lens<PubspecYaml, Map<String, String>>(
+      (s_) => s_.environment, (s_, environment) => s_.copyWith(environment: environment));
   static final executables = Lens<PubspecYaml, Map<String, Optional<String>>>(
       (s_) => s_.executables, (s_, executables) => s_.copyWith(executables: executables));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(

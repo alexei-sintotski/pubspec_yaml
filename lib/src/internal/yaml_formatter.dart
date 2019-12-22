@@ -40,6 +40,7 @@ String formatToYaml(PubspecYaml pubspecYaml) => '${[
         _dependenciesToYaml(pubspecYaml.devDependencies, Tokens.devDependencies),
       if (pubspecYaml.dependencyOverrides.isNotEmpty)
         _dependenciesToYaml(pubspecYaml.dependencyOverrides, Tokens.dependencyOverrides),
+      if (pubspecYaml.environment.isNotEmpty) _environmentToYaml(pubspecYaml.environment),
       if (pubspecYaml.executables.isNotEmpty) _executablesToYaml(pubspecYaml.executables),
       for (final customField in pubspecYaml.customFields.entries)
         json2yaml(Map<String, dynamic>.fromEntries({customField}), yamlStyle: YamlStyle.pubspecYaml),
@@ -109,6 +110,11 @@ MapEntry<String, dynamic> _hostedPackageDependencyToJson(HostedPackageDependency
               if (dep.version.hasValue) Tokens.version: dep.version.valueOr(() => ''),
             }
           : dep.version.valueOr(() => null),
+    );
+
+String _environmentToYaml(Map<String, String> environment) => json2yaml(
+      <String, dynamic>{Tokens.environment: environment},
+      yamlStyle: YamlStyle.pubspecYaml,
     );
 
 String _executablesToYaml(Map<String, Optional<String>> executables) => json2yaml(
