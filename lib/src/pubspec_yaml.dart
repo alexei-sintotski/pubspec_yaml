@@ -57,6 +57,7 @@ class PubspecYaml extends $PubspecYaml {
     this.dependencies = const [],
     this.devDependencies = const [],
     this.dependencyOverrides = const [],
+    this.environment = const {},
     this.executables = const {},
     this.customFields = const <String, dynamic>{},
   });
@@ -111,6 +112,11 @@ class PubspecYaml extends $PubspecYaml {
   /// https://dart.dev/tools/pub/dependencies
   @CustomEquality(DeepCollectionEquality())
   final Iterable<PackageDependencySpec> dependencyOverrides;
+
+  /// SDK constraints
+  /// https://dart.dev/tools/pub/pubspec#sdk-constraints
+  @CustomEquality(DeepCollectionEquality())
+  final Map<String, String> environment;
 
   /// Executables that can be run directly from the command line
   /// https://dart.dev/tools/pub/pubspec#executables
