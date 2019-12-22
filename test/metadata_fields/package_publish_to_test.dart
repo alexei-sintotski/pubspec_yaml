@@ -20,28 +20,36 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-class Tokens {
-  static const name = 'name';
-  static const version = 'version';
-  static const description = 'description';
-  static const author = 'author';
-  static const authors = 'authors';
-  static const homepage = 'homepage';
-  static const repository = 'repository';
-  static const issueTracker = 'issue_tracker';
-  static const documentation = 'documentation';
-  static const dependencies = 'dependencies';
-  static const sdk = 'sdk';
-  static const git = 'git';
-  static const url = 'url';
-  static const ref = 'ref';
-  static const path = 'path';
-  static const hosted = 'hosted';
-  static const executables = 'executables';
-  static const devDependencies = 'dev_dependencies';
-  static const dependencyOverrides = 'dependency_overrides';
-  static const environment = 'environment';
-  static const publishTo = 'publish_to';
+import 'package:pubspec_yaml/src/pubspec_yaml.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('given pubspec.yaml with publish_to specification', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPublishToSpec);
+
+    group('$PubspecYaml.loadFromYamlString', () {
+      test('produces object with publish_to data', () {
+        expect(pubspecYaml.publishTo.valueOr(() => ''), publishTo);
+      });
+      test('produces object without custom fields', () {
+        expect(pubspecYaml.customFields, isEmpty);
+      });
+    });
+
+    group('$PubspecYaml.toYamlString', () {
+      final outputYaml = pubspecYaml.toYamlString();
+      test('produces string equivalent to the input', () {
+        expect(outputYaml, pubspecYamlWithPublishToSpec);
+      });
+    });
+  });
 }
+
+const publishTo = 'none';
+const pubspecYamlWithPublishToSpec = '''
+name: pubspec_yaml
+publish_to: $publishTo
+''';

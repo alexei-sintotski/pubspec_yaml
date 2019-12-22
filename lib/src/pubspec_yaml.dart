@@ -54,6 +54,7 @@ class PubspecYaml extends $PubspecYaml {
     this.repository = const Optional.none(),
     this.issueTracker = const Optional.none(),
     this.documentation = const Optional.none(),
+    this.publishTo = const Optional.none(),
     this.dependencies = const [],
     this.devDependencies = const [],
     this.dependencyOverrides = const [],
@@ -94,6 +95,12 @@ class PubspecYaml extends $PubspecYaml {
   /// Site that hosts documentation, separate from the main homepage and from the Pub-generated API reference
   ///https://dart.dev/tools/pub/pubspec#documentation
   final Optional<String> documentation;
+
+  /// This setting can be used to specify a custom pub package server to publish.
+  /// The default uses the pub.dev site.
+  /// Specify none to prevent a package from being published.
+  /// https://dart.dev/tools/pub/pubspec#publish_to
+  final Optional<String> publishTo;
 
   /// Regular dependencies that anyone using the package will also need
   /// https://dart.dev/tools/pub/pubspec#dependencies

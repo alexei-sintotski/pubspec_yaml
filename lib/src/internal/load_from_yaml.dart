@@ -63,6 +63,7 @@ PubspecYaml loadFromYaml(String content) {
     executables: jsonMap.containsKey(Tokens.executables) && jsonMap[Tokens.executables] != null
         ? _loadExecutables(jsonMap[Tokens.executables] as Map<String, dynamic>)
         : {},
+    publishTo: Optional(jsonMap[Tokens.publishTo] as String),
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -156,4 +157,5 @@ const _knownTokens = [
   Tokens.devDependencies,
   Tokens.dependencyOverrides,
   Tokens.environment,
+  Tokens.publishTo,
 ];

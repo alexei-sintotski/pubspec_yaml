@@ -56,6 +56,7 @@ String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dyn
       if (pubspecYaml.repository.hasValue) Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
       if (pubspecYaml.issueTracker.hasValue) Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
       if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
+      if (pubspecYaml.publishTo.hasValue) Tokens.publishTo: pubspecYaml.publishTo.valueOr(() => ''),
     }, yamlStyle: YamlStyle.pubspecYaml);
 
 String _dependenciesToYaml(
