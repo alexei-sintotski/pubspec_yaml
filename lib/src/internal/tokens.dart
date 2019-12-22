@@ -38,4 +38,5 @@ class Tokens {
   static const url = 'url';
   static const ref = 'ref';
   static const path = 'path';
+  static const hosted = 'hosted';
 }

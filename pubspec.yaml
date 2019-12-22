@@ -9,7 +9,7 @@ environment:
 dependencies:
   collection: ^1.14.0
   functional_data: ^0.2.0
-  json2yaml: ^1.0.0
+  json2yaml: ^1.0.1
   meta: ^1.1.0
   plain_optional: ^0.1.0
   sum_types: ^0.2.0
