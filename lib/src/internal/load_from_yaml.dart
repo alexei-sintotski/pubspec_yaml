@@ -54,15 +54,17 @@ PubspecYaml loadFromYaml(String content) {
     repository: Optional(jsonMap[Tokens.repository] as String),
     issueTracker: Optional(jsonMap[Tokens.issueTracker] as String),
     documentation: Optional(jsonMap[Tokens.documentation] as String),
-    dependencies: jsonMap.containsKey(Tokens.dependencies) && jsonMap[Tokens.dependencies] != null
-        ? _loadDependencies(jsonMap[Tokens.dependencies] as Map<String, dynamic>)
-        : [],
+    dependencies: _loadDependenciesIfRequired(jsonMap, Tokens.dependencies),
+    devDependencies: _loadDependenciesIfRequired(jsonMap, Tokens.devDependencies),
     executables: jsonMap.containsKey(Tokens.executables) && jsonMap[Tokens.executables] != null
         ? _loadExecutables(jsonMap[Tokens.executables] as Map<String, dynamic>)
         : {},
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
+
+Iterable<PackageDependencySpec> _loadDependenciesIfRequired(Map<String, dynamic> jsonMap, String key) =>
+    jsonMap.containsKey(key) && jsonMap[key] != null ? _loadDependencies(jsonMap[key] as Map<String, dynamic>) : [];
 
 Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependencies) =>
     dependencies.entries.map((entry) {
@@ -144,4 +146,5 @@ const _knownTokens = [
   Tokens.documentation,
   Tokens.dependencies,
   Tokens.executables,
+  Tokens.devDependencies,
 ];

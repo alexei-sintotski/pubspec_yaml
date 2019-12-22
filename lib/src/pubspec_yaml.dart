@@ -55,6 +55,7 @@ class PubspecYaml extends $PubspecYaml {
     this.issueTracker = const Optional.none(),
     this.documentation = const Optional.none(),
     this.dependencies = const [],
+    this.devDependencies = const [],
     this.executables = const {},
     this.customFields = const <String, dynamic>{},
   });
@@ -96,6 +97,11 @@ class PubspecYaml extends $PubspecYaml {
   /// https://dart.dev/tools/pub/pubspec#dependencies
   @CustomEquality(DeepCollectionEquality())
   final Iterable<PackageDependencySpec> dependencies;
+
+  /// Dependencies that are only needed in the development phase of the package
+  /// https://dart.dev/tools/pub/pubspec#dependencies
+  @CustomEquality(DeepCollectionEquality())
+  final Iterable<PackageDependencySpec> devDependencies;
 
   /// Executables that can be run directly from the command line
   /// https://dart.dev/tools/pub/pubspec#executables

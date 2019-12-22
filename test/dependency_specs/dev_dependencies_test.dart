@@ -20,25 +20,42 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ *
  */
 
-class Tokens {
-  static const name = 'name';
-  static const version = 'version';
-  static const description = 'description';
-  static const author = 'author';
-  static const authors = 'authors';
-  static const homepage = 'homepage';
-  static const repository = 'repository';
-  static const issueTracker = 'issue_tracker';
-  static const documentation = 'documentation';
-  static const dependencies = 'dependencies';
-  static const sdk = 'sdk';
-  static const git = 'git';
-  static const url = 'url';
-  static const ref = 'ref';
-  static const path = 'path';
-  static const hosted = 'hosted';
-  static const executables = 'executables';
-  static const devDependencies = 'dev_dependencies';
+import 'package:pubspec_yaml/pubspec_yaml.dart';
+import 'package:test/test.dart';
+
+void main() {
+  group('given pubspec.yaml with dev dependencies', () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithDevDependency);
+
+    group('$PubspecYaml.loadFromYamlString()', () {
+      test('produces object with non-empty list of dev dependencies', () {
+        expect(pubspecYaml.devDependencies, isNotEmpty);
+      });
+
+      test('produces dev dependency with correct name', () {
+        expect(pubspecYaml.devDependencies.first.package(), dependency);
+      });
+
+      test('produces object without custom fields', () {
+        expect(pubspecYaml.customFields, isEmpty);
+      });
+    });
+
+    group('$PubspecYaml.toYamlString())', () {
+      test('produces string identical to the original input', () {
+        expect(pubspecYaml.toYamlString(), pubspecYamlWithDevDependency);
+      });
+    });
+  });
 }
+
+const dependency = 'test';
+const pubspecYamlWithDevDependency = '''
+name: pubspec_yaml
+
+dev_dependencies:
+  $dependency: ">=0.5.0 <0.12.0"
+''';

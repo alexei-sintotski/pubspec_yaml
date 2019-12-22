@@ -16,6 +16,7 @@ abstract class $PubspecYaml {
   Optional<String> get issueTracker;
   Optional<String> get documentation;
   Iterable<PackageDependencySpec> get dependencies;
+  Iterable<PackageDependencySpec> get devDependencies;
   Map<String, Optional<String>> get executables;
   Map<String, dynamic> get customFields;
   const $PubspecYaml();
@@ -29,6 +30,7 @@ abstract class $PubspecYaml {
           Optional<String> issueTracker,
           Optional<String> documentation,
           Iterable<PackageDependencySpec> dependencies,
+          Iterable<PackageDependencySpec> devDependencies,
           Map<String, Optional<String>> executables,
           Map<String, dynamic> customFields}) =>
       PubspecYaml(
@@ -41,10 +43,11 @@ abstract class $PubspecYaml {
           issueTracker: issueTracker ?? this.issueTracker,
           documentation: documentation ?? this.documentation,
           dependencies: dependencies ?? this.dependencies,
+          devDependencies: devDependencies ?? this.devDependencies,
           executables: executables ?? this.executables,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, executables: $executables, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, devDependencies: $devDependencies, executables: $executables, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
@@ -56,6 +59,7 @@ abstract class $PubspecYaml {
       issueTracker == other.issueTracker &&
       documentation == other.documentation &&
       const DeepCollectionEquality().equals(dependencies, other.dependencies) &&
+      const DeepCollectionEquality().equals(devDependencies, other.devDependencies) &&
       const DeepCollectionEquality().equals(executables, other.executables) &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
   @override
@@ -70,6 +74,7 @@ abstract class $PubspecYaml {
     result = 37 * result + issueTracker.hashCode;
     result = 37 * result + documentation.hashCode;
     result = 37 * result + const DeepCollectionEquality().hash(dependencies);
+    result = 37 * result + const DeepCollectionEquality().hash(devDependencies);
     result = 37 * result + const DeepCollectionEquality().hash(executables);
     result = 37 * result + const DeepCollectionEquality().hash(customFields);
     return result;
@@ -94,6 +99,8 @@ class PubspecYaml$ {
       (s_) => s_.documentation, (s_, documentation) => s_.copyWith(documentation: documentation));
   static final dependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
       (s_) => s_.dependencies, (s_, dependencies) => s_.copyWith(dependencies: dependencies));
+  static final devDependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
+      (s_) => s_.devDependencies, (s_, devDependencies) => s_.copyWith(devDependencies: devDependencies));
   static final executables = Lens<PubspecYaml, Map<String, Optional<String>>>(
       (s_) => s_.executables, (s_, executables) => s_.copyWith(executables: executables));
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
