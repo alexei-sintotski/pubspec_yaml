@@ -11,18 +11,22 @@ abstract class _$PackageDependencySpec {
     this.sdk,
     this.git,
     this.path,
-  }) : assert(sdk != null && git == null && path == null ||
-            sdk == null && git != null && path == null ||
-            sdk == null && git == null && path != null);
+    this.hosted,
+  }) : assert(sdk != null && git == null && path == null && hosted == null ||
+            sdk == null && git != null && path == null && hosted == null ||
+            sdk == null && git == null && path != null && hosted == null ||
+            sdk == null && git == null && path == null && hosted != null);
   static PackageDependencySpec load<$T extends PackageDependencySpecRecordBase<$T>>(
     $T rec,
   ) {
-    if (rec.sdk != null && rec.git == null && rec.path == null) {
+    if (rec.sdk != null && rec.git == null && rec.path == null && rec.hosted == null) {
       return PackageDependencySpec.sdk(rec.sdk);
-    } else if (rec.sdk == null && rec.git != null && rec.path == null) {
+    } else if (rec.sdk == null && rec.git != null && rec.path == null && rec.hosted == null) {
       return PackageDependencySpec.git(rec.git);
-    } else if (rec.sdk == null && rec.git == null && rec.path != null) {
+    } else if (rec.sdk == null && rec.git == null && rec.path != null && rec.hosted == null) {
       return PackageDependencySpec.path(rec.path);
+    } else if (rec.sdk == null && rec.git == null && rec.path == null && rec.hosted != null) {
+      return PackageDependencySpec.hosted(rec.hosted);
     } else {
       throw Exception("Cannot select a $PackageDependencySpec case given $rec");
     }
@@ -33,6 +37,7 @@ abstract class _$PackageDependencySpec {
       SdkPackageDependencySpec sdk,
       GitPackageDependencySpec git,
       PathPackageDependencySpec path,
+      HostedPackageDependencySpec hosted,
     })
         make,
   ) {
@@ -40,6 +45,7 @@ abstract class _$PackageDependencySpec {
       sdk: (sdk) => make(sdk: sdk),
       git: (git) => make(git: git),
       path: (path) => make(path: path),
+      hosted: (hosted) => make(hosted: hosted),
     );
   }
 
@@ -47,6 +53,7 @@ abstract class _$PackageDependencySpec {
     @required $T Function(SdkPackageDependencySpec) sdk,
     @required $T Function(GitPackageDependencySpec) git,
     @required $T Function(PathPackageDependencySpec) path,
+    @required $T Function(HostedPackageDependencySpec) hosted,
   }) {
     if (this.sdk != null) {
       return sdk(this.sdk);
@@ -54,6 +61,8 @@ abstract class _$PackageDependencySpec {
       return git(this.git);
     } else if (this.path != null) {
       return path(this.path);
+    } else if (this.hosted != null) {
+      return hosted(this.hosted);
     } else {
       throw StateError("an instance of $PackageDependencySpec has no case selected");
     }
@@ -63,6 +72,7 @@ abstract class _$PackageDependencySpec {
     $T Function(SdkPackageDependencySpec) sdk,
     $T Function(GitPackageDependencySpec) git,
     $T Function(PathPackageDependencySpec) path,
+    $T Function(HostedPackageDependencySpec) hosted,
     @required $T Function() otherwise,
   }) {
     $T _otherwise(Object _) => otherwise();
@@ -70,6 +80,7 @@ abstract class _$PackageDependencySpec {
       sdk: sdk ?? _otherwise,
       git: git ?? _otherwise,
       path: path ?? _otherwise,
+      hosted: hosted ?? _otherwise,
     );
   }
 
@@ -77,7 +88,11 @@ abstract class _$PackageDependencySpec {
   bool operator ==(
     dynamic other,
   ) {
-    return other.runtimeType == runtimeType && other.sdk == sdk && other.git == git && other.path == path;
+    return other.runtimeType == runtimeType &&
+        other.sdk == sdk &&
+        other.git == git &&
+        other.path == path &&
+        other.hosted == hosted;
   }
 
   @override
@@ -86,6 +101,7 @@ abstract class _$PackageDependencySpec {
     result = 37 * result + sdk.hashCode;
     result = 37 * result + git.hashCode;
     result = 37 * result + path.hashCode;
+    result = 37 * result + hosted.hashCode;
     return result;
   }
 
@@ -95,6 +111,7 @@ abstract class _$PackageDependencySpec {
       sdk: (value) => "sdk($value)",
       git: (value) => "git($value)",
       path: (value) => "path($value)",
+      hosted: (value) => "hosted($value)",
     );
     return "$runtimeType.$ctor";
   }
@@ -105,12 +122,15 @@ abstract class _$PackageDependencySpec {
   final GitPackageDependencySpec git;
   @protected
   final PathPackageDependencySpec path;
+  @protected
+  final HostedPackageDependencySpec hosted;
 }
 
 abstract class PackageDependencySpecRecordBase<Self> {
   SdkPackageDependencySpec get sdk;
   GitPackageDependencySpec get git;
   PathPackageDependencySpec get path;
+  HostedPackageDependencySpec get hosted;
 }
 
 // ignore_for_file: always_put_required_named_parameters_first

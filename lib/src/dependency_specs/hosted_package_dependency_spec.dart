@@ -23,29 +23,29 @@
  *
  */
 
+import 'package:functional_data/functional_data.dart' hide Optional;
 import 'package:meta/meta.dart';
-import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
-import 'package:sum_types/sum_types.dart';
+import 'package:plain_optional/plain_optional.dart';
 
-import 'dependency_specs/hosted_package_dependency_spec.dart';
-import 'dependency_specs/path_package_dependency_spec.dart';
+part 'hosted_package_dependency_spec.g.dart';
 
-part 'package_dependency_spec.g.dart';
+// ignore_for_file: annotate_overrides
 
-/// Package dependency specification (https://dart.dev/tools/pub/dependencies)
+/// A hosted package is one that can be downloaded from the pub.dev site
+/// (or another HTTP server that speaks the same API).
+/// https://dart.dev/tools/pub/dependencies
 @immutable
-@SumType()
-class PackageDependencySpec extends _$PackageDependencySpec {
-  const PackageDependencySpec.sdk(SdkPackageDependencySpec package) : super(sdk: package);
-  const PackageDependencySpec.git(GitPackageDependencySpec package) : super(git: package);
-  const PackageDependencySpec.path(PathPackageDependencySpec package) : super(path: package);
-  const PackageDependencySpec.hosted(HostedPackageDependencySpec package) : super(hosted: package);
+@FunctionalData()
+class HostedPackageDependencySpec extends $HostedPackageDependencySpec {
+  const HostedPackageDependencySpec({
+    @required this.package,
+    this.version = const Optional.none(),
+    this.name = const Optional.none(),
+    this.url = const Optional.none(),
+  });
 
-  String package() => iswitch(
-        sdk: (p) => p.package,
-        git: (p) => p.package,
-        path: (p) => p.package,
-        hosted: (p) => p.package,
-      );
+  final String package;
+  final Optional<String> version;
+  final Optional<String> name;
+  final Optional<String> url;
 }

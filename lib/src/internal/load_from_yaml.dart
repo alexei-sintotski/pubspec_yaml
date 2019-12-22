@@ -27,6 +27,7 @@ import 'dart:convert';
 
 import 'package:plain_optional/plain_optional.dart';
 import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
+import 'package:pubspec_yaml/src/dependency_specs/hosted_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/path_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:pubspec_yaml/src/package_dependency_spec.dart';
@@ -66,18 +67,18 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
       if (value is Map<String, dynamic>) {
         if (value.containsKey(Tokens.sdk)) {
           return PackageDependencySpec.sdk(_loadSdkDependency(entry.key, value));
-        }
-        if (value.containsKey(Tokens.git)) {
+        } else if (value.containsKey(Tokens.git)) {
           return PackageDependencySpec.git(_loadGitDependency(entry.key, value[Tokens.git]));
-        }
-        if (value.containsKey(Tokens.path)) {
+        } else if (value.containsKey(Tokens.path)) {
           return PackageDependencySpec.path(PathPackageDependencySpec(
             package: entry.key,
             path: value[Tokens.path] as String,
           ));
+        } else if (value.containsKey(Tokens.hosted)) {
+          return PackageDependencySpec.hosted(_loadGenericHostedDependency(entry.key, value));
         }
       }
-      return null;
+      return PackageDependencySpec.hosted(_loadPubDevHostedDependency(entry.key, value));
     });
 
 SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic> definition) =>
@@ -105,6 +106,22 @@ GitPackageDependencySpec _loadFromDetailedGitDependencyDefinition(String package
       ref: Optional(definition[Tokens.ref] as String),
       path: Optional(definition[Tokens.path] as String),
     );
+
+HostedPackageDependencySpec _loadPubDevHostedDependency(String package, dynamic definition) =>
+    HostedPackageDependencySpec(
+      package: package,
+      version: Optional(definition as String),
+    );
+
+HostedPackageDependencySpec _loadGenericHostedDependency(String package, Map<String, dynamic> definition) {
+  final definitionBody = definition[Tokens.hosted] as Map<String, dynamic>;
+  return HostedPackageDependencySpec(
+    package: package,
+    version: Optional(definition[Tokens.version] as String),
+    name: Optional(definitionBody[Tokens.name] as String),
+    url: Optional(definitionBody[Tokens.url] as String),
+  );
+}
 
 const _knownTokens = [
   Tokens.name,
