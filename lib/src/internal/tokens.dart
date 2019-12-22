@@ -41,4 +41,5 @@ class Tokens {
   static const hosted = 'hosted';
   static const executables = 'executables';
   static const devDependencies = 'dev_dependencies';
+  static const dependencyOverrides = 'dependency_overrides';
 }

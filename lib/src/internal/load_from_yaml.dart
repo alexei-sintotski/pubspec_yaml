@@ -56,6 +56,7 @@ PubspecYaml loadFromYaml(String content) {
     documentation: Optional(jsonMap[Tokens.documentation] as String),
     dependencies: _loadDependenciesIfRequired(jsonMap, Tokens.dependencies),
     devDependencies: _loadDependenciesIfRequired(jsonMap, Tokens.devDependencies),
+    dependencyOverrides: _loadDependenciesIfRequired(jsonMap, Tokens.dependencyOverrides),
     executables: jsonMap.containsKey(Tokens.executables) && jsonMap[Tokens.executables] != null
         ? _loadExecutables(jsonMap[Tokens.executables] as Map<String, dynamic>)
         : {},
@@ -147,4 +148,5 @@ const _knownTokens = [
   Tokens.dependencies,
   Tokens.executables,
   Tokens.devDependencies,
+  Tokens.dependencyOverrides,
 ];

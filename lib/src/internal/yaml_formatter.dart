@@ -38,6 +38,8 @@ String formatToYaml(PubspecYaml pubspecYaml) => '${[
       if (pubspecYaml.dependencies.isNotEmpty) _dependenciesToYaml(pubspecYaml.dependencies, Tokens.dependencies),
       if (pubspecYaml.devDependencies.isNotEmpty)
         _dependenciesToYaml(pubspecYaml.devDependencies, Tokens.devDependencies),
+      if (pubspecYaml.dependencyOverrides.isNotEmpty)
+        _dependenciesToYaml(pubspecYaml.dependencyOverrides, Tokens.dependencyOverrides),
       if (pubspecYaml.executables.isNotEmpty) _executablesToYaml(pubspecYaml.executables),
       for (final customField in pubspecYaml.customFields.entries)
         json2yaml(Map<String, dynamic>.fromEntries({customField}), yamlStyle: YamlStyle.pubspecYaml),
