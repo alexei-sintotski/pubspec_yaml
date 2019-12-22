@@ -15,6 +15,7 @@ abstract class $PubspecYaml {
   Optional<String> get repository;
   Optional<String> get issueTracker;
   Optional<String> get documentation;
+  Optional<String> get publishTo;
   Iterable<PackageDependencySpec> get dependencies;
   Iterable<PackageDependencySpec> get devDependencies;
   Iterable<PackageDependencySpec> get dependencyOverrides;
@@ -31,6 +32,7 @@ abstract class $PubspecYaml {
           Optional<String> repository,
           Optional<String> issueTracker,
           Optional<String> documentation,
+          Optional<String> publishTo,
           Iterable<PackageDependencySpec> dependencies,
           Iterable<PackageDependencySpec> devDependencies,
           Iterable<PackageDependencySpec> dependencyOverrides,
@@ -46,6 +48,7 @@ abstract class $PubspecYaml {
           repository: repository ?? this.repository,
           issueTracker: issueTracker ?? this.issueTracker,
           documentation: documentation ?? this.documentation,
+          publishTo: publishTo ?? this.publishTo,
           dependencies: dependencies ?? this.dependencies,
           devDependencies: devDependencies ?? this.devDependencies,
           dependencyOverrides: dependencyOverrides ?? this.dependencyOverrides,
@@ -53,7 +56,7 @@ abstract class $PubspecYaml {
           executables: executables ?? this.executables,
           customFields: customFields ?? this.customFields);
   String toString() =>
-      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, dependencies: $dependencies, devDependencies: $devDependencies, dependencyOverrides: $dependencyOverrides, environment: $environment, executables: $executables, customFields: $customFields)";
+      "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, publishTo: $publishTo, dependencies: $dependencies, devDependencies: $devDependencies, dependencyOverrides: $dependencyOverrides, environment: $environment, executables: $executables, customFields: $customFields)";
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       name == other.name &&
@@ -64,6 +67,7 @@ abstract class $PubspecYaml {
       repository == other.repository &&
       issueTracker == other.issueTracker &&
       documentation == other.documentation &&
+      publishTo == other.publishTo &&
       const DeepCollectionEquality().equals(dependencies, other.dependencies) &&
       const DeepCollectionEquality().equals(devDependencies, other.devDependencies) &&
       const DeepCollectionEquality().equals(dependencyOverrides, other.dependencyOverrides) &&
@@ -81,6 +85,7 @@ abstract class $PubspecYaml {
     result = 37 * result + repository.hashCode;
     result = 37 * result + issueTracker.hashCode;
     result = 37 * result + documentation.hashCode;
+    result = 37 * result + publishTo.hashCode;
     result = 37 * result + const DeepCollectionEquality().hash(dependencies);
     result = 37 * result + const DeepCollectionEquality().hash(devDependencies);
     result = 37 * result + const DeepCollectionEquality().hash(dependencyOverrides);
@@ -107,6 +112,8 @@ class PubspecYaml$ {
       (s_) => s_.issueTracker, (s_, issueTracker) => s_.copyWith(issueTracker: issueTracker));
   static final documentation = Lens<PubspecYaml, Optional<String>>(
       (s_) => s_.documentation, (s_, documentation) => s_.copyWith(documentation: documentation));
+  static final publishTo =
+      Lens<PubspecYaml, Optional<String>>((s_) => s_.publishTo, (s_, publishTo) => s_.copyWith(publishTo: publishTo));
   static final dependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
       (s_) => s_.dependencies, (s_, dependencies) => s_.copyWith(dependencies: dependencies));
   static final devDependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
