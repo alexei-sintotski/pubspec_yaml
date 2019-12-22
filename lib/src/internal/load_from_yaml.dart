@@ -57,6 +57,9 @@ PubspecYaml loadFromYaml(String content) {
     dependencies: jsonMap.containsKey(Tokens.dependencies) && jsonMap[Tokens.dependencies] != null
         ? _loadDependencies(jsonMap[Tokens.dependencies] as Map<String, dynamic>)
         : [],
+    executables: jsonMap.containsKey(Tokens.executables) && jsonMap[Tokens.executables] != null
+        ? _loadExecutables(jsonMap[Tokens.executables] as Map<String, dynamic>)
+        : {},
     customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
   );
 }
@@ -123,6 +126,12 @@ HostedPackageDependencySpec _loadGenericHostedDependency(String package, Map<Str
   );
 }
 
+Map<String, Optional<String>> _loadExecutables(Map<String, dynamic> executables) =>
+    executables.map((key, dynamic value) => MapEntry(
+          key,
+          Optional(value as String),
+        ));
+
 const _knownTokens = [
   Tokens.name,
   Tokens.version,
@@ -134,4 +143,5 @@ const _knownTokens = [
   Tokens.issueTracker,
   Tokens.documentation,
   Tokens.dependencies,
+  Tokens.executables,
 ];
