@@ -35,7 +35,9 @@ import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 
 String formatToYaml(PubspecYaml pubspecYaml) => '${[
       _packageMetadataToYaml(pubspecYaml),
-      if (pubspecYaml.dependencies.isNotEmpty) _packageDependenciesToYaml(pubspecYaml.dependencies),
+      if (pubspecYaml.dependencies.isNotEmpty) _dependenciesToYaml(pubspecYaml.dependencies, Tokens.dependencies),
+      if (pubspecYaml.devDependencies.isNotEmpty)
+        _dependenciesToYaml(pubspecYaml.devDependencies, Tokens.devDependencies),
       if (pubspecYaml.executables.isNotEmpty) _executablesToYaml(pubspecYaml.executables),
       for (final customField in pubspecYaml.customFields.entries)
         json2yaml(Map<String, dynamic>.fromEntries({customField}), yamlStyle: YamlStyle.pubspecYaml),
@@ -53,8 +55,12 @@ String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dyn
       if (pubspecYaml.documentation.hasValue) Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
     }, yamlStyle: YamlStyle.pubspecYaml);
 
-String _packageDependenciesToYaml(Iterable<PackageDependencySpec> dependencies) => json2yaml(<String, dynamic>{
-      Tokens.dependencies: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
+String _dependenciesToYaml(
+  Iterable<PackageDependencySpec> dependencies,
+  String key,
+) =>
+    json2yaml(<String, dynamic>{
+      key: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
             sdk: _sdkPackageDependencyToJson,
             git: _gitPackageDependencyToJson,
             path: _pathPackageDependencyToJson,
