@@ -34,6 +34,7 @@ part 'path_package_dependency_spec.g.dart';
 @immutable
 @FunctionalData()
 class PathPackageDependencySpec extends $PathPackageDependencySpec {
+  /// Default constructor
   const PathPackageDependencySpec({@required this.package, @required this.path});
 
   final String package;

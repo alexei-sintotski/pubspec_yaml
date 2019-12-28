@@ -25,13 +25,16 @@
 
 import 'package:json2yaml/json2yaml.dart';
 import 'package:plain_optional/plain_optional.dart';
-import 'package:pubspec_yaml/pubspec_yaml.dart';
-import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/hosted_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/path_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/internal/tokens.dart';
-import 'package:pubspec_yaml/src/package_dependency_spec.dart';
+
+import '../../pubspec_yaml.dart';
+import '../dependency_specs/git_package_dependency_spec.dart';
+import '../dependency_specs/hosted_package_dependency_spec.dart';
+import '../dependency_specs/path_package_dependency_spec.dart';
+import '../dependency_specs/sdk_package_dependency_spec.dart';
+import '../package_dependency_spec.dart';
+import 'tokens.dart';
+
+// ignore_for_file: public_member_api_docs
 
 String formatToYaml(PubspecYaml pubspecYaml) => '${[
       _packageMetadataToYaml(pubspecYaml),

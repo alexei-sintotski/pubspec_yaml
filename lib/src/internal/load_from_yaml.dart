@@ -26,18 +26,19 @@
 import 'dart:convert';
 
 import 'package:plain_optional/plain_optional.dart';
-import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/hosted_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/path_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 import 'package:yaml/yaml.dart';
 
+import '../dependency_specs/git_package_dependency_spec.dart';
+import '../dependency_specs/hosted_package_dependency_spec.dart';
+import '../dependency_specs/path_package_dependency_spec.dart';
+import '../dependency_specs/sdk_package_dependency_spec.dart';
+import '../package_dependency_spec.dart';
 import '../pubspec_yaml.dart';
 import 'tokens.dart';
 
 // ignore_for_file: avoid_as
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: public_member_api_docs
 
 PubspecYaml loadFromYaml(String content) {
   final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;

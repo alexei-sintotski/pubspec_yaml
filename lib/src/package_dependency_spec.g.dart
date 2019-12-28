@@ -138,10 +138,12 @@ abstract class PackageDependencySpecRecordBase<Self> {
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
 // ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: join_return_with_assignment
 // ignore_for_file: prefer_asserts_with_message
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: prefer_single_quotes
+// ignore_for_file: public_member_api_docs
 // ignore_for_file: sort_constructors_first
 // ignore_for_file: type_annotate_public_apis

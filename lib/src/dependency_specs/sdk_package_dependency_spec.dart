@@ -35,6 +35,7 @@ part 'sdk_package_dependency_spec.g.dart';
 @immutable
 @FunctionalData()
 class SdkPackageDependencySpec extends $SdkPackageDependencySpec {
+  /// Default constructor
   const SdkPackageDependencySpec({
     @required this.package,
     @required this.sdk,

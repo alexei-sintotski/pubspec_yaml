@@ -35,6 +35,7 @@ part 'git_package_dependency_spec.g.dart';
 @immutable
 @FunctionalData()
 class GitPackageDependencySpec extends $GitPackageDependencySpec {
+  /// Default constructor
   const GitPackageDependencySpec({
     @required this.package,
     @required this.url,
