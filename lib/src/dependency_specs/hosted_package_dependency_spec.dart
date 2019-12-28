@@ -37,6 +37,7 @@ part 'hosted_package_dependency_spec.g.dart';
 @immutable
 @FunctionalData()
 class HostedPackageDependencySpec extends $HostedPackageDependencySpec {
+  /// Default constructor
   const HostedPackageDependencySpec({
     @required this.package,
     this.version = const Optional.none(),

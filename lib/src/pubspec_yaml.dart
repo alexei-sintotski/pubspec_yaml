@@ -27,10 +27,10 @@ import 'package:collection/collection.dart';
 import 'package:functional_data/functional_data.dart' hide Optional;
 import 'package:meta/meta.dart';
 import 'package:plain_optional/plain_optional.dart';
-import 'package:pubspec_yaml/src/package_dependency_spec.dart';
 
 import 'internal/load_from_yaml.dart';
 import 'internal/yaml_formatter.dart';
+import 'package_dependency_spec.dart';
 
 part 'pubspec_yaml.g.dart';
 
@@ -45,6 +45,7 @@ part 'pubspec_yaml.g.dart';
 @immutable
 @FunctionalData()
 class PubspecYaml extends $PubspecYaml {
+  /// Default constructor
   const PubspecYaml({
     @required this.name,
     this.version = const Optional.none(),
@@ -63,6 +64,7 @@ class PubspecYaml extends $PubspecYaml {
     this.customFields = const <String, dynamic>{},
   });
 
+  /// Imports PubspecYaml from a YAML string
   factory PubspecYaml.loadFromYamlString(String content) {
     assert(content != null, 'content must not be null');
     assert(content.trim().isNotEmpty, 'content must not be empty');
@@ -134,5 +136,6 @@ class PubspecYaml extends $PubspecYaml {
   @CustomEquality(DeepCollectionEquality())
   final Map<String, dynamic> customFields;
 
+  /// Exports PubspecYaml instance as a YAML string
   String toYamlString() => formatToYaml(this);
 }

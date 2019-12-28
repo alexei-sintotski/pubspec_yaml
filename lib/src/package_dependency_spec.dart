@@ -24,12 +24,12 @@
  */
 
 import 'package:meta/meta.dart';
-import 'package:pubspec_yaml/src/dependency_specs/git_package_dependency_spec.dart';
-import 'package:pubspec_yaml/src/dependency_specs/sdk_package_dependency_spec.dart';
 import 'package:sum_types/sum_types.dart';
 
+import 'dependency_specs/git_package_dependency_spec.dart';
 import 'dependency_specs/hosted_package_dependency_spec.dart';
 import 'dependency_specs/path_package_dependency_spec.dart';
+import 'dependency_specs/sdk_package_dependency_spec.dart';
 
 part 'package_dependency_spec.g.dart';
 
@@ -42,6 +42,7 @@ class PackageDependencySpec extends _$PackageDependencySpec {
   const PackageDependencySpec.path(PathPackageDependencySpec package) : super(path: package);
   const PackageDependencySpec.hosted(HostedPackageDependencySpec package) : super(hosted: package);
 
+  /// Returns package name
   String package() => iswitch(
         sdk: (p) => p.package,
         git: (p) => p.package,
