@@ -27,10 +27,10 @@ import 'package:json2yaml/json2yaml.dart';
 import 'package:plain_optional/plain_optional.dart';
 
 import '../../pubspec_yaml.dart';
-import '../dependency_specs/hosted_package_dependency_spec.dart';
 import '../dependency_specs/path_package_dependency_spec.dart';
 import '../dependency_specs/sdk_package_dependency_spec.dart';
 import '../git_package_dependency_spec/serializers.dart';
+import '../hosted_package_dependency_spec/serializers.dart';
 import '../package_dependency_spec.dart';
 import 'tokens.dart';
 
@@ -71,7 +71,7 @@ String _dependenciesToYaml(
             sdk: _sdkPackageDependencyToJson,
             git: (p) => p.toJson().entries.first,
             path: _pathPackageDependencyToJson,
-            hosted: _hostedPackageDependencyToJson,
+            hosted: (p) => p.toJson().entries.first,
           ))),
     }, yamlStyle: YamlStyle.pubspecYaml);
 
@@ -88,19 +88,6 @@ MapEntry<String, dynamic> _pathPackageDependencyToJson(PathPackageDependencySpec
       <String, dynamic>{
         Tokens.path: dep.path,
       },
-    );
-
-MapEntry<String, dynamic> _hostedPackageDependencyToJson(HostedPackageDependencySpec dep) => MapEntry<String, dynamic>(
-      dep.package,
-      dep.url.hasValue
-          ? {
-              Tokens.hosted: {
-                if (dep.name.hasValue) Tokens.name: dep.name.valueOr(() => ''),
-                if (dep.url.hasValue) Tokens.url: dep.url.valueOr(() => ''),
-              },
-              if (dep.version.hasValue) Tokens.version: dep.version.valueOr(() => ''),
-            }
-          : dep.version.valueOr(() => null),
     );
 
 String _environmentToYaml(Map<String, String> environment) => json2yaml(
