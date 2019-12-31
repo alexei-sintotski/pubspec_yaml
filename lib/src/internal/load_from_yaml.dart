@@ -28,11 +28,11 @@ import 'dart:convert';
 import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
-import '../dependency_specs/path_package_dependency_spec.dart';
 import '../dependency_specs/sdk_package_dependency_spec.dart';
 import '../git_package_dependency_spec/serializers.dart';
 import '../hosted_package_dependency_spec/serializers.dart';
 import '../package_dependency_spec.dart';
+import '../path_package_dependency_spec/serializers.dart';
 import '../pubspec_yaml.dart';
 import 'tokens.dart';
 
@@ -81,10 +81,7 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
         } else if (value.containsKey(Tokens.git)) {
           return PackageDependencySpec.git(loadGitPackageDependencySpec(entry));
         } else if (value.containsKey(Tokens.path)) {
-          return PackageDependencySpec.path(PathPackageDependencySpec(
-            package: entry.key,
-            path: value[Tokens.path] as String,
-          ));
+          return PackageDependencySpec.path(loadPathPackageDependencySpec(entry));
         } else {
           return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
         }
