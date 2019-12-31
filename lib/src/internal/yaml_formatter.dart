@@ -27,11 +27,8 @@ import 'package:json2yaml/json2yaml.dart';
 import 'package:plain_optional/plain_optional.dart';
 
 import '../../pubspec_yaml.dart';
-import '../git_package_dependency_spec/serializers.dart';
-import '../hosted_package_dependency_spec/serializers.dart';
-import '../package_dependency_spec.dart';
-import '../path_package_dependency_spec/serializers.dart';
-import '../sdk_package_dependency_spec/serializers.dart';
+import '../package_dependency_spec/package_dependency_spec.dart';
+import '../package_dependency_spec/serializers.dart';
 import 'tokens.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -67,12 +64,9 @@ String _dependenciesToYaml(
   String key,
 ) =>
     json2yaml(<String, dynamic>{
-      key: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
-            sdk: (p) => p.toJson().entries.first,
-            git: (p) => p.toJson().entries.first,
-            path: (p) => p.toJson().entries.first,
-            hosted: (p) => p.toJson().entries.first,
-          ))),
+      key: <String, dynamic>{
+        for (final dep in dependencies.toList()..sort((a, b) => a.package().compareTo(b.package()))) ...dep.toJson()
+      }
     }, yamlStyle: YamlStyle.pubspecYaml);
 
 String _environmentToYaml(Map<String, String> environment) => json2yaml(
