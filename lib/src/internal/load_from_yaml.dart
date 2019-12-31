@@ -28,12 +28,12 @@ import 'dart:convert';
 import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
-import '../dependency_specs/sdk_package_dependency_spec.dart';
 import '../git_package_dependency_spec/serializers.dart';
 import '../hosted_package_dependency_spec/serializers.dart';
 import '../package_dependency_spec.dart';
 import '../path_package_dependency_spec/serializers.dart';
 import '../pubspec_yaml.dart';
+import '../sdk_package_dependency_spec/serializers.dart';
 import 'tokens.dart';
 
 // ignore_for_file: avoid_as
@@ -77,7 +77,7 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
       final dynamic value = entry.value;
       if (value is Map<String, dynamic>) {
         if (value.containsKey(Tokens.sdk)) {
-          return PackageDependencySpec.sdk(_loadSdkDependency(entry.key, value));
+          return PackageDependencySpec.sdk(loadSdkPackageDependencySpec(entry));
         } else if (value.containsKey(Tokens.git)) {
           return PackageDependencySpec.git(loadGitPackageDependencySpec(entry));
         } else if (value.containsKey(Tokens.path)) {
@@ -88,13 +88,6 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
       }
       return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
     });
-
-SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic> definition) =>
-    SdkPackageDependencySpec(
-      package: package,
-      sdk: definition[Tokens.sdk] as String,
-      version: Optional(definition[Tokens.version] as String),
-    );
 
 Map<String, String> _loadEnvironment(Map<String, dynamic> environment) =>
     environment.map((key, dynamic value) => MapEntry(key, value as String));
