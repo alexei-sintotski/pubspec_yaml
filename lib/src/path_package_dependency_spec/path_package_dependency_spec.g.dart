@@ -29,6 +29,7 @@ class PathPackageDependencySpec$ {
   static final path = Lens<PathPackageDependencySpec, String>((s_) => s_.path, (s_, path) => s_.copyWith(path: path));
 }
 
+// ignore_for_file: ARGUMENT_TYPE_NOT_ASSIGNABLE
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: always_require_non_null_named_parameters
 // ignore_for_file: annotate_overrides
