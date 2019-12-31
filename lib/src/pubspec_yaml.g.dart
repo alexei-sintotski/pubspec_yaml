@@ -16,9 +16,9 @@ abstract class $PubspecYaml {
   Optional<String> get issueTracker;
   Optional<String> get documentation;
   Optional<String> get publishTo;
-  Iterable<PackageDependencySpec> get dependencies;
-  Iterable<PackageDependencySpec> get devDependencies;
-  Iterable<PackageDependencySpec> get dependencyOverrides;
+  Iterable get dependencies;
+  Iterable get devDependencies;
+  Iterable get dependencyOverrides;
   Map<String, String> get environment;
   Map<String, Optional<String>> get executables;
   Map<String, dynamic> get customFields;
@@ -33,9 +33,9 @@ abstract class $PubspecYaml {
           Optional<String> issueTracker,
           Optional<String> documentation,
           Optional<String> publishTo,
-          Iterable<PackageDependencySpec> dependencies,
-          Iterable<PackageDependencySpec> devDependencies,
-          Iterable<PackageDependencySpec> dependencyOverrides,
+          Iterable dependencies,
+          Iterable devDependencies,
+          Iterable dependencyOverrides,
           Map<String, String> environment,
           Map<String, Optional<String>> executables,
           Map<String, dynamic> customFields}) =>
@@ -114,11 +114,11 @@ class PubspecYaml$ {
       (s_) => s_.documentation, (s_, documentation) => s_.copyWith(documentation: documentation));
   static final publishTo =
       Lens<PubspecYaml, Optional<String>>((s_) => s_.publishTo, (s_, publishTo) => s_.copyWith(publishTo: publishTo));
-  static final dependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
+  static final dependencies = Lens<PubspecYaml, Iterable>(
       (s_) => s_.dependencies, (s_, dependencies) => s_.copyWith(dependencies: dependencies));
-  static final devDependencies = Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
+  static final devDependencies = Lens<PubspecYaml, Iterable>(
       (s_) => s_.devDependencies, (s_, devDependencies) => s_.copyWith(devDependencies: devDependencies));
-  static final dependencyOverrides = Lens<PubspecYaml, Iterable<PackageDependencySpec>>((s_) => s_.dependencyOverrides,
+  static final dependencyOverrides = Lens<PubspecYaml, Iterable>((s_) => s_.dependencyOverrides,
       (s_, dependencyOverrides) => s_.copyWith(dependencyOverrides: dependencyOverrides));
   static final environment = Lens<PubspecYaml, Map<String, String>>(
       (s_) => s_.environment, (s_, environment) => s_.copyWith(environment: environment));
@@ -128,6 +128,7 @@ class PubspecYaml$ {
       (s_) => s_.customFields, (s_, customFields) => s_.copyWith(customFields: customFields));
 }
 
+// ignore_for_file: ARGUMENT_TYPE_NOT_ASSIGNABLE
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: always_require_non_null_named_parameters
 // ignore_for_file: annotate_overrides
