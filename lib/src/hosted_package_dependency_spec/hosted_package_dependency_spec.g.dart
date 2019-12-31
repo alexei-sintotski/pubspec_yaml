@@ -48,6 +48,7 @@ class HostedPackageDependencySpec$ {
       Lens<HostedPackageDependencySpec, Optional<String>>((s_) => s_.url, (s_, url) => s_.copyWith(url: url));
 }
 
+// ignore_for_file: ARGUMENT_TYPE_NOT_ASSIGNABLE
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: always_require_non_null_named_parameters
 // ignore_for_file: annotate_overrides
