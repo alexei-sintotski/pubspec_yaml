@@ -27,11 +27,11 @@ import 'package:json2yaml/json2yaml.dart';
 import 'package:plain_optional/plain_optional.dart';
 
 import '../../pubspec_yaml.dart';
-import '../dependency_specs/path_package_dependency_spec.dart';
 import '../dependency_specs/sdk_package_dependency_spec.dart';
 import '../git_package_dependency_spec/serializers.dart';
 import '../hosted_package_dependency_spec/serializers.dart';
 import '../package_dependency_spec.dart';
+import '../path_package_dependency_spec/serializers.dart';
 import 'tokens.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -70,7 +70,7 @@ String _dependenciesToYaml(
       key: Map<String, dynamic>.fromEntries(dependencies.map((dep) => dep.iswitch(
             sdk: _sdkPackageDependencyToJson,
             git: (p) => p.toJson().entries.first,
-            path: _pathPackageDependencyToJson,
+            path: (p) => p.toJson().entries.first,
             hosted: (p) => p.toJson().entries.first,
           ))),
     }, yamlStyle: YamlStyle.pubspecYaml);
@@ -80,13 +80,6 @@ MapEntry<String, dynamic> _sdkPackageDependencyToJson(SdkPackageDependencySpec d
       <String, dynamic>{
         Tokens.sdk: dep.sdk,
         if (dep.version.hasValue) Tokens.version: dep.version.valueOr(() => ''),
-      },
-    );
-
-MapEntry<String, dynamic> _pathPackageDependencyToJson(PathPackageDependencySpec dep) => MapEntry<String, dynamic>(
-      dep.package,
-      <String, dynamic>{
-        Tokens.path: dep.path,
       },
     );
 

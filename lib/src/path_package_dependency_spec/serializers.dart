@@ -14,7 +14,7 @@
  * copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
@@ -23,11 +23,27 @@
  *
  */
 
-library pubspec_yaml;
+// ignore_for_file: avoid_as
+// ignore_for_file: public_member_api_docs
 
-export 'src/dependency_specs/sdk_package_dependency_spec.dart';
-export 'src/git_package_dependency_spec/git_package_dependency_spec.dart';
-export 'src/hosted_package_dependency_spec/hosted_package_dependency_spec.dart';
-export 'src/package_dependency_spec.dart';
-export 'src/path_package_dependency_spec/path_package_dependency_spec.dart';
-export 'src/pubspec_yaml.dart';
+import 'path_package_dependency_spec.dart';
+
+extension PathPackageDependencySpecToJson on PathPackageDependencySpec {
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        package: <String, dynamic>{
+          _Tokens.path: path,
+        },
+      };
+}
+
+PathPackageDependencySpec loadPathPackageDependencySpec(MapEntry<String, dynamic> entry) {
+  final definition = entry.value as Map<String, dynamic>;
+  return PathPackageDependencySpec(
+    package: entry.key,
+    path: definition[_Tokens.path] as String,
+  );
+}
+
+class _Tokens {
+  static const path = 'path';
+}
