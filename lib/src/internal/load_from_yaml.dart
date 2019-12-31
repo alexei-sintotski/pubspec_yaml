@@ -28,10 +28,10 @@ import 'dart:convert';
 import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
-import '../dependency_specs/hosted_package_dependency_spec.dart';
 import '../dependency_specs/path_package_dependency_spec.dart';
 import '../dependency_specs/sdk_package_dependency_spec.dart';
 import '../git_package_dependency_spec/serializers.dart';
+import '../hosted_package_dependency_spec/serializers.dart';
 import '../package_dependency_spec.dart';
 import '../pubspec_yaml.dart';
 import 'tokens.dart';
@@ -85,11 +85,11 @@ Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependenc
             package: entry.key,
             path: value[Tokens.path] as String,
           ));
-        } else if (value.containsKey(Tokens.hosted)) {
-          return PackageDependencySpec.hosted(_loadGenericHostedDependency(entry.key, value));
+        } else {
+          return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
         }
       }
-      return PackageDependencySpec.hosted(_loadPubDevHostedDependency(entry.key, value));
+      return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
     });
 
 SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic> definition) =>
@@ -98,22 +98,6 @@ SdkPackageDependencySpec _loadSdkDependency(String package, Map<String, dynamic>
       sdk: definition[Tokens.sdk] as String,
       version: Optional(definition[Tokens.version] as String),
     );
-
-HostedPackageDependencySpec _loadPubDevHostedDependency(String package, dynamic definition) =>
-    HostedPackageDependencySpec(
-      package: package,
-      version: Optional(definition as String),
-    );
-
-HostedPackageDependencySpec _loadGenericHostedDependency(String package, Map<String, dynamic> definition) {
-  final definitionBody = definition[Tokens.hosted] as Map<String, dynamic>;
-  return HostedPackageDependencySpec(
-    package: package,
-    version: Optional(definition[Tokens.version] as String),
-    name: Optional(definitionBody[Tokens.name] as String),
-    url: Optional(definitionBody[Tokens.url] as String),
-  );
-}
 
 Map<String, String> _loadEnvironment(Map<String, dynamic> environment) =>
     environment.map((key, dynamic value) => MapEntry(key, value as String));

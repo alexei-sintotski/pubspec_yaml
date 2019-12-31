@@ -26,10 +26,10 @@
 import 'package:meta/meta.dart';
 import 'package:sum_types/sum_types.dart';
 
-import 'dependency_specs/hosted_package_dependency_spec.dart';
 import 'dependency_specs/path_package_dependency_spec.dart';
 import 'dependency_specs/sdk_package_dependency_spec.dart';
 import 'git_package_dependency_spec/git_package_dependency_spec.dart';
+import 'hosted_package_dependency_spec/hosted_package_dependency_spec.dart';
 
 part 'package_dependency_spec.g.dart';
 
