@@ -28,12 +28,9 @@ import 'dart:convert';
 import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
-import '../git_package_dependency_spec/serializers.dart';
-import '../hosted_package_dependency_spec/serializers.dart';
-import '../package_dependency_spec.dart';
-import '../path_package_dependency_spec/serializers.dart';
+import '../package_dependency_spec/package_dependency_spec.dart';
+import '../package_dependency_spec/serializers.dart';
 import '../pubspec_yaml.dart';
-import '../sdk_package_dependency_spec/serializers.dart';
 import 'tokens.dart';
 
 // ignore_for_file: avoid_as
@@ -73,21 +70,7 @@ Iterable<PackageDependencySpec> _loadDependenciesIfRequired(Map<String, dynamic>
     jsonMap.containsKey(key) && jsonMap[key] != null ? _loadDependencies(jsonMap[key] as Map<String, dynamic>) : [];
 
 Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> dependencies) =>
-    dependencies.entries.map((entry) {
-      final dynamic value = entry.value;
-      if (value is Map<String, dynamic>) {
-        if (value.containsKey(Tokens.sdk)) {
-          return PackageDependencySpec.sdk(loadSdkPackageDependencySpec(entry));
-        } else if (value.containsKey(Tokens.git)) {
-          return PackageDependencySpec.git(loadGitPackageDependencySpec(entry));
-        } else if (value.containsKey(Tokens.path)) {
-          return PackageDependencySpec.path(loadPathPackageDependencySpec(entry));
-        } else {
-          return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
-        }
-      }
-      return PackageDependencySpec.hosted(loadHostedPackageDependencySpec(entry));
-    });
+    dependencies.entries.map(loadPackageDependencySpec);
 
 Map<String, String> _loadEnvironment(Map<String, dynamic> environment) =>
     environment.map((key, dynamic value) => MapEntry(key, value as String));

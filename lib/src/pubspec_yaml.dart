@@ -30,7 +30,7 @@ import 'package:plain_optional/plain_optional.dart';
 
 import 'internal/load_from_yaml.dart';
 import 'internal/yaml_formatter.dart';
-import 'package_dependency_spec.dart';
+import 'package_dependency_spec/package_dependency_spec.dart';
 
 part 'pubspec_yaml.g.dart';
 
