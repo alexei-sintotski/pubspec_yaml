@@ -5,8 +5,7 @@ import 'package:pubspec_yaml/pubspec_yaml.dart';
 // ignore_for_file: avoid_print
 
 void main() {
-  final pubspecYamlContent = File('pubspec.yaml').readAsStringSync();
-  final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlContent);
+  final pubspecYaml = File('pubspec.yaml').readAsStringSync().toPubspecYaml();
 
   final productionOverrides = pubspecYaml.dependencyOverrides.where(
     (override) => pubspecYaml.dependencies.any((

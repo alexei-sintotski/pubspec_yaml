@@ -145,6 +145,12 @@ class PubspecYaml extends $PubspecYaml {
   String toYamlString() => _formatToYaml(this);
 }
 
+/// Extension class on String to import PubspecYaml from a YAML string
+extension PubspecYamlFromYamlString on String {
+  /// Creates PubspecYaml from a YAML string
+  PubspecYaml toPubspecYaml() => PubspecYaml.loadFromYamlString(this);
+}
+
 // =====================================================================================================================
 // Implementation details
 // =====================================================================================================================

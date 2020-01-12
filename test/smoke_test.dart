@@ -8,15 +8,13 @@ void main() {
     final realisticPubspecYaml = File('${gitRepoRoot()}/pubspec.lock').readAsStringSync();
 
     group('$PubspecYaml.loadFromYamlString', () {
-      test('does not crash', () {
-        PubspecYaml.loadFromYamlString(realisticPubspecYaml);
-      });
+      test('does not crash', realisticPubspecYaml.toPubspecYaml);
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('preserves equivalence', () {
-        final pubspecYaml = PubspecYaml.loadFromYamlString(realisticPubspecYaml);
-        expect(PubspecYaml.loadFromYamlString(pubspecYaml.toYamlString()), pubspecYaml);
+        final pubspecYaml = realisticPubspecYaml.toPubspecYaml();
+        expect(pubspecYaml.toYamlString().toPubspecYaml(), pubspecYaml);
       });
     });
   });
