@@ -20,38 +20,26 @@ The following fields are supported:
 
 Other fields are accessible via PubspecYaml.customFields as a JSON structure (Map<String, dynamic>).
 
-## YAML Import / Export
+## YAML Import
 
-PubspecYaml provides two methods to serialize pubspec.yaml content:
+PubspecYaml provides two methods to import pubspec.yaml content:
 * The factory method PubspecYaml.loadFromYamlString() creates an object from a string with pubspec.yaml content
-* PubspecYaml.toYamlString() produces pubspec.yaml content that can be written to a file
+* String extension method toPubspecYaml()
+
+## YAML Export
+
+PubspecYaml.toYamlString() produces pubspec.yaml content that can be written to a file
 
 ## Data Manipulation
 
 PubspecYaml uses functional_data extensions to enable equality operations and lenses (https://pub.dev/packages/functional_data).
 
-## Usage
-
-To use pubspec_yaml, add the following dependency to pubspec.yaml:
-
-```
-dependencies:
-  pubspec_yaml: ^1.0.0
-```
-
 ## Example
 
 The following Dart script checks whether production dependencies have overrides:
 ```
-import 'dart:io';
-
-import 'package:pubspec_yaml/pubspec_yaml.dart';
-
-// ignore_for_file: avoid_print
-
 void main() {
-  final pubspecYamlContent = File('pubspec.yaml').readAsStringSync();
-  final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlContent);
+  final pubspecYaml = File('pubspec.yaml').readAsStringSync().toPubspecYaml();
 
   final productionOverrides = pubspecYaml.dependencyOverrides.where(
     (override) => pubspecYaml.dependencies.any((
