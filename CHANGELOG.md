@@ -1,4 +1,4 @@
-## [1.1.0] - 2020-03-23
+## [2.0.0] - 2020-03-23
 * Support for command-line executables provided by the package
 * PubspecYaml instances can be created from YAML using string extension method
 * This version requires Dart 2.7
