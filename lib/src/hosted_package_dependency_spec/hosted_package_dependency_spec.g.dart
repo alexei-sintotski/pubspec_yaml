@@ -6,12 +6,16 @@ part of 'hosted_package_dependency_spec.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
+// ignore_for_file: join_return_with_assignment
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $HostedPackageDependencySpec {
+  const $HostedPackageDependencySpec();
   String get package;
   Optional<String> get version;
   Optional<String> get name;
   Optional<String> get url;
-  const $HostedPackageDependencySpec();
   HostedPackageDependencySpec copyWith(
           {String package, Optional<String> version, Optional<String> name, Optional<String> url}) =>
       HostedPackageDependencySpec(
@@ -19,7 +23,9 @@ abstract class $HostedPackageDependencySpec {
           version: version ?? this.version,
           name: name ?? this.name,
           url: url ?? this.url);
+  @override
   String toString() => "HostedPackageDependencySpec(package: $package, version: $version, name: $name, url: $url)";
+  @override
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       package == other.package &&

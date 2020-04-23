@@ -23,7 +23,7 @@
  *
  */
 
-import 'package:functional_data/functional_data.dart' hide Optional;
+import 'package:functional_data/functional_data.dart';
 import 'package:meta/meta.dart';
 import 'package:plain_optional/plain_optional.dart';
 
