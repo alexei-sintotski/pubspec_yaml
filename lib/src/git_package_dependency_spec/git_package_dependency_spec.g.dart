@@ -6,16 +6,22 @@ part of 'git_package_dependency_spec.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
+// ignore_for_file: join_return_with_assignment
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $GitPackageDependencySpec {
+  const $GitPackageDependencySpec();
   String get package;
   String get url;
   Optional<String> get ref;
   Optional<String> get path;
-  const $GitPackageDependencySpec();
   GitPackageDependencySpec copyWith({String package, String url, Optional<String> ref, Optional<String> path}) =>
       GitPackageDependencySpec(
           package: package ?? this.package, url: url ?? this.url, ref: ref ?? this.ref, path: path ?? this.path);
+  @override
   String toString() => "GitPackageDependencySpec(package: $package, url: $url, ref: $ref, path: $path)";
+  @override
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
       package == other.package &&

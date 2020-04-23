@@ -6,13 +6,19 @@ part of 'path_package_dependency_spec.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
+// ignore_for_file: join_return_with_assignment
+// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $PathPackageDependencySpec {
+  const $PathPackageDependencySpec();
   String get package;
   String get path;
-  const $PathPackageDependencySpec();
   PathPackageDependencySpec copyWith({String package, String path}) =>
       PathPackageDependencySpec(package: package ?? this.package, path: path ?? this.path);
+  @override
   String toString() => "PathPackageDependencySpec(package: $package, path: $path)";
+  @override
   bool operator ==(dynamic other) => other.runtimeType == runtimeType && package == other.package && path == other.path;
   @override
   int get hashCode {
