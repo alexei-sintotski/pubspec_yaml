@@ -1,3 +1,6 @@
+## [2.0.1] - 2020-04-23
+* Support for functional_data 0.3.0
+
 ## [2.0.0] - 2020-03-23
 * Support for command-line executables provided by the package
 * PubspecYaml instances can be created from YAML using string extension method
