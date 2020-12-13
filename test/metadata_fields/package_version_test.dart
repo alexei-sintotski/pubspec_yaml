@@ -27,49 +27,51 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package version', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPackageVersionDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageVersionDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package version', () {
-        expect(pubspecYaml.version.valueOr(() => ''), packageVersion);
+        expect(pubspec.version.valueOr(() => ''), packageVersion);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithPackageVersionDefined);
+        expect(outputYaml, pubspecWithPackageVersionDefined);
       });
     });
   });
 
   group('given pubspec.yaml with undefined package version', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithUndefinedVersion);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithUndefinedVersion);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package version defined', () {
-        expect(pubspecYaml.version.hasValue, isFalse);
+        expect(pubspec.version.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithUndefinedVersion);
+        expect(outputYaml, pubspecWithUndefinedVersion);
       });
     });
   });
 }
 
 const packageVersion = '1.0.0';
-const pubspecYamlWithPackageVersionDefined = '''
+const pubspecWithPackageVersionDefined = '''
 name: pubspec_yaml
 version: $packageVersion
 ''';
 
-const pubspecYamlWithUndefinedVersion = '''
+const pubspecWithUndefinedVersion = '''
 name: pubspec_yaml
 ''';

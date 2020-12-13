@@ -27,67 +27,71 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package description', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPackageDescriptionDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageDescriptionDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package description', () {
-        expect(pubspecYaml.description.valueOr(() => ''), packageDescription);
+        expect(pubspec.description.valueOr(() => ''), packageDescription);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithPackageDescriptionDefined);
+        expect(outputYaml, pubspecWithPackageDescriptionDefined);
       });
     });
   });
 
   group('given pubspec.yaml with undefined package description', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutDescription);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutDescription);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package description defined', () {
-        expect(pubspecYaml.description.hasValue, isFalse);
+        expect(pubspec.description.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithoutDescription);
+        expect(outputYaml, pubspecWithoutDescription);
       });
     });
   });
 
   group('given pubspec.yaml with multine package description', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithMultilinePackageDescription);
+    final pubspec =
+        PubspecYaml.loadFromYamlString(pubspecWithMultilinePackageDescription);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package description', () {
-        expect(pubspecYaml.description.valueOr(() => ''), packageDescription);
+        expect(pubspec.description.valueOr(() => ''), packageDescription);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
   });
 }
 
-const packageDescription = 'Dart library to access and manipulate content of pubpec.yaml files';
-const pubspecYamlWithPackageDescriptionDefined = '''
+const packageDescription =
+    'Dart library to access and manipulate content of pubpec.yaml files';
+const pubspecWithPackageDescriptionDefined = '''
 name: pubspec_yaml
 description: $packageDescription
 ''';
 
-const pubspecYamlWithoutDescription = '''
+const pubspecWithoutDescription = '''
 name: pubspec_yaml
 ''';
 
-const pubspecYamlWithMultilinePackageDescription = '''
+const pubspecWithMultilinePackageDescription = '''
 name: pubspec_yaml
 description: >-
   $packageDescription

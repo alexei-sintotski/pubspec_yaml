@@ -36,7 +36,9 @@ extension PathPackageDependencySpecToJson on PathPackageDependencySpec {
       };
 }
 
-PathPackageDependencySpec loadPathPackageDependencySpec(MapEntry<String, dynamic> entry) {
+PathPackageDependencySpec loadPathPackageDependencySpec(
+  MapEntry<String, dynamic> entry,
+) {
   final definition = entry.value as Map<String, dynamic>;
   return PathPackageDependencySpec(
     package: entry.key,

@@ -28,32 +28,34 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with dependency overrides', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithDependencyOverrides);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithDependencyOverrides,
+    );
 
     group('$PubspecYaml.loadFromYamlString()', () {
       test('produces object with non-empty list of dependency overrides', () {
-        expect(pubspecYaml.dependencyOverrides, isNotEmpty);
+        expect(pubspec.dependencyOverrides, isNotEmpty);
       });
 
       test('produces dependency override with correct name', () {
-        expect(pubspecYaml.dependencyOverrides.first.package(), dependency);
+        expect(pubspec.dependencyOverrides.first.package(), dependency);
       });
 
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString())', () {
       test('produces string identical to the original input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithDependencyOverrides);
+        expect(pubspec.toYamlString(), pubspecWithDependencyOverrides);
       });
     });
   });
 }
 
 const dependency = 'transmogrify';
-const pubspecYamlWithDependencyOverrides = '''
+const pubspecWithDependencyOverrides = '''
 name: pubspec_yaml
 
 dependencies:

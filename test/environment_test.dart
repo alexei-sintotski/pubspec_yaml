@@ -28,27 +28,27 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with SDK constraints', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithSdkConstraints);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithSdkConstraints);
 
     group('$PubspecYaml.loadFromYamlString()', () {
       test('provides object with non-empty environment', () {
-        expect(pubspecYaml.environment, isNotEmpty);
+        expect(pubspec.environment, isNotEmpty);
       });
       test('provides object correct SDK names', () {
-        expect(pubspecYaml.environment.keys, [dartSdk, flutterSdk]);
+        expect(pubspec.environment.keys, [dartSdk, flutterSdk]);
       });
       test('provides object correct SDK entries', () {
-        expect(pubspecYaml.environment[dartSdk], dartSdkConstraint);
-        expect(pubspecYaml.environment[flutterSdk], flutterSdkConstraint);
+        expect(pubspec.environment[dartSdk], dartSdkConstraint);
+        expect(pubspec.environment[flutterSdk], flutterSdkConstraint);
       });
       test('provides object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString()', () {
       test('produces output identical to the original string', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithSdkConstraints);
+        expect(pubspec.toYamlString(), pubspecWithSdkConstraints);
       });
     });
   });
@@ -58,7 +58,7 @@ const dartSdk = 'sdk';
 const dartSdkConstraint = '>=1.19.0 <3.0.0';
 const flutterSdk = 'flutter';
 const flutterSdkConstraint = '^0.1.2';
-const pubspecYamlWithSdkConstraints = '''
+const pubspecWithSdkConstraints = '''
 name: pubspec_yaml
 
 environment:

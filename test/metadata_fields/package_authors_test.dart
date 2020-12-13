@@ -28,110 +28,116 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with single author specified', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithSingleAuthor);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithSingleAuthor);
 
     group('$PubspecYaml.loadFromYamlString)', () {
       test('produces an object with single author', () {
-        expect(pubspecYaml.authors.length, 1);
+        expect(pubspec.authors.length, 1);
       });
       test('produces an object with correct author name', () {
-        expect(pubspecYaml.authors.first, author);
+        expect(pubspec.authors.first, author);
       });
       test('produces an object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithSingleAuthor);
+        expect(pubspec.toYamlString(), pubspecWithSingleAuthor);
       });
     });
   });
 
   group('given pubspec.yaml without author specification', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutAuthorSpecification);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithoutAuthorSpecification,
+    );
 
     group('$PubspecYaml.loadFromYamlString)', () {
       test('produces an object with empty list of authors', () {
-        expect(pubspecYaml.authors, isEmpty);
+        expect(pubspec.authors, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithoutAuthorSpecification);
+        expect(pubspec.toYamlString(), pubspecWithoutAuthorSpecification);
       });
     });
   });
 
   group('given pubspec.yaml with two authors specified', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithTwoAuthors);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithTwoAuthors);
 
     group('$PubspecYaml.loadFromYamlString)', () {
       test('produces an object with two authors', () {
-        expect(pubspecYaml.authors.length, 2);
+        expect(pubspec.authors.length, 2);
       });
       test('produces an object with correct author names', () {
-        expect(pubspecYaml.authors, [author, anotherAuthor]);
+        expect(pubspec.authors, [author, anotherAuthor]);
       });
       test('produces an object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithTwoAuthors);
+        expect(pubspec.toYamlString(), pubspecWithTwoAuthors);
       });
     });
   });
 
   group('given pubspec.yaml with empty author specification', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithEmptyAuthorSpecification);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithEmptyAuthorSpecification,
+    );
 
     group('$PubspecYaml.loadFromYamlString)', () {
       test('produces an object with empty list of authors', () {
-        expect(pubspecYaml.authors, isEmpty);
+        expect(pubspec.authors, isEmpty);
       });
     });
   });
 
   group('given pubspec.yaml with empty authors specification', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithEmptyAuthorsSpecification);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithEmptyAuthorsSpecification,
+    );
 
     group('$PubspecYaml.loadFromYamlString)', () {
       test('produces an object with empty list of authors', () {
-        expect(pubspecYaml.authors, isEmpty);
+        expect(pubspec.authors, isEmpty);
       });
     });
   });
 }
 
 const author = 'Natalie Weizenbaum <nweiz@google.com>';
-const pubspecYamlWithSingleAuthor = '''
+const pubspecWithSingleAuthor = '''
 name: pubspec_yaml
 author: "$author"
 ''';
 
-const pubspecYamlWithoutAuthorSpecification = '''
+const pubspecWithoutAuthorSpecification = '''
 name: pubspec_yaml
 ''';
 
 const anotherAuthor = 'Abigail Larsen';
-const pubspecYamlWithTwoAuthors = '''
+const pubspecWithTwoAuthors = '''
 name: pubspec_yaml
 authors:
   - "$author"
   - $anotherAuthor
 ''';
 
-const pubspecYamlWithEmptyAuthorSpecification = '''
+const pubspecWithEmptyAuthorSpecification = '''
 name: pubspec_yaml
 author:
 ''';
 
-const pubspecYamlWithEmptyAuthorsSpecification = '''
+const pubspecWithEmptyAuthorsSpecification = '''
 name: pubspec_yaml
 authors:
 ''';

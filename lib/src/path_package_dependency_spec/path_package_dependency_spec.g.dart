@@ -15,11 +15,16 @@ abstract class $PathPackageDependencySpec {
   String get package;
   String get path;
   PathPackageDependencySpec copyWith({String package, String path}) =>
-      PathPackageDependencySpec(package: package ?? this.package, path: path ?? this.path);
+      PathPackageDependencySpec(
+          package: package ?? this.package, path: path ?? this.path);
   @override
-  String toString() => "PathPackageDependencySpec(package: $package, path: $path)";
+  String toString() =>
+      "PathPackageDependencySpec(package: $package, path: $path)";
   @override
-  bool operator ==(dynamic other) => other.runtimeType == runtimeType && package == other.package && path == other.path;
+  bool operator ==(dynamic other) =>
+      other.runtimeType == runtimeType &&
+      package == other.package &&
+      path == other.path;
   @override
   int get hashCode {
     var result = 17;
@@ -30,9 +35,10 @@ abstract class $PathPackageDependencySpec {
 }
 
 class PathPackageDependencySpec$ {
-  static final package =
-      Lens<PathPackageDependencySpec, String>((s_) => s_.package, (s_, package) => s_.copyWith(package: package));
-  static final path = Lens<PathPackageDependencySpec, String>((s_) => s_.path, (s_, path) => s_.copyWith(path: path));
+  static final package = Lens<PathPackageDependencySpec, String>(
+      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+  static final path = Lens<PathPackageDependencySpec, String>(
+      (s_) => s_.path, (s_, path) => s_.copyWith(path: path));
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic

@@ -28,37 +28,37 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml without dependencies', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutDependencies);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutDependencies);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with no dependencies', () {
-        expect(pubspecYaml.dependencies, isEmpty);
+        expect(pubspec.dependencies, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithoutDependencies);
+        expect(pubspec.toYamlString(), pubspecWithoutDependencies);
       });
     });
   });
 
   group('given pubspec.yaml with no dependencies', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithNoDependencies);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithNoDependencies);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with no dependencies', () {
-        expect(pubspecYaml.dependencies, isEmpty);
+        expect(pubspec.dependencies, isEmpty);
       });
     });
   });
 }
 
-const pubspecYamlWithoutDependencies = '''
+const pubspecWithoutDependencies = '''
 name: pubspec_yaml
 ''';
 
-const pubspecYamlWithNoDependencies = '''
+const pubspecWithNoDependencies = '''
 name: pubspec_yaml
 
 dependencies:

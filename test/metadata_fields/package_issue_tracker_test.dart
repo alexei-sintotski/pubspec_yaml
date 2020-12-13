@@ -28,49 +28,51 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package issue tracker', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithIssueTrackerDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithIssueTrackerDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package issue tracker', () {
-        expect(pubspecYaml.issueTracker.valueOr(() => ''), issueTracker);
+        expect(pubspec.issueTracker.valueOr(() => ''), issueTracker);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithIssueTrackerDefined);
+        expect(outputYaml, pubspecWithIssueTrackerDefined);
       });
     });
   });
 
   group('given pubspec.yaml without package issue tracker', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutIssueTracker);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutIssueTracker);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package issue tracker defined', () {
-        expect(pubspecYaml.issueTracker.hasValue, isFalse);
+        expect(pubspec.issueTracker.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithoutIssueTracker);
+        expect(outputYaml, pubspecWithoutIssueTracker);
       });
     });
   });
 }
 
 const issueTracker = 'https://example-pet-store.com/newtify/issues';
-const pubspecYamlWithIssueTrackerDefined = '''
+const pubspecWithIssueTrackerDefined = '''
 name: pubspec_yaml
 issue_tracker: "$issueTracker"
 ''';
 
-const pubspecYamlWithoutIssueTracker = '''
+const pubspecWithoutIssueTracker = '''
 name: pubspec_yaml
 ''';

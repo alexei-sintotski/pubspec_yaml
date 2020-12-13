@@ -28,21 +28,29 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with hosted package dependency', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithHostedPackageDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithHostedPackageDependency,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with single dependency', () {
-        expect(pubspecYaml.dependencies.length, 1);
+        expect(pubspec.dependencies.length, 1);
       });
       test('produces object with GitPackageDependencySpec', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(hosted: (p) => p, otherwise: () => null), isNotNull);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            hosted: (p) => p,
+            otherwise: () => null,
+          ),
+          isNotNull,
+        );
       });
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object without version specification', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.hasValue,
             otherwise: () => true,
           ),
@@ -53,21 +61,23 @@ void main() {
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithHostedPackageDependency);
+        expect(pubspec.toYamlString(), pubspecWithHostedPackageDependency);
       });
     });
   });
 
-  group('given pubspec.yaml with hosted package dependency with version specification', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithVersionSpec);
+  group(
+      'given pubspec.yaml with hosted package dependency with version specification',
+      () {
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithVersionSpec);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object with defined version', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.hasValue,
             otherwise: () => false,
           ),
@@ -76,7 +86,7 @@ void main() {
       });
       test('produces object with correct version', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.valueOr(() => ''),
             otherwise: () => '',
           ),
@@ -87,21 +97,23 @@ void main() {
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithVersionSpec);
+        expect(pubspec.toYamlString(), pubspecWithVersionSpec);
       });
     });
   });
 
   group('given pubspec.yaml with dependency hosted elsewhere', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPackageHostedElsewhere);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageHostedElsewhere,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object with correct dependency name on server', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.name.valueOr(() => ''),
             otherwise: () => '',
           ),
@@ -110,7 +122,7 @@ void main() {
       });
       test('produces object with correct server url', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.url.valueOr(() => ''),
             otherwise: () => '',
           ),
@@ -119,7 +131,7 @@ void main() {
       });
       test('produces object without version specification', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.hasValue,
             otherwise: () => true,
           ),
@@ -130,18 +142,21 @@ void main() {
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithPackageHostedElsewhere);
+        expect(pubspec.toYamlString(), pubspecWithPackageHostedElsewhere);
       });
     });
   });
 
-  group('given pubspec.yaml with dependency hosted elsewhere with version spec', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPackageHostedElsewhereWithVersionSpec);
+  group('given pubspec.yaml with dependency hosted elsewhere with version spec',
+      () {
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageHostedElsewhereWithVersionSpec,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with defined version', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.hasValue,
             otherwise: () => false,
           ),
@@ -151,7 +166,7 @@ void main() {
 
       test('produces object with correct version specification', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(
+          pubspec.dependencies.first.iswitcho(
             hosted: (p) => p.version.valueOr(() => ''),
             otherwise: () => '',
           ),
@@ -162,14 +177,17 @@ void main() {
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithPackageHostedElsewhereWithVersionSpec);
+        expect(
+          pubspec.toYamlString(),
+          pubspecWithPackageHostedElsewhereWithVersionSpec,
+        );
       });
     });
   });
 }
 
 const dependency = 'transmogrify';
-const pubspecYamlWithHostedPackageDependency = '''
+const pubspecWithHostedPackageDependency = '''
 name: pubspec_yaml
 
 dependencies:
@@ -177,7 +195,7 @@ dependencies:
 ''';
 
 const version = '^1.4.0';
-const pubspecYamlWithVersionSpec = '''
+const pubspecWithVersionSpec = '''
 name: pubspec_yaml
 
 dependencies:
@@ -186,7 +204,7 @@ dependencies:
 
 const name = 'transmogrify';
 const url = 'http://your-package-server.com';
-const pubspecYamlWithPackageHostedElsewhere = '''
+const pubspecWithPackageHostedElsewhere = '''
 name: pubspec_yaml
 
 dependencies:
@@ -196,7 +214,7 @@ dependencies:
       url: "$url"
 ''';
 
-const pubspecYamlWithPackageHostedElsewhereWithVersionSpec = '''
+const pubspecWithPackageHostedElsewhereWithVersionSpec = '''
 name: pubspec_yaml
 
 dependencies:

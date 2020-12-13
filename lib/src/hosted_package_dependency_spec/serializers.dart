@@ -38,13 +38,16 @@ extension HostedPackageDependencySpecToJson on HostedPackageDependencySpec {
                   if (name.hasValue) _Tokens.name: name.valueOr(() => ''),
                   if (url.hasValue) _Tokens.url: url.valueOr(() => ''),
                 },
-                if (version.hasValue) _Tokens.version: version.valueOr(() => ''),
+                if (version.hasValue)
+                  _Tokens.version: version.valueOr(() => ''),
               }
             : version.valueOr(() => null),
       };
 }
 
-HostedPackageDependencySpec loadHostedPackageDependencySpec(MapEntry<String, dynamic> entry) {
+HostedPackageDependencySpec loadHostedPackageDependencySpec(
+  MapEntry<String, dynamic> entry,
+) {
   final package = entry.key;
   final dynamic definition = entry.value;
   if (definition is Map<String, dynamic>) {
@@ -55,13 +58,19 @@ HostedPackageDependencySpec loadHostedPackageDependencySpec(MapEntry<String, dyn
   return _loadPubDevHostedDependency(package, definition as String);
 }
 
-HostedPackageDependencySpec _loadPubDevHostedDependency(String package, String definition) =>
+HostedPackageDependencySpec _loadPubDevHostedDependency(
+  String package,
+  String definition,
+) =>
     HostedPackageDependencySpec(
       package: package,
       version: Optional(definition),
     );
 
-HostedPackageDependencySpec _loadGenericHostedDependency(String package, Map<String, dynamic> definition) {
+HostedPackageDependencySpec _loadGenericHostedDependency(
+  String package,
+  Map<String, dynamic> definition,
+) {
   final definitionBody = definition[_Tokens.hosted] as Map<String, dynamic>;
   return HostedPackageDependencySpec(
     package: package,

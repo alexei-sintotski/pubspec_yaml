@@ -28,40 +28,59 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with SDK package dependency', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithSdkPackageDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithSdkPackageDependency,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with single dependency', () {
-        expect(pubspecYaml.dependencies.length, 1);
+        expect(pubspec.dependencies.length, 1);
       });
       test('produces object with SdkPackageDependencySpec', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(sdk: (p) => p, otherwise: () => null), isNotNull);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            sdk: (p) => p,
+            otherwise: () => null,
+          ),
+          isNotNull,
+        );
       });
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object with correct sdk name', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(sdk: (p) => p.sdk, otherwise: () => ''), sdk);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            sdk: (p) => p.sdk,
+            otherwise: () => '',
+          ),
+          sdk,
+        );
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithSdkPackageDependency);
+        expect(pubspec.toYamlString(), pubspecWithSdkPackageDependency);
       });
     });
   });
 
   group('given pubspec.yaml with versioned SDK package dependency', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithVersionedSdkPackageDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithVersionedSdkPackageDependency,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct version name', () {
         expect(
-          pubspecYaml.dependencies.first.iswitcho(sdk: (p) => p.version.valueOr(() => ''), otherwise: () => ''),
+          pubspec.dependencies.first.iswitcho(
+            sdk: (p) => p.version.valueOr(() => ''),
+            otherwise: () => '',
+          ),
           version,
         );
       });
@@ -69,7 +88,10 @@ void main() {
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithVersionedSdkPackageDependency);
+        expect(
+          pubspec.toYamlString(),
+          pubspecWithVersionedSdkPackageDependency,
+        );
       });
     });
   });
@@ -77,7 +99,7 @@ void main() {
 
 const dependency = 'flutter_driver';
 const sdk = 'flutter';
-const pubspecYamlWithSdkPackageDependency = '''
+const pubspecWithSdkPackageDependency = '''
 name: pubspec_yaml
 
 dependencies:
@@ -86,7 +108,7 @@ dependencies:
 ''';
 
 const version = '^0.0.1';
-const pubspecYamlWithVersionedSdkPackageDependency = '''
+const pubspecWithVersionedSdkPackageDependency = '''
 name: pubspec_yaml
 
 dependencies:

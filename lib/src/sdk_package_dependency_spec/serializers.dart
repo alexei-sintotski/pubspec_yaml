@@ -39,7 +39,9 @@ extension SdkPackageDependencySpecToJson on SdkPackageDependencySpec {
       };
 }
 
-SdkPackageDependencySpec loadSdkPackageDependencySpec(MapEntry<String, dynamic> entry) {
+SdkPackageDependencySpec loadSdkPackageDependencySpec(
+  MapEntry<String, dynamic> entry,
+) {
   final definition = entry.value as Map<String, dynamic>;
   return SdkPackageDependencySpec(
     package: entry.key,
