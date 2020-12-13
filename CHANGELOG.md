@@ -1,3 +1,5 @@
+## [2.0.1+1] - Upgrade to Dart 2.10
+
 ## [2.0.1] - 2020-04-23
 * Support for functional_data 0.3.0
 
