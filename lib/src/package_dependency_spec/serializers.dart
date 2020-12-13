@@ -61,5 +61,4 @@ class _Tokens {
   static const sdk = 'sdk';
   static const git = 'git';
   static const path = 'path';
-  static const hosted = 'hosted';
 }
