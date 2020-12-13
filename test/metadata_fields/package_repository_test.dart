@@ -28,49 +28,51 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package repository', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithRepositoryDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithRepositoryDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package repository', () {
-        expect(pubspecYaml.repository.valueOr(() => ''), repository);
+        expect(pubspec.repository.valueOr(() => ''), repository);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithRepositoryDefined);
+        expect(outputYaml, pubspecWithRepositoryDefined);
       });
     });
   });
 
   group('given pubspec.yaml without package repository', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutRepository);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutRepository);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package repository defined', () {
-        expect(pubspecYaml.repository.hasValue, isFalse);
+        expect(pubspec.repository.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithoutRepository);
+        expect(outputYaml, pubspecWithoutRepository);
       });
     });
   });
 }
 
 const repository = 'https://example-pet-store.com/newtify';
-const pubspecYamlWithRepositoryDefined = '''
+const pubspecWithRepositoryDefined = '''
 name: pubspec_yaml
 repository: "$repository"
 ''';
 
-const pubspecYamlWithoutRepository = '''
+const pubspecWithoutRepository = '''
 name: pubspec_yaml
 ''';

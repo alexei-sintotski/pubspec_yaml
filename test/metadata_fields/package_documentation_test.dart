@@ -28,49 +28,51 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package documentation', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithDocumentationDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithDocumentationDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package documentation', () {
-        expect(pubspecYaml.documentation.valueOr(() => ''), documentation);
+        expect(pubspec.documentation.valueOr(() => ''), documentation);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithDocumentationDefined);
+        expect(outputYaml, pubspecWithDocumentationDefined);
       });
     });
   });
 
   group('given pubspec.yaml without package documentation', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutDocumentation);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutDocumentation);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package documentation defined', () {
-        expect(pubspecYaml.documentation.hasValue, isFalse);
+        expect(pubspec.documentation.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithoutDocumentation);
+        expect(outputYaml, pubspecWithoutDocumentation);
       });
     });
   });
 }
 
 const documentation = 'https://example-pet-store.com/newtify/docs';
-const pubspecYamlWithDocumentationDefined = '''
+const pubspecWithDocumentationDefined = '''
 name: pubspec_yaml
 documentation: "$documentation"
 ''';
 
-const pubspecYamlWithoutDocumentation = '''
+const pubspecWithoutDocumentation = '''
 name: pubspec_yaml
 ''';

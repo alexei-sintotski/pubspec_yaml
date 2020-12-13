@@ -3,27 +3,29 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package name', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPackageNameDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageNameDefined,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package name', () {
-        expect(pubspecYaml.name, packageName);
+        expect(pubspec.name, packageName);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithPackageNameDefined);
+        expect(outputYaml, pubspecWithPackageNameDefined);
       });
     });
   });
 }
 
 const packageName = 'pubspec_yaml';
-const pubspecYamlWithPackageNameDefined = '''
+const pubspecWithPackageNameDefined = '''
 name: $packageName
 ''';

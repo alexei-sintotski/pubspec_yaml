@@ -28,60 +28,98 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with Git package dependency', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithGitPackageDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithGitPackageDependency,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with single dependency', () {
-        expect(pubspecYaml.dependencies.length, 1);
+        expect(pubspec.dependencies.length, 1);
       });
       test('produces object with GitPackageDependencySpec', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p, otherwise: () => null), isNotNull);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            git: (p) => p,
+            otherwise: () => null,
+          ),
+          isNotNull,
+        );
       });
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object with correct url', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p.url, otherwise: () => ''), url);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            git: (p) => p.url,
+            otherwise: () => '',
+          ),
+          url,
+        );
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithGitPackageDependency);
+        expect(pubspec.toYamlString(), pubspecWithGitPackageDependency);
       });
     });
   });
 
-  group('given pubspec.yaml with Git package dependency with ref specified', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithGitRefSpecification);
+  group('given pubspec.yaml with Git package dependency with ref specified',
+      () {
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithGitRefSpecification,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), dependency);
+        expect(pubspec.dependencies.first.package(), dependency);
       });
       test('produces object with correct url', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p.url, otherwise: () => ''), url);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            git: (p) => p.url,
+            otherwise: () => '',
+          ),
+          url,
+        );
       });
       test('produces object with correct ref', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p.ref.valueOr(() => ''), otherwise: () => ''), ref);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            git: (p) => p.ref.valueOr(() => ''),
+            otherwise: () => '',
+          ),
+          ref,
+        );
       });
       test('produces object without path', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p.path.hasValue, otherwise: () => true), isFalse);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            git: (p) => p.path.hasValue,
+            otherwise: () => true,
+          ),
+          isFalse,
+        );
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithGitRefSpecification);
+        expect(pubspec.toYamlString(), pubspecWithGitRefSpecification);
       });
     });
   });
 
-  group('given pubspec.yaml with Git package dependency with path specified', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPathSpecification);
+  group('given pubspec.yaml with Git package dependency with path specified',
+      () {
+    final pubspecYaml = PubspecYaml.loadFromYamlString(
+      pubspecYamlWithPathSpecification,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct path', () {
@@ -93,7 +131,13 @@ void main() {
             path);
       });
       test('produces object without ref', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(git: (p) => p.ref.hasValue, otherwise: () => true), isFalse);
+        expect(
+          pubspecYaml.dependencies.first.iswitcho(
+            git: (p) => p.ref.hasValue,
+            otherwise: () => true,
+          ),
+          isFalse,
+        );
       });
     });
 
@@ -107,7 +151,7 @@ void main() {
 
 const dependency = 'kittens';
 const url = 'git://github.com/munificent/kittens.git';
-const pubspecYamlWithGitPackageDependency = '''
+const pubspecWithGitPackageDependency = '''
 name: pubspec_yaml
 
 dependencies:
@@ -116,7 +160,7 @@ dependencies:
 ''';
 
 const ref = 'some-branch';
-const pubspecYamlWithGitRefSpecification = '''
+const pubspecWithGitRefSpecification = '''
 name: pubspec_yaml
 
 dependencies:

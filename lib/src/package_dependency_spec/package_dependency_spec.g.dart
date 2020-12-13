@@ -16,16 +16,29 @@ abstract class _$PackageDependencySpec {
             sdk == null && git != null && path == null && hosted == null ||
             sdk == null && git == null && path != null && hosted == null ||
             sdk == null && git == null && path == null && hosted != null);
-  static PackageDependencySpec load<$T extends PackageDependencySpecRecordBase<$T>>(
+  static PackageDependencySpec
+      load<$T extends PackageDependencySpecRecordBase<$T>>(
     $T rec,
   ) {
-    if (rec.sdk != null && rec.git == null && rec.path == null && rec.hosted == null) {
+    if (rec.sdk != null &&
+        rec.git == null &&
+        rec.path == null &&
+        rec.hosted == null) {
       return PackageDependencySpec.sdk(rec.sdk);
-    } else if (rec.sdk == null && rec.git != null && rec.path == null && rec.hosted == null) {
+    } else if (rec.sdk == null &&
+        rec.git != null &&
+        rec.path == null &&
+        rec.hosted == null) {
       return PackageDependencySpec.git(rec.git);
-    } else if (rec.sdk == null && rec.git == null && rec.path != null && rec.hosted == null) {
+    } else if (rec.sdk == null &&
+        rec.git == null &&
+        rec.path != null &&
+        rec.hosted == null) {
       return PackageDependencySpec.path(rec.path);
-    } else if (rec.sdk == null && rec.git == null && rec.path == null && rec.hosted != null) {
+    } else if (rec.sdk == null &&
+        rec.git == null &&
+        rec.path == null &&
+        rec.hosted != null) {
       return PackageDependencySpec.hosted(rec.hosted);
     } else {
       throw Exception("Cannot select a $PackageDependencySpec case given $rec");
@@ -64,7 +77,8 @@ abstract class _$PackageDependencySpec {
     } else if (this.hosted != null) {
       return hosted(this.hosted);
     } else {
-      throw StateError("an instance of $PackageDependencySpec has no case selected");
+      throw StateError(
+          "an instance of $PackageDependencySpec has no case selected");
     }
   }
 

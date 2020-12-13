@@ -17,14 +17,18 @@ abstract class $HostedPackageDependencySpec {
   Optional<String> get name;
   Optional<String> get url;
   HostedPackageDependencySpec copyWith(
-          {String package, Optional<String> version, Optional<String> name, Optional<String> url}) =>
+          {String package,
+          Optional<String> version,
+          Optional<String> name,
+          Optional<String> url}) =>
       HostedPackageDependencySpec(
           package: package ?? this.package,
           version: version ?? this.version,
           name: name ?? this.name,
           url: url ?? this.url);
   @override
-  String toString() => "HostedPackageDependencySpec(package: $package, version: $version, name: $name, url: $url)";
+  String toString() =>
+      "HostedPackageDependencySpec(package: $package, version: $version, name: $name, url: $url)";
   @override
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
@@ -44,14 +48,14 @@ abstract class $HostedPackageDependencySpec {
 }
 
 class HostedPackageDependencySpec$ {
-  static final package =
-      Lens<HostedPackageDependencySpec, String>((s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+  static final package = Lens<HostedPackageDependencySpec, String>(
+      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
   static final version = Lens<HostedPackageDependencySpec, Optional<String>>(
       (s_) => s_.version, (s_, version) => s_.copyWith(version: version));
-  static final name =
-      Lens<HostedPackageDependencySpec, Optional<String>>((s_) => s_.name, (s_, name) => s_.copyWith(name: name));
-  static final url =
-      Lens<HostedPackageDependencySpec, Optional<String>>((s_) => s_.url, (s_, url) => s_.copyWith(url: url));
+  static final name = Lens<HostedPackageDependencySpec, Optional<String>>(
+      (s_) => s_.name, (s_, name) => s_.copyWith(name: name));
+  static final url = Lens<HostedPackageDependencySpec, Optional<String>>(
+      (s_) => s_.url, (s_, url) => s_.copyWith(url: url));
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic

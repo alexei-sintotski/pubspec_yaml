@@ -28,32 +28,32 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with dev dependencies', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithDevDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithDevDependency);
 
     group('$PubspecYaml.loadFromYamlString()', () {
       test('produces object with non-empty list of dev dependencies', () {
-        expect(pubspecYaml.devDependencies, isNotEmpty);
+        expect(pubspec.devDependencies, isNotEmpty);
       });
 
       test('produces dev dependency with correct name', () {
-        expect(pubspecYaml.devDependencies.first.package(), dependency);
+        expect(pubspec.devDependencies.first.package(), dependency);
       });
 
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString())', () {
       test('produces string identical to the original input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithDevDependency);
+        expect(pubspec.toYamlString(), pubspecWithDevDependency);
       });
     });
   });
 }
 
 const dependency = 'test';
-const pubspecYamlWithDevDependency = '''
+const pubspecWithDevDependency = '''
 name: pubspec_yaml
 
 dev_dependencies:

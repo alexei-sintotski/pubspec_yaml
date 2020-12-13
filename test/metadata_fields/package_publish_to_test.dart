@@ -28,28 +28,28 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with publish_to specification', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPublishToSpec);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithPublishToSpec);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with publish_to data', () {
-        expect(pubspecYaml.publishTo.valueOr(() => ''), publishTo);
+        expect(pubspec.publishTo.valueOr(() => ''), publishTo);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithPublishToSpec);
+        expect(outputYaml, pubspecWithPublishToSpec);
       });
     });
   });
 }
 
 const publishTo = 'none';
-const pubspecYamlWithPublishToSpec = '''
+const pubspecWithPublishToSpec = '''
 name: pubspec_yaml
 publish_to: $publishTo
 ''';

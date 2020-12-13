@@ -28,26 +28,40 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with path package dependency', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithPathPackageDependency);
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPathPackageDependency,
+    );
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with single dependency', () {
-        expect(pubspecYaml.dependencies.length, 1);
+        expect(pubspec.dependencies.length, 1);
       });
       test('produces object with PathPackageDependencySpec', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(path: (p) => p, otherwise: () => null), isNotNull);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            path: (p) => p,
+            otherwise: () => null,
+          ),
+          isNotNull,
+        );
       });
       test('produces object with correct dependency name', () {
-        expect(pubspecYaml.dependencies.first.package(), package);
+        expect(pubspec.dependencies.first.package(), package);
       });
       test('produces object with correct path', () {
-        expect(pubspecYaml.dependencies.first.iswitcho(path: (p) => p.path, otherwise: () => ''), path);
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            path: (p) => p.path,
+            otherwise: () => '',
+          ),
+          path,
+        );
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces string equivalent to the input', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithPathPackageDependency);
+        expect(pubspec.toYamlString(), pubspecWithPathPackageDependency);
       });
     });
   });
@@ -55,7 +69,7 @@ void main() {
 
 const package = 'transmogrify';
 const path = '/Users/me/transmogrify';
-const pubspecYamlWithPathPackageDependency = '''
+const pubspecWithPathPackageDependency = '''
 name: pubspec_yaml
 
 dependencies:

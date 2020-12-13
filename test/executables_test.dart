@@ -28,29 +28,42 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with executables spec', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithExecutables);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecYamlWithExecutables);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with two executables entries', () {
-        expect(pubspecYaml.executables.length, 2);
+        expect(pubspec.executables.length, 2);
       });
       test('produces object containing correct executable names', () {
-        expect(pubspecYaml.executables.keys, [executableWithCustomScriptName, executableWithoutCustomScriptName]);
+        expect(pubspec.executables.keys, [
+          executableWithCustomScriptName,
+          executableWithoutCustomScriptName
+        ]);
       });
-      test('fills no custom script name for executable without custom script name', () {
-        expect(pubspecYaml.executables[executableWithoutCustomScriptName].hasValue, isFalse);
+      test(
+          'fills no custom script name for executable without custom script name',
+          () {
+        expect(
+          pubspec.executables[executableWithoutCustomScriptName].hasValue,
+          isFalse,
+        );
       });
-      test('fills correct custom script name for executable with the specified custom script name', () {
-        expect(pubspecYaml.executables[executableWithCustomScriptName].valueOr(() => ''), customScriptName);
+      test(
+          'fills correct custom script name for executable with the specified custom script name',
+          () {
+        expect(
+          pubspec.executables[executableWithCustomScriptName].valueOr(() => ''),
+          customScriptName,
+        );
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
       test('produces output identical to the original string', () {
-        expect(pubspecYaml.toYamlString(), pubspecYamlWithExecutables);
+        expect(pubspec.toYamlString(), pubspecYamlWithExecutables);
       });
     });
   });

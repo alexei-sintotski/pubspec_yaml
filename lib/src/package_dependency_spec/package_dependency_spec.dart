@@ -37,10 +37,14 @@ part 'package_dependency_spec.g.dart';
 @immutable
 @SumType()
 class PackageDependencySpec extends _$PackageDependencySpec {
-  const PackageDependencySpec.sdk(SdkPackageDependencySpec package) : super(sdk: package);
-  const PackageDependencySpec.git(GitPackageDependencySpec package) : super(git: package);
-  const PackageDependencySpec.path(PathPackageDependencySpec package) : super(path: package);
-  const PackageDependencySpec.hosted(HostedPackageDependencySpec package) : super(hosted: package);
+  const PackageDependencySpec.sdk(SdkPackageDependencySpec package)
+      : super(sdk: package);
+  const PackageDependencySpec.git(GitPackageDependencySpec package)
+      : super(git: package);
+  const PackageDependencySpec.path(PathPackageDependencySpec package)
+      : super(path: package);
+  const PackageDependencySpec.hosted(HostedPackageDependencySpec package)
+      : super(hosted: package);
 
   /// Returns package name
   String package() => iswitch(

@@ -157,35 +157,57 @@ extension PubspecYamlFromYamlString on String {
 
 String _formatToYaml(PubspecYaml pubspecYaml) => '${[
       _packageMetadataToYaml(pubspecYaml),
-      if (pubspecYaml.dependencies.isNotEmpty) _dependenciesToYaml(pubspecYaml.dependencies, _Tokens.dependencies),
+      if (pubspecYaml.dependencies.isNotEmpty)
+        _dependenciesToYaml(pubspecYaml.dependencies, _Tokens.dependencies),
       if (pubspecYaml.devDependencies.isNotEmpty)
-        _dependenciesToYaml(pubspecYaml.devDependencies, _Tokens.devDependencies),
+        _dependenciesToYaml(
+          pubspecYaml.devDependencies,
+          _Tokens.devDependencies,
+        ),
       if (pubspecYaml.dependencyOverrides.isNotEmpty)
-        _dependenciesToYaml(pubspecYaml.dependencyOverrides, _Tokens.dependencyOverrides),
-      if (pubspecYaml.environment.isNotEmpty) _environmentToYaml(pubspecYaml.environment),
-      if (pubspecYaml.executables.isNotEmpty) _executablesToYaml(pubspecYaml.executables),
+        _dependenciesToYaml(
+          pubspecYaml.dependencyOverrides,
+          _Tokens.dependencyOverrides,
+        ),
+      if (pubspecYaml.environment.isNotEmpty)
+        _environmentToYaml(pubspecYaml.environment),
+      if (pubspecYaml.executables.isNotEmpty)
+        _executablesToYaml(pubspecYaml.executables),
       for (final customField in pubspecYaml.customFields.entries)
-        json2yaml(Map<String, dynamic>.fromEntries({customField}), yamlStyle: YamlStyle.pubspecYaml),
+        json2yaml(
+          Map<String, dynamic>.fromEntries({customField}),
+          yamlStyle: YamlStyle.pubspecYaml,
+        ),
     ].join("\n\n")}\n';
 
-String _packageMetadataToYaml(PubspecYaml pubspecYaml) => json2yaml(<String, dynamic>{
+String _packageMetadataToYaml(PubspecYaml pubspecYaml) =>
+    json2yaml(<String, dynamic>{
       _Tokens.name: pubspecYaml.name,
-      if (pubspecYaml.version.hasValue) _Tokens.version: pubspecYaml.version.valueOr(() => ''),
-      if (pubspecYaml.description.hasValue) _Tokens.description: pubspecYaml.description.valueOr(() => ''),
-      if (pubspecYaml.authors.length == 1) _Tokens.author: pubspecYaml.authors.first,
+      if (pubspecYaml.version.hasValue)
+        _Tokens.version: pubspecYaml.version.valueOr(() => ''),
+      if (pubspecYaml.description.hasValue)
+        _Tokens.description: pubspecYaml.description.valueOr(() => ''),
+      if (pubspecYaml.authors.length == 1)
+        _Tokens.author: pubspecYaml.authors.first,
       if (pubspecYaml.authors.length > 1) _Tokens.authors: pubspecYaml.authors,
-      if (pubspecYaml.homepage.hasValue) _Tokens.homepage: pubspecYaml.homepage.valueOr(() => ''),
-      if (pubspecYaml.repository.hasValue) _Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
-      if (pubspecYaml.issueTracker.hasValue) _Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
-      if (pubspecYaml.documentation.hasValue) _Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
-      if (pubspecYaml.publishTo.hasValue) _Tokens.publishTo: pubspecYaml.publishTo.valueOr(() => ''),
+      if (pubspecYaml.homepage.hasValue)
+        _Tokens.homepage: pubspecYaml.homepage.valueOr(() => ''),
+      if (pubspecYaml.repository.hasValue)
+        _Tokens.repository: pubspecYaml.repository.valueOr(() => ''),
+      if (pubspecYaml.issueTracker.hasValue)
+        _Tokens.issueTracker: pubspecYaml.issueTracker.valueOr(() => ''),
+      if (pubspecYaml.documentation.hasValue)
+        _Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
+      if (pubspecYaml.publishTo.hasValue)
+        _Tokens.publishTo: pubspecYaml.publishTo.valueOr(() => ''),
     }, yamlStyle: YamlStyle.pubspecYaml);
 
 String _dependenciesToYaml(
   Iterable<PackageDependencySpec> dependencies,
   String key,
 ) =>
-    json2yaml(_dependenciesToJson(dependencies, key), yamlStyle: YamlStyle.pubspecYaml);
+    json2yaml(_dependenciesToJson(dependencies, key),
+        yamlStyle: YamlStyle.pubspecYaml);
 
 Map<String, dynamic> _dependenciesToJson(
   Iterable<PackageDependencySpec> dependencies,
@@ -193,7 +215,10 @@ Map<String, dynamic> _dependenciesToJson(
 ) =>
     <String, dynamic>{
       key: <String, dynamic>{
-        for (final dep in dependencies.toList()..sort((a, b) => a.package().compareTo(b.package()))) ...dep.toJson()
+        for (final dep
+            in dependencies.toList()
+              ..sort((a, b) => a.package().compareTo(b.package())))
+          ...dep.toJson()
       }
     };
 
@@ -202,17 +227,20 @@ String _environmentToYaml(Map<String, String> environment) => json2yaml(
       yamlStyle: YamlStyle.pubspecYaml,
     );
 
-String _executablesToYaml(Map<String, Optional<String>> executables) => json2yaml(
+String _executablesToYaml(Map<String, Optional<String>> executables) =>
+    json2yaml(
       <String, dynamic>{
         _Tokens.executables: <String, dynamic>{
-          for (final entry in executables.entries) entry.key: entry.value.valueOr(() => null),
+          for (final entry in executables.entries)
+            entry.key: entry.value.valueOr(() => null),
         }
       },
       yamlStyle: YamlStyle.pubspecYaml,
     );
 
 PubspecYaml _loadFromYaml(String content) {
-  final jsonMap = json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
+  final jsonMap =
+      json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
   return PubspecYaml(
     name: jsonMap[_Tokens.name] as String,
     version: Optional(jsonMap[_Tokens.version] as String),
@@ -220,7 +248,8 @@ PubspecYaml _loadFromYaml(String content) {
     authors: [
       if (jsonMap[_Tokens.author] != null) jsonMap[_Tokens.author] as String,
       if (jsonMap[_Tokens.authors] != null)
-        ...(jsonMap[_Tokens.authors] as List<dynamic>).map((dynamic author) => author as String)
+        ...(jsonMap[_Tokens.authors] as List<dynamic>)
+            .map((dynamic author) => author as String)
     ],
     homepage: Optional(jsonMap[_Tokens.homepage] as String),
     repository: Optional(jsonMap[_Tokens.repository] as String),
@@ -228,28 +257,45 @@ PubspecYaml _loadFromYaml(String content) {
     documentation: Optional(jsonMap[_Tokens.documentation] as String),
     dependencies: _loadDependencies(jsonMap, _Tokens.dependencies),
     devDependencies: _loadDependencies(jsonMap, _Tokens.devDependencies),
-    dependencyOverrides: _loadDependencies(jsonMap, _Tokens.dependencyOverrides),
-    environment: jsonMap.containsKey(_Tokens.environment) && jsonMap[_Tokens.environment] != null
+    dependencyOverrides: _loadDependencies(
+      jsonMap,
+      _Tokens.dependencyOverrides,
+    ),
+    environment: jsonMap.containsKey(_Tokens.environment) &&
+            jsonMap[_Tokens.environment] != null
         ? _loadEnvironment(jsonMap[_Tokens.environment] as Map<String, dynamic>)
         : {},
-    executables: jsonMap.containsKey(_Tokens.executables) && jsonMap[_Tokens.executables] != null
+    executables: jsonMap.containsKey(_Tokens.executables) &&
+            jsonMap[_Tokens.executables] != null
         ? _loadExecutables(jsonMap[_Tokens.executables] as Map<String, dynamic>)
         : {},
     publishTo: Optional(jsonMap[_Tokens.publishTo] as String),
-    customFields: Map<String, dynamic>.fromEntries(jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key))),
+    customFields: Map<String, dynamic>.fromEntries(
+      jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key)),
+    ),
   );
 }
 
-Iterable<PackageDependencySpec> _loadDependencies(Map<String, dynamic> jsonMap, String key) => [
+Iterable<PackageDependencySpec> _loadDependencies(
+        Map<String, dynamic> jsonMap, String key) =>
+    [
       if (jsonMap.containsKey(key) && jsonMap[key] != null)
-        ...(jsonMap[key] as Map<String, dynamic>).entries.map(loadPackageDependencySpec)
+        ...(jsonMap[key] as Map<String, dynamic>)
+            .entries
+            .map(loadPackageDependencySpec)
     ];
 
 Map<String, String> _loadEnvironment(Map<String, dynamic> environment) =>
     environment.map((key, dynamic value) => MapEntry(key, value as String));
 
-Map<String, Optional<String>> _loadExecutables(Map<String, dynamic> executables) =>
-    executables.map((key, dynamic value) => MapEntry(key, Optional(value as String)));
+Map<String, Optional<String>> _loadExecutables(
+        Map<String, dynamic> executables) =>
+    executables.map((key, dynamic value) => MapEntry(
+          key,
+          Optional(
+            value as String,
+          ),
+        ));
 
 const _knownTokens = [
   _Tokens.name,

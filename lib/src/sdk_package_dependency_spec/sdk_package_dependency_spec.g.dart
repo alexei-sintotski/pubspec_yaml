@@ -15,13 +15,21 @@ abstract class $SdkPackageDependencySpec {
   String get package;
   String get sdk;
   Optional<String> get version;
-  SdkPackageDependencySpec copyWith({String package, String sdk, Optional<String> version}) => SdkPackageDependencySpec(
-      package: package ?? this.package, sdk: sdk ?? this.sdk, version: version ?? this.version);
+  SdkPackageDependencySpec copyWith(
+          {String package, String sdk, Optional<String> version}) =>
+      SdkPackageDependencySpec(
+          package: package ?? this.package,
+          sdk: sdk ?? this.sdk,
+          version: version ?? this.version);
   @override
-  String toString() => "SdkPackageDependencySpec(package: $package, sdk: $sdk, version: $version)";
+  String toString() =>
+      "SdkPackageDependencySpec(package: $package, sdk: $sdk, version: $version)";
   @override
   bool operator ==(dynamic other) =>
-      other.runtimeType == runtimeType && package == other.package && sdk == other.sdk && version == other.version;
+      other.runtimeType == runtimeType &&
+      package == other.package &&
+      sdk == other.sdk &&
+      version == other.version;
   @override
   int get hashCode {
     var result = 17;
@@ -33,9 +41,10 @@ abstract class $SdkPackageDependencySpec {
 }
 
 class SdkPackageDependencySpec$ {
-  static final package =
-      Lens<SdkPackageDependencySpec, String>((s_) => s_.package, (s_, package) => s_.copyWith(package: package));
-  static final sdk = Lens<SdkPackageDependencySpec, String>((s_) => s_.sdk, (s_, sdk) => s_.copyWith(sdk: sdk));
+  static final package = Lens<SdkPackageDependencySpec, String>(
+      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+  static final sdk = Lens<SdkPackageDependencySpec, String>(
+      (s_) => s_.sdk, (s_, sdk) => s_.copyWith(sdk: sdk));
   static final version = Lens<SdkPackageDependencySpec, Optional<String>>(
       (s_) => s_.version, (s_, version) => s_.copyWith(version: version));
 }

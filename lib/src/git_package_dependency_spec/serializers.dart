@@ -30,13 +30,16 @@ import 'git_package_dependency_spec.dart';
 // ignore_for_file: avoid_as
 // ignore_for_file: public_member_api_docs
 
-GitPackageDependencySpec loadGitPackageDependencySpec(MapEntry<String, dynamic> entry) {
+GitPackageDependencySpec loadGitPackageDependencySpec(
+  MapEntry<String, dynamic> entry,
+) {
   final package = entry.key;
   final dynamic definition = (entry.value as Map<String, dynamic>)[_Tokens.git];
   if (definition is String) {
     return _loadFromSimpleGitDependencyDefinition(package, definition);
   } else {
-    return _loadFromDetailedGitDependencyDefinition(package, definition as Map<String, dynamic>);
+    return _loadFromDetailedGitDependencyDefinition(
+        package, definition as Map<String, dynamic>);
   }
 }
 
@@ -54,10 +57,16 @@ extension GitPackageDependencySpecToJson on GitPackageDependencySpec {
       };
 }
 
-GitPackageDependencySpec _loadFromSimpleGitDependencyDefinition(String package, String url) =>
+GitPackageDependencySpec _loadFromSimpleGitDependencyDefinition(
+  String package,
+  String url,
+) =>
     GitPackageDependencySpec(package: package, url: url);
 
-GitPackageDependencySpec _loadFromDetailedGitDependencyDefinition(String package, Map<String, dynamic> definition) =>
+GitPackageDependencySpec _loadFromDetailedGitDependencyDefinition(
+  String package,
+  Map<String, dynamic> definition,
+) =>
     GitPackageDependencySpec(
       package: package,
       url: definition[_Tokens.url] as String,

@@ -28,49 +28,49 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with package homepage', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithHomepageDefined);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithHomepageDefined);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object with correct package homepage', () {
-        expect(pubspecYaml.homepage.valueOr(() => ''), homepage);
+        expect(pubspec.homepage.valueOr(() => ''), homepage);
       });
       test('produces object without custom fields', () {
-        expect(pubspecYaml.customFields, isEmpty);
+        expect(pubspec.customFields, isEmpty);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithHomepageDefined);
+        expect(outputYaml, pubspecWithHomepageDefined);
       });
     });
   });
 
   group('given pubspec.yaml without package homepage', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithoutHomepage);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithoutHomepage);
 
     group('$PubspecYaml.loadFromYamlString', () {
       test('produces object without package homepage defined', () {
-        expect(pubspecYaml.homepage.hasValue, isFalse);
+        expect(pubspec.homepage.hasValue, isFalse);
       });
     });
 
     group('$PubspecYaml.toYamlString', () {
-      final outputYaml = pubspecYaml.toYamlString();
+      final outputYaml = pubspec.toYamlString();
       test('produces string equivalent to the input', () {
-        expect(outputYaml, pubspecYamlWithoutHomepage);
+        expect(outputYaml, pubspecWithoutHomepage);
       });
     });
   });
 }
 
 const homepage = 'https://example-pet-store.com/newtify';
-const pubspecYamlWithHomepageDefined = '''
+const pubspecWithHomepageDefined = '''
 name: pubspec_yaml
 homepage: "$homepage"
 ''';
 
-const pubspecYamlWithoutHomepage = '''
+const pubspecWithoutHomepage = '''
 name: pubspec_yaml
 ''';

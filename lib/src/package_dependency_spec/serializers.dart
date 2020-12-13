@@ -41,7 +41,9 @@ extension PackageDependencySpecToJson on PackageDependencySpec {
       );
 }
 
-PackageDependencySpec loadPackageDependencySpec(MapEntry<String, dynamic> entry) {
+PackageDependencySpec loadPackageDependencySpec(
+  MapEntry<String, dynamic> entry,
+) {
   {
     final dynamic value = entry.value;
     if (value is Map<String, dynamic>) {

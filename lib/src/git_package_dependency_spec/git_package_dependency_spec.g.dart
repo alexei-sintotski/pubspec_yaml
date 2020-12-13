@@ -16,11 +16,19 @@ abstract class $GitPackageDependencySpec {
   String get url;
   Optional<String> get ref;
   Optional<String> get path;
-  GitPackageDependencySpec copyWith({String package, String url, Optional<String> ref, Optional<String> path}) =>
+  GitPackageDependencySpec copyWith(
+          {String package,
+          String url,
+          Optional<String> ref,
+          Optional<String> path}) =>
       GitPackageDependencySpec(
-          package: package ?? this.package, url: url ?? this.url, ref: ref ?? this.ref, path: path ?? this.path);
+          package: package ?? this.package,
+          url: url ?? this.url,
+          ref: ref ?? this.ref,
+          path: path ?? this.path);
   @override
-  String toString() => "GitPackageDependencySpec(package: $package, url: $url, ref: $ref, path: $path)";
+  String toString() =>
+      "GitPackageDependencySpec(package: $package, url: $url, ref: $ref, path: $path)";
   @override
   bool operator ==(dynamic other) =>
       other.runtimeType == runtimeType &&
@@ -40,13 +48,14 @@ abstract class $GitPackageDependencySpec {
 }
 
 class GitPackageDependencySpec$ {
-  static final package =
-      Lens<GitPackageDependencySpec, String>((s_) => s_.package, (s_, package) => s_.copyWith(package: package));
-  static final url = Lens<GitPackageDependencySpec, String>((s_) => s_.url, (s_, url) => s_.copyWith(url: url));
-  static final ref =
-      Lens<GitPackageDependencySpec, Optional<String>>((s_) => s_.ref, (s_, ref) => s_.copyWith(ref: ref));
-  static final path =
-      Lens<GitPackageDependencySpec, Optional<String>>((s_) => s_.path, (s_, path) => s_.copyWith(path: path));
+  static final package = Lens<GitPackageDependencySpec, String>(
+      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+  static final url = Lens<GitPackageDependencySpec, String>(
+      (s_) => s_.url, (s_, url) => s_.copyWith(url: url));
+  static final ref = Lens<GitPackageDependencySpec, Optional<String>>(
+      (s_) => s_.ref, (s_, ref) => s_.copyWith(ref: ref));
+  static final path = Lens<GitPackageDependencySpec, Optional<String>>(
+      (s_) => s_.path, (s_, path) => s_.copyWith(path: path));
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic

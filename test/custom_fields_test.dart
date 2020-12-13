@@ -3,46 +3,51 @@ import 'package:test/test.dart';
 
 void main() {
   group('given pubspec.yaml with one custom field', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithOneCustomField);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithOneCustomField);
     group('$PubspecYaml.loadFromYamlString', () {
       test('it produces object with a single custom field', () {
-        expect(pubspecYaml.customFields.length, 1);
+        expect(pubspec.customFields.length, 1);
       });
       test('it produces object with correct custom field', () {
-        expect(pubspecYaml.customFields.keys, contains(customFieldName));
+        expect(pubspec.customFields.keys, contains(customFieldName));
       });
     });
     group('$PubspecYaml.toYamlString', () {
       test('preserves custom fields data', () {
-        expect(PubspecYaml.loadFromYamlString(pubspecYaml.toYamlString()).customFields, pubspecYaml.customFields);
+        expect(
+          PubspecYaml.loadFromYamlString(pubspec.toYamlString()).customFields,
+          pubspec.customFields,
+        );
       });
     });
   });
 
   group('given pubspec.yaml with two custom fields', () {
-    final pubspecYaml = PubspecYaml.loadFromYamlString(pubspecYamlWithTwoCustomFields);
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithTwoCustomFields);
     group('$PubspecYaml.loadFromYamlString', () {
       test('it produces object with two custom field', () {
-        expect(pubspecYaml.customFields.length, 2);
+        expect(pubspec.customFields.length, 2);
       });
     });
     group('$PubspecYaml.toYamlString', () {
       test('preserves custom fields data', () {
-        expect(PubspecYaml.loadFromYamlString(pubspecYaml.toYamlString()).customFields, pubspecYaml.customFields);
+        expect(
+            PubspecYaml.loadFromYamlString(pubspec.toYamlString()).customFields,
+            pubspec.customFields);
       });
     });
   });
 }
 
 const customFieldName = 'custom_field';
-const pubspecYamlWithOneCustomField = '''
+const pubspecWithOneCustomField = '''
 $customFieldName:
   assets:
     - assets/my_icon.png
     - assets/background.png
 ''';
 
-const pubspecYamlWithTwoCustomFields = '''
+const pubspecWithTwoCustomFields = '''
 $customFieldName:
   assets:
     - assets/my_icon.png
