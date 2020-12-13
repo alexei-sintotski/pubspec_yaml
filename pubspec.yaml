@@ -4,7 +4,7 @@ version: 2.0.1
 homepage: https://github.com/alexei-sintotski/pubspec_yaml
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   collection: ^1.14.0
@@ -17,8 +17,8 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^1.7.0
-  dependency_validator: ^1.4.0
+  dependency_validator: ^2.0.0
   functional_data_generator: ^0.3.0
   sum_types_generator: ^0.2.0
-  test: ^1.9.0
-  test_coverage: ^0.4.0
+  test: ^1.15.0
+  test_coverage: ^0.5.0
