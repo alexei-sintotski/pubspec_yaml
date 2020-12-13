@@ -10,8 +10,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -95,15 +95,18 @@ class PubspecYaml extends $PubspecYaml {
   /// URL for package’s source code repository (https://dart.dev/tools/pub/pubspec#repository)
   final Optional<String> repository;
 
-  ///URL for the package’s issue tracker, where existing bugs can be viewed and new bugs can be filed
-  ///https://dart.dev/tools/pub/pubspec#issue-tracker
+  /// URL for the package’s issue tracker, where existing bugs can be viewed and
+  /// new bugs can be filed
+  /// https://dart.dev/tools/pub/pubspec#issue-tracker
   final Optional<String> issueTracker;
 
-  /// Site that hosts documentation, separate from the main homepage and from the Pub-generated API reference
+  /// Site that hosts documentation, separate from the main homepage and from
+  /// the Pub-generated API reference
   ///https://dart.dev/tools/pub/pubspec#documentation
   final Optional<String> documentation;
 
-  /// This setting can be used to specify a custom pub package server to publish.
+  /// This setting can be used to specify a custom pub package server to
+  /// publish.
   /// The default uses the pub.dev site.
   /// Specify none to prevent a package from being published.
   /// https://dart.dev/tools/pub/pubspec#publish_to
@@ -151,9 +154,9 @@ extension PubspecYamlFromYamlString on String {
   PubspecYaml toPubspecYaml() => PubspecYaml.loadFromYamlString(this);
 }
 
-// =====================================================================================================================
+// =============================================================================
 // Implementation details
-// =====================================================================================================================
+// =============================================================================
 
 String _formatToYaml(PubspecYaml pubspecYaml) => '${[
       _packageMetadataToYaml(pubspecYaml),
