@@ -6,26 +6,48 @@ part of 'path_package_dependency_spec.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
-// ignore_for_file: join_return_with_assignment
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $PathPackageDependencySpec {
   const $PathPackageDependencySpec();
+
   String get package;
   String get path;
-  PathPackageDependencySpec copyWith({String package, String path}) =>
+
+  PathPackageDependencySpec copyWith({
+    String? package,
+    String? path,
+  }) =>
       PathPackageDependencySpec(
-          package: package ?? this.package, path: path ?? this.path);
+        package: package ?? this.package,
+        path: path ?? this.path,
+      );
+
+  PathPackageDependencySpec copyUsing(
+      void Function(PathPackageDependencySpec$Change change) mutator) {
+    final change = PathPackageDependencySpec$Change._(
+      this.package,
+      this.path,
+    );
+    mutator(change);
+    return PathPackageDependencySpec(
+      package: change.package,
+      path: change.path,
+    );
+  }
+
   @override
   String toString() =>
       "PathPackageDependencySpec(package: $package, path: $path)";
+
   @override
-  bool operator ==(dynamic other) =>
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      other is PathPackageDependencySpec &&
       other.runtimeType == runtimeType &&
       package == other.package &&
       path == other.path;
+
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + package.hashCode;
@@ -34,11 +56,27 @@ abstract class $PathPackageDependencySpec {
   }
 }
 
+class PathPackageDependencySpec$Change {
+  PathPackageDependencySpec$Change._(
+    this.package,
+    this.path,
+  );
+
+  String package;
+  String path;
+}
+
+// ignore: avoid_classes_with_only_static_members
 class PathPackageDependencySpec$ {
   static final package = Lens<PathPackageDependencySpec, String>(
-      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+    (packageContainer) => packageContainer.package,
+    (packageContainer, package) => packageContainer.copyWith(package: package),
+  );
+
   static final path = Lens<PathPackageDependencySpec, String>(
-      (s_) => s_.path, (s_, path) => s_.copyWith(path: path));
+    (pathContainer) => pathContainer.path,
+    (pathContainer, path) => pathContainer.copyWith(path: path),
+  );
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic

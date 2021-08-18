@@ -24,22 +24,22 @@ abstract class _$PackageDependencySpec {
         rec.git == null &&
         rec.path == null &&
         rec.hosted == null) {
-      return PackageDependencySpec.sdk(rec.sdk);
+      return PackageDependencySpec.sdk(rec.sdk!);
     } else if (rec.sdk == null &&
         rec.git != null &&
         rec.path == null &&
         rec.hosted == null) {
-      return PackageDependencySpec.git(rec.git);
+      return PackageDependencySpec.git(rec.git!);
     } else if (rec.sdk == null &&
         rec.git == null &&
         rec.path != null &&
         rec.hosted == null) {
-      return PackageDependencySpec.path(rec.path);
+      return PackageDependencySpec.path(rec.path!);
     } else if (rec.sdk == null &&
         rec.git == null &&
         rec.path == null &&
         rec.hosted != null) {
-      return PackageDependencySpec.hosted(rec.hosted);
+      return PackageDependencySpec.hosted(rec.hosted!);
     } else {
       throw Exception("Cannot select a $PackageDependencySpec case given $rec");
     }
@@ -47,10 +47,10 @@ abstract class _$PackageDependencySpec {
 
   $T dump<$T>(
     $T Function({
-      SdkPackageDependencySpec sdk,
-      GitPackageDependencySpec git,
-      PathPackageDependencySpec path,
-      HostedPackageDependencySpec hosted,
+      SdkPackageDependencySpec? sdk,
+      GitPackageDependencySpec? git,
+      PathPackageDependencySpec? path,
+      HostedPackageDependencySpec? hosted,
     })
         make,
   ) {
@@ -63,19 +63,19 @@ abstract class _$PackageDependencySpec {
   }
 
   $T iswitch<$T>({
-    @required $T Function(SdkPackageDependencySpec) sdk,
-    @required $T Function(GitPackageDependencySpec) git,
-    @required $T Function(PathPackageDependencySpec) path,
-    @required $T Function(HostedPackageDependencySpec) hosted,
+    required $T Function(SdkPackageDependencySpec) sdk,
+    required $T Function(GitPackageDependencySpec) git,
+    required $T Function(PathPackageDependencySpec) path,
+    required $T Function(HostedPackageDependencySpec) hosted,
   }) {
     if (this.sdk != null) {
-      return sdk(this.sdk);
+      return sdk(this.sdk!);
     } else if (this.git != null) {
-      return git(this.git);
+      return git(this.git!);
     } else if (this.path != null) {
-      return path(this.path);
+      return path(this.path!);
     } else if (this.hosted != null) {
-      return hosted(this.hosted);
+      return hosted(this.hosted!);
     } else {
       throw StateError(
           "an instance of $PackageDependencySpec has no case selected");
@@ -83,13 +83,13 @@ abstract class _$PackageDependencySpec {
   }
 
   $T iswitcho<$T>({
-    $T Function(SdkPackageDependencySpec) sdk,
-    $T Function(GitPackageDependencySpec) git,
-    $T Function(PathPackageDependencySpec) path,
-    $T Function(HostedPackageDependencySpec) hosted,
-    @required $T Function() otherwise,
+    $T Function(SdkPackageDependencySpec)? sdk,
+    $T Function(GitPackageDependencySpec)? git,
+    $T Function(PathPackageDependencySpec)? path,
+    $T Function(HostedPackageDependencySpec)? hosted,
+    required $T Function() otherwise,
   }) {
-    $T _otherwise(Object _) => otherwise();
+    $T _otherwise(Object? _) => otherwise();
     return iswitch(
       sdk: sdk ?? _otherwise,
       git: git ?? _otherwise,
@@ -131,20 +131,20 @@ abstract class _$PackageDependencySpec {
   }
 
   @protected
-  final SdkPackageDependencySpec sdk;
+  final SdkPackageDependencySpec? sdk;
   @protected
-  final GitPackageDependencySpec git;
+  final GitPackageDependencySpec? git;
   @protected
-  final PathPackageDependencySpec path;
+  final PathPackageDependencySpec? path;
   @protected
-  final HostedPackageDependencySpec hosted;
+  final HostedPackageDependencySpec? hosted;
 }
 
 abstract class PackageDependencySpecRecordBase<Self> {
-  SdkPackageDependencySpec get sdk;
-  GitPackageDependencySpec get git;
-  PathPackageDependencySpec get path;
-  HostedPackageDependencySpec get hosted;
+  SdkPackageDependencySpec? get sdk;
+  GitPackageDependencySpec? get git;
+  PathPackageDependencySpec? get path;
+  HostedPackageDependencySpec? get hosted;
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic
