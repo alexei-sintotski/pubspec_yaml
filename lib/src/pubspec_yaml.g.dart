@@ -6,12 +6,9 @@ part of 'pubspec_yaml.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
-// ignore_for_file: join_return_with_assignment
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $PubspecYaml {
   const $PubspecYaml();
+
   String get name;
   Optional<String> get version;
   Optional<String> get description;
@@ -27,43 +24,88 @@ abstract class $PubspecYaml {
   Map<String, String> get environment;
   Map<String, Optional<String>> get executables;
   Map<String, dynamic> get customFields;
-  PubspecYaml copyWith(
-          {String name,
-          Optional<String> version,
-          Optional<String> description,
-          List<String> authors,
-          Optional<String> homepage,
-          Optional<String> repository,
-          Optional<String> issueTracker,
-          Optional<String> documentation,
-          Optional<String> publishTo,
-          Iterable<PackageDependencySpec> dependencies,
-          Iterable<PackageDependencySpec> devDependencies,
-          Iterable<PackageDependencySpec> dependencyOverrides,
-          Map<String, String> environment,
-          Map<String, Optional<String>> executables,
-          Map<String, dynamic> customFields}) =>
+
+  PubspecYaml copyWith({
+    String? name,
+    Optional<String>? version,
+    Optional<String>? description,
+    List<String>? authors,
+    Optional<String>? homepage,
+    Optional<String>? repository,
+    Optional<String>? issueTracker,
+    Optional<String>? documentation,
+    Optional<String>? publishTo,
+    Iterable<PackageDependencySpec>? dependencies,
+    Iterable<PackageDependencySpec>? devDependencies,
+    Iterable<PackageDependencySpec>? dependencyOverrides,
+    Map<String, String>? environment,
+    Map<String, Optional<String>>? executables,
+    Map<String, dynamic>? customFields,
+  }) =>
       PubspecYaml(
-          name: name ?? this.name,
-          version: version ?? this.version,
-          description: description ?? this.description,
-          authors: authors ?? this.authors,
-          homepage: homepage ?? this.homepage,
-          repository: repository ?? this.repository,
-          issueTracker: issueTracker ?? this.issueTracker,
-          documentation: documentation ?? this.documentation,
-          publishTo: publishTo ?? this.publishTo,
-          dependencies: dependencies ?? this.dependencies,
-          devDependencies: devDependencies ?? this.devDependencies,
-          dependencyOverrides: dependencyOverrides ?? this.dependencyOverrides,
-          environment: environment ?? this.environment,
-          executables: executables ?? this.executables,
-          customFields: customFields ?? this.customFields);
+        name: name ?? this.name,
+        version: version ?? this.version,
+        description: description ?? this.description,
+        authors: authors ?? this.authors,
+        homepage: homepage ?? this.homepage,
+        repository: repository ?? this.repository,
+        issueTracker: issueTracker ?? this.issueTracker,
+        documentation: documentation ?? this.documentation,
+        publishTo: publishTo ?? this.publishTo,
+        dependencies: dependencies ?? this.dependencies,
+        devDependencies: devDependencies ?? this.devDependencies,
+        dependencyOverrides: dependencyOverrides ?? this.dependencyOverrides,
+        environment: environment ?? this.environment,
+        executables: executables ?? this.executables,
+        customFields: customFields ?? this.customFields,
+      );
+
+  PubspecYaml copyUsing(void Function(PubspecYaml$Change change) mutator) {
+    final change = PubspecYaml$Change._(
+      this.name,
+      this.version,
+      this.description,
+      this.authors,
+      this.homepage,
+      this.repository,
+      this.issueTracker,
+      this.documentation,
+      this.publishTo,
+      this.dependencies,
+      this.devDependencies,
+      this.dependencyOverrides,
+      this.environment,
+      this.executables,
+      this.customFields,
+    );
+    mutator(change);
+    return PubspecYaml(
+      name: change.name,
+      version: change.version,
+      description: change.description,
+      authors: change.authors,
+      homepage: change.homepage,
+      repository: change.repository,
+      issueTracker: change.issueTracker,
+      documentation: change.documentation,
+      publishTo: change.publishTo,
+      dependencies: change.dependencies,
+      devDependencies: change.devDependencies,
+      dependencyOverrides: change.dependencyOverrides,
+      environment: change.environment,
+      executables: change.executables,
+      customFields: change.customFields,
+    );
+  }
+
   @override
   String toString() =>
       "PubspecYaml(name: $name, version: $version, description: $description, authors: $authors, homepage: $homepage, repository: $repository, issueTracker: $issueTracker, documentation: $documentation, publishTo: $publishTo, dependencies: $dependencies, devDependencies: $devDependencies, dependencyOverrides: $dependencyOverrides, environment: $environment, executables: $executables, customFields: $customFields)";
+
   @override
-  bool operator ==(dynamic other) =>
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      other is PubspecYaml &&
       other.runtimeType == runtimeType &&
       name == other.name &&
       version == other.version &&
@@ -82,7 +124,9 @@ abstract class $PubspecYaml {
       const DeepCollectionEquality().equals(environment, other.environment) &&
       const DeepCollectionEquality().equals(executables, other.executables) &&
       const DeepCollectionEquality().equals(customFields, other.customFields);
+
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + name.hashCode;
@@ -105,53 +149,135 @@ abstract class $PubspecYaml {
   }
 }
 
+class PubspecYaml$Change {
+  PubspecYaml$Change._(
+    this.name,
+    this.version,
+    this.description,
+    this.authors,
+    this.homepage,
+    this.repository,
+    this.issueTracker,
+    this.documentation,
+    this.publishTo,
+    this.dependencies,
+    this.devDependencies,
+    this.dependencyOverrides,
+    this.environment,
+    this.executables,
+    this.customFields,
+  );
+
+  String name;
+  Optional<String> version;
+  Optional<String> description;
+  List<String> authors;
+  Optional<String> homepage;
+  Optional<String> repository;
+  Optional<String> issueTracker;
+  Optional<String> documentation;
+  Optional<String> publishTo;
+  Iterable<PackageDependencySpec> dependencies;
+  Iterable<PackageDependencySpec> devDependencies;
+  Iterable<PackageDependencySpec> dependencyOverrides;
+  Map<String, String> environment;
+  Map<String, Optional<String>> executables;
+  Map<String, dynamic> customFields;
+}
+
+// ignore: avoid_classes_with_only_static_members
 class PubspecYaml$ {
   static final name = Lens<PubspecYaml, String>(
-      (s_) => s_.name, (s_, name) => s_.copyWith(name: name));
+    (nameContainer) => nameContainer.name,
+    (nameContainer, name) => nameContainer.copyWith(name: name),
+  );
+
   static final version = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.version, (s_, version) => s_.copyWith(version: version));
+    (versionContainer) => versionContainer.version,
+    (versionContainer, version) => versionContainer.copyWith(version: version),
+  );
+
   static final description = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.description,
-      (s_, description) => s_.copyWith(description: description));
+    (descriptionContainer) => descriptionContainer.description,
+    (descriptionContainer, description) =>
+        descriptionContainer.copyWith(description: description),
+  );
+
   static final authors = Lens<PubspecYaml, List<String>>(
-      (s_) => s_.authors, (s_, authors) => s_.copyWith(authors: authors));
+    (authorsContainer) => authorsContainer.authors,
+    (authorsContainer, authors) => authorsContainer.copyWith(authors: authors),
+  );
+
   static final homepage = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.homepage, (s_, homepage) => s_.copyWith(homepage: homepage));
+    (homepageContainer) => homepageContainer.homepage,
+    (homepageContainer, homepage) =>
+        homepageContainer.copyWith(homepage: homepage),
+  );
+
   static final repository = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.repository,
-      (s_, repository) => s_.copyWith(repository: repository));
+    (repositoryContainer) => repositoryContainer.repository,
+    (repositoryContainer, repository) =>
+        repositoryContainer.copyWith(repository: repository),
+  );
+
   static final issueTracker = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.issueTracker,
-      (s_, issueTracker) => s_.copyWith(issueTracker: issueTracker));
+    (issueTrackerContainer) => issueTrackerContainer.issueTracker,
+    (issueTrackerContainer, issueTracker) =>
+        issueTrackerContainer.copyWith(issueTracker: issueTracker),
+  );
+
   static final documentation = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.documentation,
-      (s_, documentation) => s_.copyWith(documentation: documentation));
+    (documentationContainer) => documentationContainer.documentation,
+    (documentationContainer, documentation) =>
+        documentationContainer.copyWith(documentation: documentation),
+  );
+
   static final publishTo = Lens<PubspecYaml, Optional<String>>(
-      (s_) => s_.publishTo,
-      (s_, publishTo) => s_.copyWith(publishTo: publishTo));
+    (publishToContainer) => publishToContainer.publishTo,
+    (publishToContainer, publishTo) =>
+        publishToContainer.copyWith(publishTo: publishTo),
+  );
+
   static final dependencies =
       Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
-          (s_) => s_.dependencies,
-          (s_, dependencies) => s_.copyWith(dependencies: dependencies));
+    (dependenciesContainer) => dependenciesContainer.dependencies,
+    (dependenciesContainer, dependencies) =>
+        dependenciesContainer.copyWith(dependencies: dependencies),
+  );
+
   static final devDependencies =
       Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
-          (s_) => s_.devDependencies,
-          (s_, devDependencies) =>
-              s_.copyWith(devDependencies: devDependencies));
+    (devDependenciesContainer) => devDependenciesContainer.devDependencies,
+    (devDependenciesContainer, devDependencies) =>
+        devDependenciesContainer.copyWith(devDependencies: devDependencies),
+  );
+
   static final dependencyOverrides =
       Lens<PubspecYaml, Iterable<PackageDependencySpec>>(
-          (s_) => s_.dependencyOverrides,
-          (s_, dependencyOverrides) =>
-              s_.copyWith(dependencyOverrides: dependencyOverrides));
+    (dependencyOverridesContainer) =>
+        dependencyOverridesContainer.dependencyOverrides,
+    (dependencyOverridesContainer, dependencyOverrides) =>
+        dependencyOverridesContainer.copyWith(
+            dependencyOverrides: dependencyOverrides),
+  );
+
   static final environment = Lens<PubspecYaml, Map<String, String>>(
-      (s_) => s_.environment,
-      (s_, environment) => s_.copyWith(environment: environment));
+    (environmentContainer) => environmentContainer.environment,
+    (environmentContainer, environment) =>
+        environmentContainer.copyWith(environment: environment),
+  );
+
   static final executables = Lens<PubspecYaml, Map<String, Optional<String>>>(
-      (s_) => s_.executables,
-      (s_, executables) => s_.copyWith(executables: executables));
+    (executablesContainer) => executablesContainer.executables,
+    (executablesContainer, executables) =>
+        executablesContainer.copyWith(executables: executables),
+  );
+
   static final customFields = Lens<PubspecYaml, Map<String, dynamic>>(
-      (s_) => s_.customFields,
-      (s_, customFields) => s_.copyWith(customFields: customFields));
+    (customFieldsContainer) => customFieldsContainer.customFields,
+    (customFieldsContainer, customFields) =>
+        customFieldsContainer.copyWith(customFields: customFields),
+  );
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic

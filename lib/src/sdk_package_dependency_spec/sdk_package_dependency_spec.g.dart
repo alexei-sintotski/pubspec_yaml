@@ -6,31 +6,54 @@ part of 'sdk_package_dependency_spec.dart';
 // FunctionalDataGenerator
 // **************************************************************************
 
-// ignore_for_file: join_return_with_assignment
-// ignore_for_file: avoid_classes_with_only_static_members
-// ignore_for_file: non_constant_identifier_names
-// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes
 abstract class $SdkPackageDependencySpec {
   const $SdkPackageDependencySpec();
+
   String get package;
   String get sdk;
   Optional<String> get version;
-  SdkPackageDependencySpec copyWith(
-          {String package, String sdk, Optional<String> version}) =>
+
+  SdkPackageDependencySpec copyWith({
+    String? package,
+    String? sdk,
+    Optional<String>? version,
+  }) =>
       SdkPackageDependencySpec(
-          package: package ?? this.package,
-          sdk: sdk ?? this.sdk,
-          version: version ?? this.version);
+        package: package ?? this.package,
+        sdk: sdk ?? this.sdk,
+        version: version ?? this.version,
+      );
+
+  SdkPackageDependencySpec copyUsing(
+      void Function(SdkPackageDependencySpec$Change change) mutator) {
+    final change = SdkPackageDependencySpec$Change._(
+      this.package,
+      this.sdk,
+      this.version,
+    );
+    mutator(change);
+    return SdkPackageDependencySpec(
+      package: change.package,
+      sdk: change.sdk,
+      version: change.version,
+    );
+  }
+
   @override
   String toString() =>
       "SdkPackageDependencySpec(package: $package, sdk: $sdk, version: $version)";
+
   @override
-  bool operator ==(dynamic other) =>
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      other is SdkPackageDependencySpec &&
       other.runtimeType == runtimeType &&
       package == other.package &&
       sdk == other.sdk &&
       version == other.version;
+
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
     var result = 17;
     result = 37 * result + package.hashCode;
@@ -40,13 +63,34 @@ abstract class $SdkPackageDependencySpec {
   }
 }
 
+class SdkPackageDependencySpec$Change {
+  SdkPackageDependencySpec$Change._(
+    this.package,
+    this.sdk,
+    this.version,
+  );
+
+  String package;
+  String sdk;
+  Optional<String> version;
+}
+
+// ignore: avoid_classes_with_only_static_members
 class SdkPackageDependencySpec$ {
   static final package = Lens<SdkPackageDependencySpec, String>(
-      (s_) => s_.package, (s_, package) => s_.copyWith(package: package));
+    (packageContainer) => packageContainer.package,
+    (packageContainer, package) => packageContainer.copyWith(package: package),
+  );
+
   static final sdk = Lens<SdkPackageDependencySpec, String>(
-      (s_) => s_.sdk, (s_, sdk) => s_.copyWith(sdk: sdk));
+    (sdkContainer) => sdkContainer.sdk,
+    (sdkContainer, sdk) => sdkContainer.copyWith(sdk: sdk),
+  );
+
   static final version = Lens<SdkPackageDependencySpec, Optional<String>>(
-      (s_) => s_.version, (s_, version) => s_.copyWith(version: version));
+    (versionContainer) => versionContainer.version,
+    (versionContainer, version) => versionContainer.copyWith(version: version),
+  );
 }
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: avoid_annotating_with_dynamic
