@@ -41,6 +41,8 @@ void main() {
 
 const customFieldName = 'custom_field';
 const pubspecWithOneCustomField = '''
+name: pubspecWithOneCustomField
+
 $customFieldName:
   assets:
     - assets/my_icon.png
@@ -48,6 +50,8 @@ $customFieldName:
 ''';
 
 const pubspecWithTwoCustomFields = '''
+name: pubspecWithOneCustomField
+
 $customFieldName:
   assets:
     - assets/my_icon.png

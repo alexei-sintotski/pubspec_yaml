@@ -70,8 +70,8 @@ GitPackageDependencySpec _loadFromDetailedGitDependencyDefinition(
     GitPackageDependencySpec(
       package: package,
       url: definition[_Tokens.url] as String,
-      ref: Optional(definition[_Tokens.ref] as String),
-      path: Optional(definition[_Tokens.path] as String),
+      ref: Optional(definition[_Tokens.ref] as String?),
+      path: Optional(definition[_Tokens.path] as String?),
     );
 
 class _Tokens {

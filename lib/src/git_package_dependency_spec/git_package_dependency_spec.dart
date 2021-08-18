@@ -37,8 +37,8 @@ part 'git_package_dependency_spec.g.dart';
 class GitPackageDependencySpec extends $GitPackageDependencySpec {
   /// Default constructor
   const GitPackageDependencySpec({
-    @required this.package,
-    @required this.url,
+    required this.package,
+    required this.url,
     this.ref = const Optional.none(),
     this.path = const Optional.none(),
   });

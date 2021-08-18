@@ -52,7 +52,7 @@ part 'pubspec_yaml.g.dart';
 class PubspecYaml extends $PubspecYaml {
   /// Default constructor
   const PubspecYaml({
-    @required this.name,
+    required this.name,
     this.version = const Optional.none(),
     this.description = const Optional.none(),
     this.authors = const [],
@@ -71,7 +71,6 @@ class PubspecYaml extends $PubspecYaml {
 
   /// Imports PubspecYaml from a YAML string
   factory PubspecYaml.loadFromYamlString(String content) {
-    assert(content != null, 'content must not be null');
     assert(content.trim().isNotEmpty, 'content must not be empty');
     return _loadFromYaml(content);
   }
@@ -235,7 +234,7 @@ String _executablesToYaml(Map<String, Optional<String>> executables) =>
       <String, dynamic>{
         _Tokens.executables: <String, dynamic>{
           for (final entry in executables.entries)
-            entry.key: entry.value.valueOr(() => null),
+            entry.key: _nullIfEmpty(entry.value.valueOr(() => '')),
         }
       },
       yamlStyle: YamlStyle.pubspecYaml,
@@ -246,18 +245,18 @@ PubspecYaml _loadFromYaml(String content) {
       json.decode(json.encode(loadYaml(content))) as Map<String, dynamic>;
   return PubspecYaml(
     name: jsonMap[_Tokens.name] as String,
-    version: Optional(jsonMap[_Tokens.version] as String),
-    description: Optional(jsonMap[_Tokens.description] as String),
+    version: Optional(jsonMap[_Tokens.version] as String?),
+    description: Optional(jsonMap[_Tokens.description] as String?),
     authors: [
       if (jsonMap[_Tokens.author] != null) jsonMap[_Tokens.author] as String,
       if (jsonMap[_Tokens.authors] != null)
         ...(jsonMap[_Tokens.authors] as List<dynamic>)
             .map((dynamic author) => author as String)
     ],
-    homepage: Optional(jsonMap[_Tokens.homepage] as String),
-    repository: Optional(jsonMap[_Tokens.repository] as String),
-    issueTracker: Optional(jsonMap[_Tokens.issueTracker] as String),
-    documentation: Optional(jsonMap[_Tokens.documentation] as String),
+    homepage: Optional(jsonMap[_Tokens.homepage] as String?),
+    repository: Optional(jsonMap[_Tokens.repository] as String?),
+    issueTracker: Optional(jsonMap[_Tokens.issueTracker] as String?),
+    documentation: Optional(jsonMap[_Tokens.documentation] as String?),
     dependencies: _loadDependencies(jsonMap, _Tokens.dependencies),
     devDependencies: _loadDependencies(jsonMap, _Tokens.devDependencies),
     dependencyOverrides: _loadDependencies(
@@ -272,7 +271,7 @@ PubspecYaml _loadFromYaml(String content) {
             jsonMap[_Tokens.executables] != null
         ? _loadExecutables(jsonMap[_Tokens.executables] as Map<String, dynamic>)
         : {},
-    publishTo: Optional(jsonMap[_Tokens.publishTo] as String),
+    publishTo: Optional(jsonMap[_Tokens.publishTo] as String?),
     customFields: Map<String, dynamic>.fromEntries(
       jsonMap.entries.where((entry) => !_knownTokens.contains(entry.key)),
     ),
@@ -295,9 +294,7 @@ Map<String, Optional<String>> _loadExecutables(
         Map<String, dynamic> executables) =>
     executables.map((key, dynamic value) => MapEntry(
           key,
-          Optional(
-            value as String,
-          ),
+          Optional(value as String?),
         ));
 
 const _knownTokens = [
@@ -335,3 +332,5 @@ class _Tokens {
   static const environment = 'environment';
   static const publishTo = 'publish_to';
 }
+
+String? _nullIfEmpty(String s) => s.isEmpty ? null : s;
