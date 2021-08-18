@@ -36,8 +36,8 @@ part 'path_package_dependency_spec.g.dart';
 class PathPackageDependencySpec extends $PathPackageDependencySpec {
   /// Default constructor
   const PathPackageDependencySpec({
-    @required this.package,
-    @required this.path,
+    required this.package,
+    required this.path,
   });
 
   final String package;

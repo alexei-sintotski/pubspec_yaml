@@ -39,7 +39,7 @@ part 'hosted_package_dependency_spec.g.dart';
 class HostedPackageDependencySpec extends $HostedPackageDependencySpec {
   /// Default constructor
   const HostedPackageDependencySpec({
-    @required this.package,
+    required this.package,
     this.version = const Optional.none(),
     this.name = const Optional.none(),
     this.url = const Optional.none(),

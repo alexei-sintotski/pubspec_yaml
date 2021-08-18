@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   group('given realistic pubspec.yaml content', () {
     final realisticPubspec = File(
-      '${gitRepoRoot()}/pubspec.lock',
+      '${gitRepoRoot()}/pubspec.yaml',
     ).readAsStringSync();
 
     group('$PubspecYaml.loadFromYamlString', () {

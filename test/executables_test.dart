@@ -44,7 +44,7 @@ void main() {
           'fills no custom script name for executable without '
           'custom script name', () {
         expect(
-          pubspec.executables[executableWithoutCustomScriptName].hasValue,
+          pubspec.executables[executableWithoutCustomScriptName]!.hasValue,
           isFalse,
         );
       });
@@ -52,7 +52,8 @@ void main() {
           'fills correct custom script name for executable with '
           'the specified custom script name', () {
         expect(
-          pubspec.executables[executableWithCustomScriptName].valueOr(() => ''),
+          pubspec.executables[executableWithCustomScriptName]!
+              .valueOr(() => ''),
           customScriptName,
         );
       });

@@ -46,7 +46,7 @@ SdkPackageDependencySpec loadSdkPackageDependencySpec(
   return SdkPackageDependencySpec(
     package: entry.key,
     sdk: definition[_Tokens.sdk] as String,
-    version: Optional(definition[_Tokens.version] as String),
+    version: Optional(definition[_Tokens.version] as String?),
   );
 }
 

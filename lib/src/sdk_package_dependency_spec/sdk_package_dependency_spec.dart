@@ -37,8 +37,8 @@ part 'sdk_package_dependency_spec.g.dart';
 class SdkPackageDependencySpec extends $SdkPackageDependencySpec {
   /// Default constructor
   const SdkPackageDependencySpec({
-    @required this.package,
-    @required this.sdk,
+    required this.package,
+    required this.sdk,
     this.version = const Optional.none(),
   });
 

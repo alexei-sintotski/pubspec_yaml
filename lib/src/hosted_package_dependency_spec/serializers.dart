@@ -41,7 +41,7 @@ extension HostedPackageDependencySpecToJson on HostedPackageDependencySpec {
                 if (version.hasValue)
                   _Tokens.version: version.valueOr(() => ''),
               }
-            : version.valueOr(() => null),
+            : _nullIfEmpty(version.valueOr(() => '')),
       };
 }
 
@@ -55,12 +55,12 @@ HostedPackageDependencySpec loadHostedPackageDependencySpec(
       return _loadGenericHostedDependency(package, definition);
     }
   }
-  return _loadPubDevHostedDependency(package, definition as String);
+  return _loadPubDevHostedDependency(package, definition as String?);
 }
 
 HostedPackageDependencySpec _loadPubDevHostedDependency(
   String package,
-  String definition,
+  String? definition,
 ) =>
     HostedPackageDependencySpec(
       package: package,
@@ -74,9 +74,9 @@ HostedPackageDependencySpec _loadGenericHostedDependency(
   final definitionBody = definition[_Tokens.hosted] as Map<String, dynamic>;
   return HostedPackageDependencySpec(
     package: package,
-    version: Optional(definition[_Tokens.version] as String),
-    name: Optional(definitionBody[_Tokens.name] as String),
-    url: Optional(definitionBody[_Tokens.url] as String),
+    version: Optional(definition[_Tokens.version] as String?),
+    name: Optional(definitionBody[_Tokens.name] as String?),
+    url: Optional(definitionBody[_Tokens.url] as String?),
   );
 }
 
@@ -86,3 +86,5 @@ class _Tokens {
   static const url = 'url';
   static const hosted = 'hosted';
 }
+
+String? _nullIfEmpty(String s) => s.isEmpty ? null : s;
