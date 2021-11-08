@@ -57,5 +57,5 @@ const pubspecWithDevDependency = '''
 name: pubspec_yaml
 
 dev_dependencies:
-  $dependency: ">=0.5.0 <0.12.0"
+  $dependency: '>=0.5.0 <0.12.0'
 ''';

@@ -70,7 +70,7 @@ void main() {
 const issueTracker = 'https://example-pet-store.com/newtify/issues';
 const pubspecWithIssueTrackerDefined = '''
 name: pubspec_yaml
-issue_tracker: "$issueTracker"
+issue_tracker: $issueTracker
 ''';
 
 const pubspecWithoutIssueTracker = '''

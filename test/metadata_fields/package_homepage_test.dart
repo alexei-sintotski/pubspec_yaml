@@ -68,7 +68,7 @@ void main() {
 const homepage = 'https://example-pet-store.com/newtify';
 const pubspecWithHomepageDefined = '''
 name: pubspec_yaml
-homepage: "$homepage"
+homepage: $homepage
 ''';
 
 const pubspecWithoutHomepage = '''
