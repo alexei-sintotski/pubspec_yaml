@@ -70,7 +70,7 @@ void main() {
 const repository = 'https://example-pet-store.com/newtify';
 const pubspecWithRepositoryDefined = '''
 name: pubspec_yaml
-repository: "$repository"
+repository: $repository
 ''';
 
 const pubspecWithoutRepository = '''

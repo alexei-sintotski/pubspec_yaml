@@ -156,7 +156,7 @@ name: pubspec_yaml
 
 dependencies:
   $dependency:
-    git: "$url"
+    git: $url
 ''';
 
 const ref = 'some-branch';
@@ -166,8 +166,8 @@ name: pubspec_yaml
 dependencies:
   $dependency:
     git:
-      url: "$url"
-      ref: "$ref"
+      url: $url
+      ref: $ref
 ''';
 
 const path = 'path/to/kittens';
@@ -177,6 +177,6 @@ name: pubspec_yaml
 dependencies:
   $dependency:
     git:
-      url: "$url"
+      url: $url
       path: $path
 ''';

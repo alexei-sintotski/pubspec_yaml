@@ -32,8 +32,19 @@ void main() {
     group('$PubspecYaml.toYamlString', () {
       test('preserves custom fields data', () {
         expect(
-            PubspecYaml.loadFromYamlString(pubspec.toYamlString()).customFields,
-            pubspec.customFields);
+          PubspecYaml.loadFromYamlString(pubspec.toYamlString()).customFields,
+          pubspec.customFields,
+        );
+      });
+    });
+  });
+
+  // https: //github.com/alexei-sintotski/pubspec_yaml/issues/31
+  group('given pubspec.yaml with nested array', () {
+    final pubspec = PubspecYaml.loadFromYamlString(pubspecWithNestedArray);
+    group('$PubspecYaml.toYamlString', () {
+      test('preserves custom fields formatting', () {
+        expect(pubspec.toYamlString(), pubspecWithNestedArray);
       });
     });
   });
@@ -57,4 +68,17 @@ $customFieldName:
     - assets/my_icon.png
     - assets/background.png
 another_custom_field: value
+''';
+
+const pubspecWithNestedArray = '''
+name: pubspecWithNestedArray
+
+fonts:
+  - family: larsseit
+    fonts:
+      - asset: assets/fonts/larsseit/Larsseit-Bold.ttf
+      - asset: assets/fonts/larsseit/Larsseit-Medium.ttf
+  - family: roger_icons
+    fonts:
+      - asset: assets/fonts/roger_icons/RogerIcons.ttf
 ''';

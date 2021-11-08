@@ -62,6 +62,6 @@ const pubspecWithSdkConstraints = '''
 name: pubspec_yaml
 
 environment:
-  $dartSdk: "$dartSdkConstraint"
+  $dartSdk: '$dartSdkConstraint'
   $flutterSdk: $flutterSdkConstraint
 ''';

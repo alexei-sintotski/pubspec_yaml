@@ -117,7 +117,7 @@ void main() {
 const author = 'Natalie Weizenbaum <nweiz@google.com>';
 const pubspecWithSingleAuthor = '''
 name: pubspec_yaml
-author: "$author"
+author: '$author'
 ''';
 
 const pubspecWithoutAuthorSpecification = '''
@@ -128,7 +128,7 @@ const anotherAuthor = 'Abigail Larsen';
 const pubspecWithTwoAuthors = '''
 name: pubspec_yaml
 authors:
-  - "$author"
+  - '$author'
   - $anotherAuthor
 ''';
 

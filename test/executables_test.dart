@@ -75,7 +75,6 @@ const customScriptName = 'new_element';
 const executableWithoutCustomScriptName = 'useful-script';
 const pubspecYamlWithExecutables = '''
 name: pubspec_yaml
-
 executables:
   $executableWithCustomScriptName: $customScriptName
   $executableWithoutCustomScriptName:

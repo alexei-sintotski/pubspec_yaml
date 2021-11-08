@@ -211,7 +211,7 @@ dependencies:
   $dependency:
     hosted:
       name: $name
-      url: "$url"
+      url: $url
 ''';
 
 const pubspecWithPackageHostedElsewhereWithVersionSpec = '''
@@ -221,6 +221,6 @@ dependencies:
   $dependency:
     hosted:
       name: $name
-      url: "$url"
+      url: $url
     version: $version
 ''';

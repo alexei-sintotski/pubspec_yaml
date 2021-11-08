@@ -70,7 +70,7 @@ void main() {
 const documentation = 'https://example-pet-store.com/newtify/docs';
 const pubspecWithDocumentationDefined = '''
 name: pubspec_yaml
-documentation: "$documentation"
+documentation: $documentation
 ''';
 
 const pubspecWithoutDocumentation = '''

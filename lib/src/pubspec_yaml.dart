@@ -32,6 +32,7 @@ import 'package:meta/meta.dart';
 import 'package:plain_optional/plain_optional.dart';
 import 'package:yaml/yaml.dart';
 
+import '../pubspec_yaml.dart';
 import 'package_dependency_spec/package_dependency_spec.dart';
 import 'package_dependency_spec/serializers.dart';
 
@@ -157,33 +158,30 @@ extension PubspecYamlFromYamlString on String {
 // Implementation details
 // =============================================================================
 
-String _formatToYaml(PubspecYaml pubspecYaml) => '${[
-      _packageMetadataToYaml(pubspecYaml),
-      if (pubspecYaml.dependencies.isNotEmpty)
-        _dependenciesToYaml(pubspecYaml.dependencies, _Tokens.dependencies),
-      if (pubspecYaml.devDependencies.isNotEmpty)
-        _dependenciesToYaml(
-          pubspecYaml.devDependencies,
-          _Tokens.devDependencies,
-        ),
-      if (pubspecYaml.dependencyOverrides.isNotEmpty)
-        _dependenciesToYaml(
-          pubspecYaml.dependencyOverrides,
-          _Tokens.dependencyOverrides,
-        ),
-      if (pubspecYaml.environment.isNotEmpty)
-        _environmentToYaml(pubspecYaml.environment),
-      if (pubspecYaml.executables.isNotEmpty)
-        _executablesToYaml(pubspecYaml.executables),
-      for (final customField in pubspecYaml.customFields.entries)
-        json2yaml(
-          Map<String, dynamic>.fromEntries({customField}),
-          yamlStyle: YamlStyle.pubspecYaml,
-        ),
-    ].join("\n\n")}\n';
+String _formatToYaml(PubspecYaml pubspecYaml) => json2yaml(
+      _pubspecYamlToJson(pubspecYaml),
+      yamlStyle: YamlStyle.pubspecYaml,
+    );
 
-String _packageMetadataToYaml(PubspecYaml pubspecYaml) =>
-    json2yaml(<String, dynamic>{
+Map<String, dynamic> _pubspecYamlToJson(PubspecYaml pubspecYaml) =>
+    <String, dynamic>{
+      ..._packageMetadataToJson(pubspecYaml),
+      ..._executablesToJson(pubspecYaml.executables),
+      ..._environmentToJson(pubspecYaml.environment),
+      ..._dependenciesToJson(pubspecYaml.dependencies, _Tokens.dependencies),
+      ..._dependenciesToJson(
+        pubspecYaml.devDependencies,
+        _Tokens.devDependencies,
+      ),
+      ..._dependenciesToJson(
+        pubspecYaml.dependencyOverrides,
+        _Tokens.dependencyOverrides,
+      ),
+      ...pubspecYaml.customFields,
+    };
+
+Map<String, dynamic> _packageMetadataToJson(PubspecYaml pubspecYaml) =>
+    <String, dynamic>{
       _Tokens.name: pubspecYaml.name,
       if (pubspecYaml.version.hasValue)
         _Tokens.version: pubspecYaml.version.valueOr(() => ''),
@@ -202,43 +200,37 @@ String _packageMetadataToYaml(PubspecYaml pubspecYaml) =>
         _Tokens.documentation: pubspecYaml.documentation.valueOr(() => ''),
       if (pubspecYaml.publishTo.hasValue)
         _Tokens.publishTo: pubspecYaml.publishTo.valueOr(() => ''),
-    }, yamlStyle: YamlStyle.pubspecYaml);
-
-String _dependenciesToYaml(
-  Iterable<PackageDependencySpec> dependencies,
-  String key,
-) =>
-    json2yaml(_dependenciesToJson(dependencies, key),
-        yamlStyle: YamlStyle.pubspecYaml);
+    };
 
 Map<String, dynamic> _dependenciesToJson(
   Iterable<PackageDependencySpec> dependencies,
   String key,
 ) =>
     <String, dynamic>{
-      key: <String, dynamic>{
-        for (final dep
-            in dependencies.toList()
-              ..sort((a, b) => a.package().compareTo(b.package())))
-          ...dep.toJson()
-      }
+      if (dependencies.isNotEmpty)
+        key: <String, dynamic>{
+          for (final dep
+              in dependencies.toList()
+                ..sort((a, b) => a.package().compareTo(b.package())))
+            ...dep.toJson()
+        }
     };
 
-String _environmentToYaml(Map<String, String> environment) => json2yaml(
-      <String, dynamic>{_Tokens.environment: environment},
-      yamlStyle: YamlStyle.pubspecYaml,
-    );
+Map<String, dynamic> _environmentToJson(Map<String, String> environment) =>
+    <String, dynamic>{
+      if (environment.isNotEmpty) _Tokens.environment: environment
+    };
 
-String _executablesToYaml(Map<String, Optional<String>> executables) =>
-    json2yaml(
-      <String, dynamic>{
+Map<String, dynamic> _executablesToJson(
+  Map<String, Optional<String>> executables,
+) =>
+    <String, dynamic>{
+      if (executables.isNotEmpty)
         _Tokens.executables: <String, dynamic>{
           for (final entry in executables.entries)
             entry.key: _nullIfEmpty(entry.value.valueOr(() => '')),
         }
-      },
-      yamlStyle: YamlStyle.pubspecYaml,
-    );
+    };
 
 PubspecYaml _loadFromYaml(String content) {
   final jsonMap =
