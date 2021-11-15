@@ -1,3 +1,6 @@
+## [3.1.0] - Improved YAML formatting
+* Correct YAML output with nested arrays and structures
+
 ## [3.0.0] - Null safety
 
 ## [2.0.1+1] - Upgrade to Dart 2.10
