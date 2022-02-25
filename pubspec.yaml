@@ -1,6 +1,6 @@
 name: pubspec_yaml
-description: Dart library to access and manipulate content of pubpec.yaml files
-version: 3.1.0
+description: Dart library to access and manipulate content of pubspec.yaml files
+version: 3.2.0
 homepage: https://github.com/alexei-sintotski/pubspec_yaml
 
 environment:
