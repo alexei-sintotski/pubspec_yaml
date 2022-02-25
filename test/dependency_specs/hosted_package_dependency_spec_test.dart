@@ -186,8 +186,8 @@ void main() {
   });
 
   group(
-      'given pubspec.yaml with dependency hosted in shot format with version spec',
-      () {
+      'given pubspec.yaml with dependency hosted in shot format '
+      'with version spec', () {
     final pubspec = PubspecYaml.loadFromYamlString(
       pubspecWithPackageHostedShortFormatWithVersionSpec,
     );
