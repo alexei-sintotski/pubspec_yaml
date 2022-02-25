@@ -34,10 +34,12 @@ extension HostedPackageDependencySpecToJson on HostedPackageDependencySpec {
   Map<String, dynamic> toJson() => <String, dynamic>{
         package: url.hasValue
             ? <String, dynamic>{
-                _Tokens.hosted: <String, dynamic>{
-                  if (name.hasValue) _Tokens.name: name.valueOr(() => ''),
-                  if (url.hasValue) _Tokens.url: url.valueOr(() => ''),
-                },
+                _Tokens.hosted: !name.hasValue && url.hasValue
+                    ? url.valueOr(() => '')
+                    : <String, dynamic>{
+                        if (name.hasValue) _Tokens.name: name.valueOr(() => ''),
+                        if (url.hasValue) _Tokens.url: url.valueOr(() => ''),
+                      },
                 if (version.hasValue)
                   _Tokens.version: version.valueOr(() => ''),
               }
@@ -71,12 +73,22 @@ HostedPackageDependencySpec _loadGenericHostedDependency(
   String package,
   Map<String, dynamic> definition,
 ) {
-  final definitionBody = definition[_Tokens.hosted] as Map<String, dynamic>;
+  final definitionBody = definition[_Tokens.hosted] as Object;
+  final String? name;
+  final String? url;
+  if (definitionBody is Map<String, dynamic>) {
+    name = definitionBody[_Tokens.name] as String;
+    url = definitionBody[_Tokens.url] as String?;
+  } else {
+    url = definitionBody as String;
+    name = null;
+  }
+
   return HostedPackageDependencySpec(
     package: package,
     version: Optional(definition[_Tokens.version] as String?),
-    name: Optional(definitionBody[_Tokens.name] as String?),
-    url: Optional(definitionBody[_Tokens.url] as String?),
+    name: Optional(name),
+    url: Optional(url),
   );
 }
 

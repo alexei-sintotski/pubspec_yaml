@@ -1,3 +1,8 @@
+## [3.2.0] - Support short format for hosted dependencies
+
+* Support for new (Dart 2.15 and later) format of defining hosted dependencies.
+See [documentation](https://dart.dev/tools/pub/dependencies#hosted-packages).
+
 ## [3.1.0] - Improved YAML formatting
 * Correct YAML output with nested arrays and structures
 

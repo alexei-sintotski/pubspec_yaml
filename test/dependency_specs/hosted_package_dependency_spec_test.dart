@@ -184,6 +184,45 @@ void main() {
       });
     });
   });
+
+  group(
+      'given pubspec.yaml with dependency hosted in shot format '
+      'with version spec', () {
+    final pubspec = PubspecYaml.loadFromYamlString(
+      pubspecWithPackageHostedShortFormatWithVersionSpec,
+    );
+
+    group('$PubspecYaml.loadFromYamlString', () {
+      test('produces object with defined version', () {
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            hosted: (p) => p.version.hasValue,
+            otherwise: () => false,
+          ),
+          isTrue,
+        );
+      });
+
+      test('produces object with correct version specification', () {
+        expect(
+          pubspec.dependencies.first.iswitcho(
+            hosted: (p) => p.version.valueOr(() => ''),
+            otherwise: () => '',
+          ),
+          version,
+        );
+      });
+    });
+
+    group('$PubspecYaml.toYamlString', () {
+      test('produces string equivalent to the input', () {
+        expect(
+          pubspec.toYamlString(),
+          pubspecWithPackageHostedShortFormatWithVersionSpec,
+        );
+      });
+    });
+  });
 }
 
 const dependency = 'transmogrify';
@@ -222,5 +261,14 @@ dependencies:
     hosted:
       name: $name
       url: $url
+    version: $version
+''';
+
+const pubspecWithPackageHostedShortFormatWithVersionSpec = '''
+name: pubspec_yaml
+
+dependencies:
+  $dependency:
+    hosted: $url
     version: $version
 ''';
